@@ -5,8 +5,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
 
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -38,6 +41,24 @@ public class UsuarioServiceImpl implements UsuarioService{
         }
         usuarioRepository.save(u);
         return new ResponseEntity<>("Usuario cadastrado com sucesso!", HttpStatus.BAD_REQUEST);
+    }
+
+    @Override
+    public UsuarioDTO patchUsuario(String id, Map<String, Object> fields) {
+        Optional<Usuario> u = usuarioRepository.findById(id);
+        if (u.isPresent()) {
+            fields.forEach((k, v) -> {
+                Field field = ReflectionUtils.findField(Usuario.class, k);
+                field.setAccessible(true);
+                if (field.getName().equalsIgnoreCase("email")) {
+                    u.get().setAtivo(false);
+                }
+                ReflectionUtils.setField(field, u.get(), v);
+            });
+            usuarioRepository.save(u.get());
+            return new UsuarioDTO(u.get());
+        }
+        return null;
     }
 
     @Override

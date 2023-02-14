@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -38,6 +39,12 @@ public class UsuarioController {
     @PostMapping
     public ResponseEntity<?> addUsuario(@RequestBody @Valid Usuario u) {
         return usuarioService.salvarUsuario(u);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> patchUsuario (@PathVariable String id, @RequestBody Map<String, Object> fields) {
+        UsuarioDTO usuario = usuarioService.patchUsuario(id, fields);
+        return new ResponseEntity<>(usuario, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
