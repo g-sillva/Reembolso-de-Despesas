@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -16,18 +17,16 @@ public class UsuarioServiceImpl implements UsuarioService{
     private UsuarioRepository usuarioRepository;
 
     @Override
-    public List<UsuarioDTO> getTodosUsuarios(Optional<String> nome,
-                                             Optional<String> email,
-                                             Optional<String> telefone,
-                                             Optional<Integer> ano,
-                                             Optional<Integer> mes) {
+    public List<UsuarioDTO> getTodosUsuarios(String nome, String email, String telefone, String ano, String mes) {
         List<UsuarioDTO> usuarioDTOS = usuarioRepository.findAll().stream().map(UsuarioDTO::new).toList();
 
-        if (nome.isPresent()) usuarioDTOS = usuarioDTOS.stream().filter(x -> x.getNome().toLowerCase().contains(nome.get().toLowerCase())).toList();
-        if (email.isPresent()) usuarioDTOS = usuarioDTOS.stream().filter(x -> x.getEmail().toLowerCase().contains(email.get().toLowerCase())).toList();
-        if (telefone.isPresent()) usuarioDTOS = usuarioDTOS.stream().filter(x -> x.getTelefone().contains(telefone.get())).toList();
-        if (ano.isPresent()) usuarioDTOS = usuarioDTOS.stream().filter(x -> x.getDataCadastro().getYear() == ano.get()).toList();
-        if (mes.isPresent()) usuarioDTOS = usuarioDTOS.stream().filter(x -> x.getDataCadastro().getMonthValue() == mes.get()).toList();
+        usuarioDTOS = usuarioDTOS.stream().filter(x ->
+            x.getNome().toLowerCase().contains(nome.toLowerCase()) &&
+                   x.getEmail().toLowerCase().contains(email.toLowerCase()) &&
+                    x.getTelefone().contains(telefone) &&
+                    Integer.toString(x.getDataCadastro().getYear()).contains(ano.equals("") ? Integer.toString(x.getDataCadastro().getYear()) : ano) &&
+                    Integer.toString(x.getDataCadastro().getMonthValue()).contains(mes.equals("") ? Integer.toString(x.getDataCadastro().getMonthValue()) : mes)
+        ).collect(Collectors.toList());
 
         return usuarioDTOS;
     }

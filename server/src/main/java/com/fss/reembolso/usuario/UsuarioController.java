@@ -18,11 +18,11 @@ public class UsuarioController {
     private UsuarioService usuarioService;
 
     @GetMapping()
-    public ResponseEntity<?> getUsuarios(@RequestParam("nome") Optional<String> nome,
-                                         @RequestParam("email") Optional<String> email,
-                                         @RequestParam("telefone") Optional<String> telefone,
-                                         @RequestParam("ano") Optional<Integer> ano,
-                                         @RequestParam("mes") Optional<Integer> mes) {
+    public ResponseEntity<?> getUsuarios(@RequestParam(name = "nome", defaultValue = "") String nome,
+                                         @RequestParam(name ="email", defaultValue = "") String email,
+                                         @RequestParam(name ="telefone", defaultValue = "") String telefone,
+                                         @RequestParam(name ="ano", defaultValue = "") String ano,
+                                         @RequestParam(name ="mes", defaultValue = "") String mes) {
 
         List<UsuarioDTO> usuarios = usuarioService.getTodosUsuarios(nome, email, telefone, ano, mes);
         return new ResponseEntity<>(usuarios, HttpStatus.OK);

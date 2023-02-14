@@ -8,11 +8,7 @@ import java.util.Optional;
 
 public interface UsuarioService {
 
-    List<UsuarioDTO> getTodosUsuarios(Optional<String> nome,
-                                      Optional<String> email,
-                                      Optional<String> telefone,
-                                      Optional<Integer> ano,
-                                      Optional<Integer> mes);
+    List<UsuarioDTO> getTodosUsuarios(String nome, String email, String telefone, String ano, String mes);
     ResponseEntity<?> salvarUsuario(Usuario u);
     UsuarioDTO getUsuarioPorId(String id);
     boolean deletarUsuario(String id);
