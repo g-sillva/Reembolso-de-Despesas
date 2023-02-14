@@ -22,6 +22,7 @@ public class Lancamento {
 
     @NotBlank(message = "O título não pode estar vazio")
     private String titulo;
+
     private String descricao;
     private Status status = Status.EM_RASCUNHO;
 
