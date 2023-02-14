@@ -2,10 +2,16 @@ package com.fss.reembolso.usuario;
 
 import com.fss.reembolso.usuario.DTOs.UsuarioDTO;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
 
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -14,25 +20,45 @@ public class UsuarioServiceImpl implements UsuarioService{
     private UsuarioRepository usuarioRepository;
 
     @Override
-    public List<UsuarioDTO> getTodosUsuarios(Optional<String> nome,
-                                             Optional<String> email,
-                                             Optional<String> telefone,
-                                             Optional<Integer> ano,
-                                             Optional<Integer> mes) {
+    public List<UsuarioDTO> getTodosUsuarios(String nome, String email, String telefone, String ano, String mes) {
         List<UsuarioDTO> usuarioDTOS = usuarioRepository.findAll().stream().map(UsuarioDTO::new).toList();
 
-        if (nome.isPresent()) usuarioDTOS = usuarioDTOS.stream().filter(x -> x.getNome().toLowerCase().contains(nome.get().toLowerCase())).toList();
-        if (email.isPresent()) usuarioDTOS = usuarioDTOS.stream().filter(x -> x.getEmail().toLowerCase().contains(email.get().toLowerCase())).toList();
-        if (telefone.isPresent()) usuarioDTOS = usuarioDTOS.stream().filter(x -> x.getTelefone().contains(telefone.get())).toList();
-        if (ano.isPresent()) usuarioDTOS = usuarioDTOS.stream().filter(x -> x.getDataCadastro().getYear() == ano.get()).toList();
-        if (mes.isPresent()) usuarioDTOS = usuarioDTOS.stream().filter(x -> x.getDataCadastro().getMonthValue() == mes.get()).toList();
+        usuarioDTOS = usuarioDTOS.stream().filter(x ->
+            x.getNome().toLowerCase().contains(nome.toLowerCase()) &&
+                   x.getEmail().toLowerCase().contains(email.toLowerCase()) &&
+                    x.getTelefone().contains(telefone) &&
+                    Integer.toString(x.getDataCadastro().getYear()).contains(ano.equals("") ? Integer.toString(x.getDataCadastro().getYear()) : ano) &&
+                    Integer.toString(x.getDataCadastro().getMonthValue()).contains(mes.equals("") ? Integer.toString(x.getDataCadastro().getMonthValue()) : mes)
+        ).collect(Collectors.toList());
 
         return usuarioDTOS;
     }
 
     @Override
-    public void salvarUsuario(Usuario u) {
+    public ResponseEntity<?> salvarUsuario(Usuario u) {
+        if (usuarioRepository.findByEmail(u.getEmail()) != null) {
+            return new ResponseEntity<>("O e-mail já está cadastrado no sistema.", HttpStatus.BAD_REQUEST);
+        }
         usuarioRepository.save(u);
+        return new ResponseEntity<>("Usuario cadastrado com sucesso!", HttpStatus.BAD_REQUEST);
+    }
+
+    @Override
+    public UsuarioDTO patchUsuario(String id, Map<String, Object> fields) {
+        Optional<Usuario> u = usuarioRepository.findById(id);
+        if (u.isPresent()) {
+            fields.forEach((k, v) -> {
+                Field field = ReflectionUtils.findField(Usuario.class, k);
+                field.setAccessible(true);
+                if (field.getName().equalsIgnoreCase("email")) {
+                    u.get().setAtivo(false);
+                }
+                ReflectionUtils.setField(field, u.get(), v);
+            });
+            usuarioRepository.save(u.get());
+            return new UsuarioDTO(u.get());
+        }
+        return null;
     }
 
     @Override
