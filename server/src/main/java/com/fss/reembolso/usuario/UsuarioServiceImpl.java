@@ -2,6 +2,8 @@ package com.fss.reembolso.usuario;
 
 import com.fss.reembolso.usuario.DTOs.UsuarioDTO;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,8 +33,12 @@ public class UsuarioServiceImpl implements UsuarioService{
     }
 
     @Override
-    public void salvarUsuario(Usuario u) {
+    public ResponseEntity<?> salvarUsuario(Usuario u) {
+        if (usuarioRepository.findByEmail(u.getEmail()) != null) {
+            return new ResponseEntity<>("O e-mail já está cadastrado no sistema.", HttpStatus.BAD_REQUEST);
+        }
         usuarioRepository.save(u);
+        return new ResponseEntity<>("Usuario cadastrado com sucesso!", HttpStatus.BAD_REQUEST);
     }
 
     @Override

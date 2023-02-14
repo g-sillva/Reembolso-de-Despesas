@@ -1,6 +1,7 @@
 package com.fss.reembolso.usuario;
 
 import com.fss.reembolso.usuario.DTOs.UsuarioDTO;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,9 +36,8 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<?> addUsuario(@RequestBody Usuario u) {
-        usuarioService.salvarUsuario(u);
-        return new ResponseEntity<>("Usuário cadastrado com sucesso!", HttpStatus.OK);
+    public ResponseEntity<?> addUsuario(@RequestBody @Valid Usuario u) {
+        return usuarioService.salvarUsuario(u);
     }
 
     @DeleteMapping("/{id}")
