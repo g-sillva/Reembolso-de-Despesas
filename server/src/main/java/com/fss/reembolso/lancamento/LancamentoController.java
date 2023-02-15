@@ -24,10 +24,13 @@ public class LancamentoController {
     public ResponseEntity<?> getLancamentos(@RequestParam(name = "titulo", defaultValue = "") String titulo,
                                             @RequestParam(name ="descricao", defaultValue = "") String descricao,
                                             @RequestParam(name ="status", defaultValue = "") String status,
-                                            @RequestParam(name ="data", defaultValue = "") String data,
-                                            @RequestParam(name ="categoria", defaultValue = "") String categoria) {
+                                            @RequestParam(name ="ano", defaultValue = "") String ano,
+                                            @RequestParam(name ="mes", defaultValue = "") String mes,
+                                            @RequestParam(name ="categoria", defaultValue = "") String categoria,
+                                            @RequestParam(name = "usuario_id", defaultValue = "") String usuario_id) {
 
-        return new ResponseEntity<>(lancamentoService.getTodosLancamentos(), HttpStatus.OK);
+        return new ResponseEntity<>(
+                lancamentoService.getTodosLancamentos(titulo, descricao, status, ano, mes, categoria, usuario_id), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
