@@ -21,9 +21,12 @@ public class LancamentoController {
     private LancamentoService lancamentoService;
 
     @GetMapping
-    public ResponseEntity<?> getLancamentos() {
+    public ResponseEntity<?> getLancamentos(@RequestParam(name = "titulo", defaultValue = "") String titulo,
+                                            @RequestParam(name ="descricao", defaultValue = "") String descricao,
+                                            @RequestParam(name ="status", defaultValue = "") String status,
+                                            @RequestParam(name ="data", defaultValue = "") String data,
+                                            @RequestParam(name ="categoria", defaultValue = "") String categoria) {
 
-        // TODO: Filtros
         return new ResponseEntity<>(lancamentoService.getTodosLancamentos(), HttpStatus.OK);
     }
 
@@ -43,10 +46,17 @@ public class LancamentoController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<?> patchUsuario (@PathVariable String id,
+    public ResponseEntity<?> patchLancamento (@PathVariable String id,
                                            @RequestPart Map<String, Object> fields,
                                            @RequestPart MultipartFile img) throws IOException {
-        Lancamento lancamento = lancamentoService.patchUsuario(id, fields, img);
-        return new ResponseEntity<>(lancamento, HttpStatus.OK);
+        Lancamento l = lancamentoService.patchUsuario(id, fields, img);
+        if (l != null) return new ResponseEntity<>(l, HttpStatus.OK);
+        return new ResponseEntity<>("Lançamento não encontrado", HttpStatus.NOT_FOUND);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteLancamento(@PathVariable String id) {
+        if (lancamentoService.deletarLancamento(id)) return new ResponseEntity<>("Lançamento deletado com sucesso!", HttpStatus.OK);
+        return new ResponseEntity<>("Lançamento não encontrado", HttpStatus.NOT_FOUND);
     }
 }

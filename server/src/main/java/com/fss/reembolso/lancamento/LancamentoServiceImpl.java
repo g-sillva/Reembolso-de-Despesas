@@ -82,4 +82,14 @@ public class LancamentoServiceImpl implements LancamentoService{
         }
         return null;
     }
+
+    @Override
+    public boolean deletarLancamento(String id) {
+        Optional<Lancamento> l = lancamentoRepository.findById(id);
+        if (l.isPresent()) {
+            lancamentoRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
 }
