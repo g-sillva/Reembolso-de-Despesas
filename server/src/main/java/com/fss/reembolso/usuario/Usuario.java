@@ -13,15 +13,20 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Document(value = "usuarios")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Usuario {
+public class Usuario implements UserDetails {
 
     @Id
     private String id;
@@ -39,7 +44,8 @@ public class Usuario {
     @NotBlank(message = "O telefone não pode estar vazio")
     @Pattern(regexp = "^[0-9]*$", message = "Telefone inválido")
     private String telefone;
-    private List<Role> roles;
+
+    private List<Role> roles = List.of(Role.ROLE_USER);
 
     @DBRef
     private List<Lancamento> lancamentos;
@@ -48,4 +54,40 @@ public class Usuario {
     @NotBlank(message = "A senha não pode estar vazia")
     private String senha;
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
+        roles.forEach(x -> list.add(new SimpleGrantedAuthority("ROLE_" + x)));
+        return list;
+    }
+
+    @Override
+    public String getPassword() {
+        return senha;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

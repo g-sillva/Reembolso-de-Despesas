@@ -3,11 +3,14 @@ package com.fss.reembolso.exceptions;
 
 import com.mongodb.MongoWriteException;
 import jakarta.el.MethodNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.nio.file.AccessDeniedException;
 
 @RestControllerAdvice
 public class CustomExceptionHandler {
