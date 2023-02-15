@@ -43,8 +43,10 @@ public class LancamentoController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<?> patchUsuario (@PathVariable String id, @RequestBody Map<String, Object> fields) {
-        Lancamento lancamento = lancamentoService.patchUsuario(id, fields);
+    public ResponseEntity<?> patchUsuario (@PathVariable String id,
+                                           @RequestPart Map<String, Object> fields,
+                                           @RequestPart MultipartFile img) throws IOException {
+        Lancamento lancamento = lancamentoService.patchUsuario(id, fields, img);
         return new ResponseEntity<>(lancamento, HttpStatus.OK);
     }
 }

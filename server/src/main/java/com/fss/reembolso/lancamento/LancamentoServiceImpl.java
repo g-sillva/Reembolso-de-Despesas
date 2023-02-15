@@ -57,9 +57,14 @@ public class LancamentoServiceImpl implements LancamentoService{
     }
 
     @Override
-    public Lancamento patchUsuario(String id, Map<String, Object> fields) {
+    public Lancamento patchUsuario(String id, Map<String, Object> fields, MultipartFile img) throws IOException {
         Optional<Lancamento> l = lancamentoRepository.findById(id);
         if (l.isPresent()) {
+
+            if (!img.isEmpty()) {
+                l.get().setImg(new Binary(BsonBinarySubType.BINARY, img.getBytes()));
+            }
+
             fields.forEach((k, v) -> {
                 Field field = ReflectionUtils.findField(Lancamento.class, k);
                 field.setAccessible(true);
