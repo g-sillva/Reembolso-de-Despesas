@@ -1,5 +1,7 @@
 package com.fss.reembolso.lancamento;
 
+import com.fss.reembolso.lancamento.Enums.Categoria;
+import com.fss.reembolso.usuario.DTOs.UsuarioDTO;
 import com.fss.reembolso.usuario.Usuario;
 import com.fss.reembolso.usuario.UsuarioRepository;
 import com.mongodb.BasicDBObject;
@@ -10,10 +12,14 @@ import org.bson.BsonBinarySubType;
 import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -48,5 +54,27 @@ public class LancamentoServiceImpl implements LancamentoService{
     @Override
     public Lancamento getLancamentoPorId(String id) {
         return lancamentoRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Lancamento patchUsuario(String id, Map<String, Object> fields) {
+        Optional<Lancamento> l = lancamentoRepository.findById(id);
+        if (l.isPresent()) {
+            fields.forEach((k, v) -> {
+                Field field = ReflectionUtils.findField(Lancamento.class, k);
+                field.setAccessible(true);
+
+                if (field.getName().equalsIgnoreCase("categoria")) {
+                    Categoria c = Categoria.findByName(v.toString());
+                    if (c == null) return;
+
+                    ReflectionUtils.setField(field, l.get(), c);
+                } else {
+                    ReflectionUtils.setField(field, l.get(), v);
+                }
+            });
+            return l.get();
+        }
+        return null;
     }
 }

@@ -1,5 +1,6 @@
 package com.fss.reembolso.lancamento;
 
+import com.fss.reembolso.usuario.DTOs.UsuarioDTO;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/lancamentos")
@@ -38,5 +40,11 @@ public class LancamentoController {
         Lancamento l = lancamentoService.salvarLancamento(lancamento, img);
         if (l != null) return new ResponseEntity<>(l, HttpStatus.OK);
         return new ResponseEntity<>("Lançamento não encontrado", HttpStatus.NOT_FOUND);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> patchUsuario (@PathVariable String id, @RequestBody Map<String, Object> fields) {
+        Lancamento lancamento = lancamentoService.patchUsuario(id, fields);
+        return new ResponseEntity<>(lancamento, HttpStatus.OK);
     }
 }

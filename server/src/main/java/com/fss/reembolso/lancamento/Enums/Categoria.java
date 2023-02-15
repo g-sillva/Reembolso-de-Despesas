@@ -6,5 +6,16 @@ public enum Categoria {
     TRANSPORTE_GASOLINA,
     HOSPEDAGEM,
     SOFTWARE,
-    TREINAMENTO
+    TREINAMENTO;
+
+    public static Categoria findByName(String name) {
+        Categoria result = null;
+        for (Categoria c : values()) {
+            if (c.name().equalsIgnoreCase(name)) {
+                result = c;
+                break;
+            }
+        }
+        return result;
+    }
 }
