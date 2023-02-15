@@ -44,4 +44,9 @@ public class LancamentoServiceImpl implements LancamentoService{
         }
         return null;
     }
+
+    @Override
+    public Lancamento getLancamentoPorId(String id) {
+        return lancamentoRepository.findById(id).orElse(null);
+    }
 }

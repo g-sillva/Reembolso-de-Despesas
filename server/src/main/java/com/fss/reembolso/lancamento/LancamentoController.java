@@ -20,7 +20,16 @@ public class LancamentoController {
 
     @GetMapping
     public ResponseEntity<?> getLancamentos() {
+
+        // TODO: Filtros
         return new ResponseEntity<>(lancamentoService.getTodosLancamentos(), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getLancamentoId(@PathVariable String id) {
+        Lancamento l = lancamentoService.getLancamentoPorId(id);
+        if (l != null) return new ResponseEntity<>(l, HttpStatus.OK);
+        return new ResponseEntity<>("Usuário não encontrado.", HttpStatus.NOT_FOUND);
     }
 
     @PostMapping(consumes = "multipart/form-data")
@@ -28,6 +37,6 @@ public class LancamentoController {
                                             @RequestPart("img") MultipartFile img) throws IOException {
         Lancamento l = lancamentoService.salvarLancamento(lancamento, img);
         if (l != null) return new ResponseEntity<>(l, HttpStatus.OK);
-        return new ResponseEntity<>("Usuário não encontrado.", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Lançamento não encontrado.", HttpStatus.NOT_FOUND);
     }
 }

@@ -8,4 +8,5 @@ import java.util.List;
 public interface LancamentoService {
     List<Lancamento> getTodosLancamentos();
     Lancamento salvarLancamento(Lancamento lancamento, MultipartFile img) throws IOException;
+    Lancamento getLancamentoPorId(String id);
 }
