@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/clients")
+@RequestMapping("/api/clientes")
 @AllArgsConstructor
 public class UsuarioController {
 

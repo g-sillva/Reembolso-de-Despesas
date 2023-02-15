@@ -1,4 +1,4 @@
-package com.fss.reembolso.lancamento;
+package com.fss.reembolso.lancamento.Enums;
 
 public enum Status {
     EM_RASCUNHO,
