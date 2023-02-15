@@ -6,12 +6,13 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/clients")
+@RequestMapping("/api/clientes")
 @AllArgsConstructor
 public class UsuarioController {
 
@@ -41,7 +42,8 @@ public class UsuarioController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<?> patchUsuario (@PathVariable String id, @RequestBody Map<String, Object> fields) {
+    public ResponseEntity<?> patchUsuario (@PathVariable String id,
+                                           @RequestBody Map<String, Object> fields) {
         UsuarioDTO usuario = usuarioService.patchUsuario(id, fields);
         return new ResponseEntity<>(usuario, HttpStatus.OK);
     }

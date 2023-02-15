@@ -1,9 +1,12 @@
 package com.fss.reembolso.lancamento;
 
+import com.fss.reembolso.lancamento.Enums.Categoria;
+import com.fss.reembolso.lancamento.Enums.Status;
 import com.fss.reembolso.usuario.Usuario;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.bson.types.Binary;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
@@ -15,6 +18,7 @@ import java.time.LocalDate;
 @Document("lancamentos")
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Lancamento {
 
     @Id
@@ -29,12 +33,10 @@ public class Lancamento {
     @CreatedDate
     private LocalDate data;
 
-    @NotBlank(message = "A categoria não pode estar vazio")
     private Categoria categoria;
 
-    @DBRef
-    private Usuario usuario;
+    @NotBlank
+    private String usuarioId;
 
-    @NotBlank(message = "A imagem não pode estar vazia")
     private Binary img;
 }
