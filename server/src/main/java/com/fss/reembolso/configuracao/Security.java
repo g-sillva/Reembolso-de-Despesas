@@ -31,6 +31,7 @@ public class Security {
                 .and().authorizeHttpRequests()
                 .requestMatchers(HttpMethod.POST, "/api/clientes/login").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/clientes/register").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/clientes/verify").permitAll()
                 .anyRequest().authenticated()
                 .and().addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

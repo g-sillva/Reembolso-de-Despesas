@@ -2,6 +2,7 @@ package com.fss.reembolso.usuario;
 
 import com.fss.reembolso.usuario.DTOs.UsuarioLoginDTO;
 import com.fss.reembolso.usuario.DTOs.UsuarioRetornoDTO;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,16 +19,23 @@ public class UsuarioController {
 
     private UsuarioService usuarioService;
 
-    // LOGIN
     @PostMapping("/login")
     public ResponseEntity<?> loginUsuario(@RequestBody UsuarioLoginDTO usuario) {
         return usuarioService.logarUsuario(usuario);
     }
 
-    // REGISTER
     @PostMapping("/register")
-    public ResponseEntity<?> registerUsuario(@RequestBody @Valid Usuario u) {
-        return usuarioService.salvarUsuario(u);
+    public ResponseEntity<?> registerUsuario(@RequestBody @Valid Usuario u, HttpServletRequest req) {
+        return usuarioService.salvarUsuario(u, getSiteURL(req));
+    }
+
+    @GetMapping("/verify")
+    public ResponseEntity<?> verificarUsuario(@RequestParam String codigo) {
+        if (usuarioService.verificarEmail(codigo)) {
+            return new ResponseEntity<>("E-mail verificado com sucesso!", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Erro ao verificar e-mail", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping()
@@ -59,5 +67,10 @@ public class UsuarioController {
     public ResponseEntity<?> deleteUsuario(@PathVariable String id) {
         if (usuarioService.deletarUsuario(id)) return new ResponseEntity<>("Usuário remvoido com sucesso!", HttpStatus.OK);
         return new ResponseEntity<>("Usuário não encontrado.", HttpStatus.NOT_FOUND);
+    }
+
+    private String getSiteURL(HttpServletRequest request) {
+        String siteURL = request.getRequestURL().toString();
+        return siteURL.replace(request.getServletPath(), "");
     }
 }

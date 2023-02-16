@@ -4,18 +4,24 @@ import com.fss.reembolso.jwt.TokenDTO;
 import com.fss.reembolso.jwt.TokenService;
 import com.fss.reembolso.usuario.DTOs.UsuarioLoginDTO;
 import com.fss.reembolso.usuario.DTOs.UsuarioRetornoDTO;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,6 +31,7 @@ public class UsuarioServiceImpl implements UsuarioService{
     private UsuarioRepository usuarioRepository;
     private TokenService tokenService;
     private PasswordEncoder passwordEncoder;
+    private JavaMailSender javaMailSender;
 
     @Override
     public List<UsuarioRetornoDTO> getTodosUsuarios(String nome, String email, String telefone, String ano, String mes) {
@@ -76,13 +83,18 @@ public class UsuarioServiceImpl implements UsuarioService{
     }
 
     @Override
-    public ResponseEntity<?> salvarUsuario(Usuario u) {
+    public ResponseEntity<?> salvarUsuario(Usuario u, String url) {
         if (usuarioRepository.findByEmail(u.getEmail()) != null) {
             return new ResponseEntity<>("O e-mail já está cadastrado no sistema.", HttpStatus.BAD_REQUEST);
         }
         u.setSenha(passwordEncoder.encode(u.getSenha()));
+
+        String codigoDeVerificacao = UUID.randomUUID().toString().replaceAll("_", "");
+        u.setCodigoVerificacao(codigoDeVerificacao);
         usuarioRepository.save(u);
-        return new ResponseEntity<>("Usuario cadastrado com sucesso!", HttpStatus.BAD_REQUEST);
+
+        enviarEmailVerificacao(u, url);
+        return new ResponseEntity<>("Usuario cadastrado com sucesso!", HttpStatus.OK);
     }
 
     @Override
@@ -91,7 +103,7 @@ public class UsuarioServiceImpl implements UsuarioService{
         if (u != null) {
             if (passwordEncoder.matches(usuario.getSenha(), u.getPassword())) {
 
-                if (!u.isAtivo()) {
+                if (!u.isEnabled()) {
                     return new ResponseEntity<>("E-mail não verificado.", HttpStatus.BAD_REQUEST);
                 }
 
@@ -104,6 +116,47 @@ public class UsuarioServiceImpl implements UsuarioService{
         return new ResponseEntity<>("E-mail incorreta.", HttpStatus.NOT_FOUND);
     }
 
-    // TODO: Enviar e-mail de verificação
+    @Override
+    public boolean verificarEmail(String codigo) {
+        Usuario u = usuarioRepository.findByCodigoVerificacao(codigo);
+        if (u == null || u.isEnabled()) return false;
+        u.setCodigoVerificacao(null);
+        u.setAtivo(true);
+        usuarioRepository.save(u);
+        return true;
+    }
 
+    public void enviarEmailVerificacao(Usuario usuario, String url) {
+        try {
+            String toAddress = usuario.getEmail();
+            String emailUser = "silvagabriel.limars@gmail.com";
+            String senderName = "Reembolso de Despesas";
+            String subject = "Finalização do cadastro";
+            String content = "[[name]],<br>"
+                    + "Por favor clique no link abaixo para finalizar seu cadastro:<br>"
+                    + "<h3><a href=\"[[URL]]\" target=\"_self\">VERIFICAR</a></h3>"
+                    + "Obrigado,<br>"
+                    + "Reembolso de Despesas.";
+
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message);
+
+            helper.setFrom(emailUser, senderName);
+            helper.setTo(toAddress);
+            helper.setSubject(subject);
+
+            content = content.replace("[[name]]", usuario.getNome());
+            String verifyURL = url + "/api/clientes/verify?codigo=" + usuario.getCodigoVerificacao();
+
+            content = content.replace("[[URL]]", verifyURL);
+
+            helper.setText(content, true);
+
+            javaMailSender.send(message);
+        } catch (MessagingException e) {
+            throw new RuntimeException("Erro ao enviar e-mail. " + e);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException("Erro com a codificação do e-mail. " + e);
+        }
+    }
 }

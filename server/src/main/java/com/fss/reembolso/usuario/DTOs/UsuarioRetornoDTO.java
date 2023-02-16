@@ -18,13 +18,12 @@ public class UsuarioRetornoDTO {
     private List<Lancamento> lancamentos;
     private boolean ativo;
 
-    public UsuarioRetornoDTO(String nome, String email, LocalDate dataCadastro, String telefone, List<Lancamento> lancamentos, boolean ativo) {
+    public UsuarioRetornoDTO(String nome, String email, LocalDate dataCadastro, String telefone, List<Lancamento> lancamentos) {
         this.nome = nome;
         this.email = email;
         this.dataCadastro = dataCadastro;
         this.telefone = telefone;
         this.lancamentos = lancamentos;
-        this.ativo = ativo;
     }
 
     public UsuarioRetornoDTO(Usuario u) {
@@ -34,6 +33,5 @@ public class UsuarioRetornoDTO {
         this.dataCadastro = u.getDataCadastro();
         this.telefone = u.getTelefone();
         this.lancamentos = u.getLancamentos();
-        this.ativo = u.isAtivo();
     }
 }
