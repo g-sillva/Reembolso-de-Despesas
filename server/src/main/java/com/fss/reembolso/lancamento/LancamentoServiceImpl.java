@@ -1,19 +1,13 @@
 package com.fss.reembolso.lancamento;
 
 import com.fss.reembolso.lancamento.Enums.Categoria;
-import com.fss.reembolso.usuario.DTOs.UsuarioDTO;
 import com.fss.reembolso.usuario.Usuario;
 import com.fss.reembolso.usuario.UsuarioRepository;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.bson.BsonBinarySubType;
 import org.bson.types.Binary;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;

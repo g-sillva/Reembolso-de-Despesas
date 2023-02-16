@@ -1,10 +1,14 @@
 package com.fss.reembolso.usuario;
 
-import com.fss.reembolso.usuario.DTOs.UsuarioDTO;
+import com.fss.reembolso.jwt.TokenDTO;
+import com.fss.reembolso.jwt.TokenService;
+import com.fss.reembolso.usuario.DTOs.UsuarioLoginDTO;
+import com.fss.reembolso.usuario.DTOs.UsuarioRetornoDTO;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
@@ -19,12 +23,14 @@ import java.util.stream.Collectors;
 public class UsuarioServiceImpl implements UsuarioService{
 
     private UsuarioRepository usuarioRepository;
+    private TokenService tokenService;
+    private PasswordEncoder passwordEncoder;
 
     @Override
-    public List<UsuarioDTO> getTodosUsuarios(String nome, String email, String telefone, String ano, String mes) {
-        List<UsuarioDTO> usuarioDTOS = usuarioRepository.findAll().stream().map(UsuarioDTO::new).toList();
+    public List<UsuarioRetornoDTO> getTodosUsuarios(String nome, String email, String telefone, String ano, String mes) {
+        List<UsuarioRetornoDTO> usuarioRetornoDTOS = usuarioRepository.findAll().stream().map(UsuarioRetornoDTO::new).toList();
 
-        usuarioDTOS = usuarioDTOS.stream().filter(x ->
+        usuarioRetornoDTOS = usuarioRetornoDTOS.stream().filter(x ->
             x.getNome().toLowerCase().contains(nome.toLowerCase()) &&
                    x.getEmail().toLowerCase().contains(email.toLowerCase()) &&
                     x.getTelefone().contains(telefone) &&
@@ -32,20 +38,11 @@ public class UsuarioServiceImpl implements UsuarioService{
                     Integer.toString(x.getDataCadastro().getMonthValue()).contains(mes.equals("") ? Integer.toString(x.getDataCadastro().getMonthValue()) : mes)
         ).collect(Collectors.toList());
 
-        return usuarioDTOS;
+        return usuarioRetornoDTOS;
     }
 
     @Override
-    public ResponseEntity<?> salvarUsuario(Usuario u) {
-        if (usuarioRepository.findByEmail(u.getEmail()) != null) {
-            return new ResponseEntity<>("O e-mail já está cadastrado no sistema.", HttpStatus.BAD_REQUEST);
-        }
-        usuarioRepository.save(u);
-        return new ResponseEntity<>("Usuario cadastrado com sucesso!", HttpStatus.BAD_REQUEST);
-    }
-
-    @Override
-    public UsuarioDTO patchUsuario(String id, Map<String, Object> fields) {
+    public UsuarioRetornoDTO patchUsuario(String id, Map<String, Object> fields) {
         Optional<Usuario> u = usuarioRepository.findById(id);
         if (u.isPresent()) {
             fields.forEach((k, v) -> {
@@ -57,15 +54,15 @@ public class UsuarioServiceImpl implements UsuarioService{
                 ReflectionUtils.setField(field, u.get(), v);
             });
             usuarioRepository.save(u.get());
-            return new UsuarioDTO(u.get());
+            return new UsuarioRetornoDTO(u.get());
         }
         return null;
     }
 
     @Override
-    public UsuarioDTO getUsuarioPorId(String id) {
+    public UsuarioRetornoDTO getUsuarioPorId(String id) {
         Optional<Usuario> usuario = usuarioRepository.findById(id);
-        return usuario.map(UsuarioDTO::new).orElse(null);
+        return usuario.map(UsuarioRetornoDTO::new).orElse(null);
     }
 
     @Override
@@ -78,5 +75,35 @@ public class UsuarioServiceImpl implements UsuarioService{
         return false;
     }
 
+    @Override
+    public ResponseEntity<?> salvarUsuario(Usuario u) {
+        if (usuarioRepository.findByEmail(u.getEmail()) != null) {
+            return new ResponseEntity<>("O e-mail já está cadastrado no sistema.", HttpStatus.BAD_REQUEST);
+        }
+        u.setSenha(passwordEncoder.encode(u.getSenha()));
+        usuarioRepository.save(u);
+        return new ResponseEntity<>("Usuario cadastrado com sucesso!", HttpStatus.BAD_REQUEST);
+    }
+
+    @Override
+    public ResponseEntity<?> logarUsuario(UsuarioLoginDTO usuario) {
+        Usuario u = usuarioRepository.findByEmail(usuario.getEmail());
+        if (u != null) {
+            if (passwordEncoder.matches(usuario.getSenha(), u.getPassword())) {
+
+                if (!u.isAtivo()) {
+                    return new ResponseEntity<>("E-mail não verificado.", HttpStatus.BAD_REQUEST);
+                }
+
+                return new ResponseEntity<>(new TokenDTO(tokenService.gerarToken(usuario)), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Senha incorreta.", HttpStatus.BAD_REQUEST);
+            }
+        }
+
+        return new ResponseEntity<>("E-mail incorreta.", HttpStatus.NOT_FOUND);
+    }
+
+    // TODO: Enviar e-mail de verificação
 
 }

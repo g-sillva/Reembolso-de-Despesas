@@ -45,7 +45,7 @@ public class Usuario implements UserDetails {
     @Pattern(regexp = "^[0-9]*$", message = "Telefone inválido")
     private String telefone;
 
-    private List<Role> roles = List.of(Role.ROLE_USER);
+    private List<Role> roles = List.of(Role.USER);
 
     @DBRef
     private List<Lancamento> lancamentos;

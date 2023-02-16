@@ -2,8 +2,11 @@ package com.fss.reembolso.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.fss.reembolso.usuario.DTOs.UsuarioLoginDTO;
 import com.fss.reembolso.usuario.Usuario;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -13,15 +16,20 @@ import java.time.ZoneOffset;
 @Service
 public class TokenService {
 
-    private String secret = "secret";
+    @Value("reembolso.api.jwt.secret")
+    private String secret;
 
-    public String gerarToken(Usuario usuario) {
-        Algorithm algorithm = Algorithm.HMAC256(secret);
-        return JWT.create()
-                .withIssuer("API reembolso")
-                .withSubject(usuario.getEmail())
-                .withExpiresAt(dataExpiracao())
-                .sign(algorithm);
+    public String gerarToken(UsuarioLoginDTO usuario) {
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(secret);
+            return JWT.create()
+                    .withIssuer("API reembolso")
+                    .withSubject(usuario.getEmail())
+                    .withExpiresAt(dataExpiracao())
+                    .sign(algorithm);
+        } catch (JWTCreationException e) {
+            throw new RuntimeException("Erro ao gerar token JWT");
+        }
     }
 
     public String getSubject(String tokenJWT) {
