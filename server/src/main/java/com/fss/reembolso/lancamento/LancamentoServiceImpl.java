@@ -1,6 +1,10 @@
 package com.fss.reembolso.lancamento;
 
 import com.fss.reembolso.lancamento.Enums.Categoria;
+import com.fss.reembolso.lancamento.Enums.Status;
+import com.fss.reembolso.notificacao.Notificacao;
+import com.fss.reembolso.notificacao.NotificacaoRepository;
+import com.fss.reembolso.notificacao.NotificacaoService;
 import com.fss.reembolso.usuario.Usuario;
 import com.fss.reembolso.usuario.UsuarioRepository;
 import lombok.AllArgsConstructor;
@@ -23,6 +27,7 @@ public class LancamentoServiceImpl implements LancamentoService{
 
     private LancamentoRepository lancamentoRepository;
     private UsuarioRepository usuarioRepository;
+    private NotificacaoRepository notificacaoRepository;
 
     @Override
     public List<Lancamento> getTodosLancamentos(String titulo, String descricao, String status, String ano, String mes, String categoria, String usuario_id) {
@@ -63,7 +68,7 @@ public class LancamentoServiceImpl implements LancamentoService{
     }
 
     @Override
-    public Lancamento patchUsuario(String id, Map<String, Object> fields, MultipartFile img) throws IOException {
+    public Lancamento patchLancamento(String id, Map<String, Object> fields, MultipartFile img) throws IOException {
         Optional<Lancamento> l = lancamentoRepository.findById(id);
         if (l.isPresent()) {
 
@@ -75,15 +80,24 @@ public class LancamentoServiceImpl implements LancamentoService{
                 Field field = ReflectionUtils.findField(Lancamento.class, k);
                 field.setAccessible(true);
 
-                if (field.getName().equalsIgnoreCase("categoria")) {
-                    Categoria c = Categoria.findByName(v.toString());
-                    if (c == null) return;
+                if (field.getName().equalsIgnoreCase("status")) {
+                    Notificacao notificacao = new Notificacao();
+                    notificacao.setTitulo("O seu lançamento mudou de status!");
+                    notificacao.setMsg("O lançamento: '" + l.get().getTitulo() + "' teve o seu status alterado para " + v.toString().replaceAll("-", " "));
+                    notificacao.setUsuarioId(l.get().getUsuarioId());
+                    notificacaoRepository.save(notificacao);
 
-                    ReflectionUtils.setField(field, l.get(), c);
+                    Status status = Status.valueOf(v.toString());
+                    l.get().setStatus(status);
+                } else if (field.getName().equalsIgnoreCase("categoria")) {
+                    Categoria c = Categoria.valueOf(v.toString().toUpperCase());
+                    l.get().setCategoria(c);
                 } else {
                     ReflectionUtils.setField(field, l.get(), v);
                 }
             });
+            System.out.println(l.get());
+            lancamentoRepository.save(l.get());
             return l.get();
         }
         return null;

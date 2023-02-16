@@ -41,14 +41,14 @@ public class LancamentoController {
                                             @RequestPart("img") MultipartFile img) throws IOException {
         Lancamento l = lancamentoService.salvarLancamento(lancamento, img);
         if (l != null) return new ResponseEntity<>(l, HttpStatus.OK);
-        return new ResponseEntity<>("Lançamento não encontrado", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Usuário não encontrado", HttpStatus.NOT_FOUND);
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<?> patchLancamento (@PathVariable String id,
                                            @RequestPart Map<String, Object> fields,
                                            @RequestPart MultipartFile img) throws IOException {
-        Lancamento l = lancamentoService.patchUsuario(id, fields, img);
+        Lancamento l = lancamentoService.patchLancamento(id, fields, img);
         if (l != null) return new ResponseEntity<>(l, HttpStatus.OK);
         return new ResponseEntity<>("Lançamento não encontrado", HttpStatus.NOT_FOUND);
     }

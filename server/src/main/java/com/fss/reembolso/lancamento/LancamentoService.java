@@ -10,6 +10,6 @@ public interface LancamentoService {
     List<Lancamento> getTodosLancamentos(String titulo, String descricao, String status, String ano, String mes, String categoria, String usuario_id);
     Lancamento salvarLancamento(Lancamento lancamento, MultipartFile img) throws IOException;
     Lancamento getLancamentoPorId(String id);
-    Lancamento patchUsuario(String id, Map<String, Object> field, MultipartFile img) throws IOException;
+    Lancamento patchLancamento(String id, Map<String, Object> field, MultipartFile img) throws IOException;
     boolean deletarLancamento(String id);
 }

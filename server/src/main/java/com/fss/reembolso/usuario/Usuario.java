@@ -1,6 +1,7 @@
 package com.fss.reembolso.usuario;
 
 import com.fss.reembolso.lancamento.Lancamento;
+import com.fss.reembolso.notificacao.Notificacao;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -51,6 +52,10 @@ public class Usuario implements UserDetails {
 
     @DBRef
     private List<Lancamento> lancamentos;
+
+    @DBRef
+    private List<Notificacao> notificacaos;
+
     private boolean ativo;
 
     @NotBlank(message = "A senha não pode estar vazia")

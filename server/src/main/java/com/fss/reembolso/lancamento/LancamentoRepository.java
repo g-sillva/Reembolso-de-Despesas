@@ -8,4 +8,5 @@ import java.util.List;
 @Repository
 public interface LancamentoRepository extends MongoRepository<Lancamento, String> {
     List<Lancamento> findByUsuarioId();
+    // TODO: paginação
 }
