@@ -5,11 +5,10 @@ import com.fss.reembolso.usuario.Usuario;
 import lombok.Getter;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Getter
-public class UsuarioDTO {
+public class UsuarioRetornoDTO {
 
     private String id;
     private String nome;
@@ -19,7 +18,7 @@ public class UsuarioDTO {
     private List<Lancamento> lancamentos;
     private boolean ativo;
 
-    public UsuarioDTO(String nome, String email, LocalDate dataCadastro, String telefone, List<Lancamento> lancamentos, boolean ativo) {
+    public UsuarioRetornoDTO(String nome, String email, LocalDate dataCadastro, String telefone, List<Lancamento> lancamentos, boolean ativo) {
         this.nome = nome;
         this.email = email;
         this.dataCadastro = dataCadastro;
@@ -28,7 +27,7 @@ public class UsuarioDTO {
         this.ativo = ativo;
     }
 
-    public UsuarioDTO(Usuario u) {
+    public UsuarioRetornoDTO(Usuario u) {
         this.id = u.getId();
         this.nome = u.getNome();
         this.email = u.getEmail();
