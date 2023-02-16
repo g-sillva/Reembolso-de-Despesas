@@ -10,9 +10,10 @@ import java.util.Map;
 public interface UsuarioService {
 
     List<UsuarioRetornoDTO> getTodosUsuarios(String nome, String email, String telefone, String ano, String mes);
-    ResponseEntity<?> salvarUsuario(Usuario u);
+    ResponseEntity<?> salvarUsuario(Usuario u, String url);
     UsuarioRetornoDTO getUsuarioPorId(String id);
     UsuarioRetornoDTO patchUsuario(String id, Map<String, Object> fields);
     boolean deletarUsuario(String id);
     ResponseEntity<?> logarUsuario(UsuarioLoginDTO usuario);
+    boolean verificarEmail(String codigo);
 }

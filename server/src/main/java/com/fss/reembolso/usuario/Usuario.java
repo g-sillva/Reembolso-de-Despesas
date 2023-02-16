@@ -31,6 +31,8 @@ public class Usuario implements UserDetails {
     @Id
     private String id;
 
+    private String codigoVerificacao;
+
     @NotBlank(message = "O nome não pode estar vazio")
     private String nome;
 
@@ -88,6 +90,6 @@ public class Usuario implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return ativo;
     }
 }
