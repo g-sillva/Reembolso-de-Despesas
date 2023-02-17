@@ -35,7 +35,7 @@ public class Lancamento {
 
     private Categoria categoria;
 
-    @NotBlank
+    @NotBlank(message = "O usuário não pode estar vazio")
     private String usuarioId;
 
     private Binary img;
