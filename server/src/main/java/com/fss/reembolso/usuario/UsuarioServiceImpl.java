@@ -112,8 +112,25 @@ public class UsuarioServiceImpl implements UsuarioService{
                 return new ResponseEntity<>("Senha incorreta.", HttpStatus.BAD_REQUEST);
             }
         }
+        return new ResponseEntity<>("E-mail incorreto.", HttpStatus.NOT_FOUND);
+    }
 
-        return new ResponseEntity<>("E-mail incorreta.", HttpStatus.NOT_FOUND);
+    @Override
+    public ResponseEntity<?> logarUsuarioAdmin(UsuarioLoginDTO usuario) {
+        Usuario u = usuarioRepository.findByEmail(usuario.getEmail());
+        if (u != null) {
+            if (passwordEncoder.matches(usuario.getSenha(), u.getPassword())) {
+
+                if (!u.getRoles().contains(Role.ADMIN)) {
+                    return new ResponseEntity<>("Sem permissão de administrador.", HttpStatus.UNAUTHORIZED);
+                }
+
+                return new ResponseEntity<>(new TokenDTO(tokenService.gerarToken(usuario)), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Senha incorreta.", HttpStatus.BAD_REQUEST);
+            }
+        }
+        return new ResponseEntity<>("E-mail incorreto.", HttpStatus.NOT_FOUND);
     }
 
     @Override

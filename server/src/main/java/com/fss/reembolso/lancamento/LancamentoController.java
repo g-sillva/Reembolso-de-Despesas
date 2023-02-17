@@ -3,6 +3,7 @@ package com.fss.reembolso.lancamento;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,23 +18,29 @@ public class LancamentoController {
     private LancamentoService lancamentoService;
 
     @GetMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> getLancamentos(@RequestParam(name = "titulo", defaultValue = "") String titulo,
                                             @RequestParam(name ="descricao", defaultValue = "") String descricao,
                                             @RequestParam(name ="status", defaultValue = "") String status,
                                             @RequestParam(name ="ano", defaultValue = "") String ano,
                                             @RequestParam(name ="mes", defaultValue = "") String mes,
-                                            @RequestParam(name ="categoria", defaultValue = "") String categoria,
-                                            @RequestParam(name = "usuario_id", defaultValue = "") String usuario_id) {
+                                            @RequestParam(name ="categoria", defaultValue = "") String categoria) {
 
         return new ResponseEntity<>(
-                lancamentoService.getTodosLancamentos(titulo, descricao, status, ano, mes, categoria, usuario_id), HttpStatus.OK);
+                lancamentoService.getTodosLancamentos(titulo, descricao, status, ano, mes, categoria), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> getLancamentoId(@PathVariable String id) {
         Lancamento l = lancamentoService.getLancamentoPorId(id);
         if (l != null) return new ResponseEntity<>(l, HttpStatus.OK);
         return new ResponseEntity<>("Usuário não encontrado.", HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<?> getLancamentosPorUsuario(@RequestParam String id) {
+        return new ResponseEntity<>(lancamentoService.getLancamentosPorUsuarioId(id), HttpStatus.OK);
     }
 
     @PostMapping(consumes = "multipart/form-data")

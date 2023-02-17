@@ -30,19 +30,24 @@ public class LancamentoServiceImpl implements LancamentoService{
     private NotificacaoRepository notificacaoRepository;
 
     @Override
-    public List<Lancamento> getTodosLancamentos(String titulo, String descricao, String status, String ano, String mes, String categoria, String usuario_id) {
+    public List<Lancamento> getTodosLancamentos(String titulo, String descricao, String status, String ano, String mes, String categoria) {
         List<Lancamento> lancamentos = lancamentoRepository.findAll();
         lancamentos = lancamentos.stream().filter(x ->
                 x.getTitulo().toLowerCase().contains(titulo.toLowerCase()) &&
                         x.getDescricao().toLowerCase().contains(descricao.toLowerCase()) &&
                         x.getStatus().name().toLowerCase().contains(status.toLowerCase()) &&
                         x.getCategoria().name().toLowerCase().contains(categoria.toLowerCase()) &&
-                        x.getUsuarioId().toLowerCase().contains(usuario_id.toLowerCase()) &&
                         Integer.toString(x.getData().getYear()).contains(ano.equals("") ? Integer.toString(x.getData().getYear()) : ano) &&
                         Integer.toString(x.getData().getMonthValue()).contains(mes.equals("") ? Integer.toString(x.getData().getMonthValue()) : mes)
         ).collect(Collectors.toList());
 
         return lancamentos;
+    }
+
+    @Override
+    public List<Lancamento> getLancamentosPorUsuarioId(String usuario_id) {
+        Optional<Usuario> u = usuarioRepository.findById(usuario_id);
+        return u.map(Usuario::getLancamentos).orElse(null);
     }
 
     @Override

@@ -15,5 +15,6 @@ public interface UsuarioService {
     UsuarioRetornoDTO patchUsuario(String id, Map<String, Object> fields);
     boolean deletarUsuario(String id);
     ResponseEntity<?> logarUsuario(UsuarioLoginDTO usuario);
+    ResponseEntity<?> logarUsuarioAdmin(UsuarioLoginDTO usuario);
     boolean verificarEmail(String codigo);
 }
