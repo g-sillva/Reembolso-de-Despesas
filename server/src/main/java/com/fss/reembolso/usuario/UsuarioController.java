@@ -1,5 +1,6 @@
 package com.fss.reembolso.usuario;
 
+import com.fss.reembolso.exceptions.ApiRequestException;
 import com.fss.reembolso.usuario.DTOs.UsuarioLoginDTO;
 import com.fss.reembolso.usuario.DTOs.UsuarioRetornoDTO;
 import jakarta.servlet.http.HttpServletRequest;

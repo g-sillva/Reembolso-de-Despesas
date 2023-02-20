@@ -101,7 +101,7 @@ public class UsuarioServiceImpl implements UsuarioService{
     public ResponseEntity<?> logarUsuario(UsuarioLoginDTO usuario) {
         Usuario u = usuarioRepository.findByEmail(usuario.getEmail());
         if (u != null) {
-            if (passwordEncoder.matches(usuario.getSenha(), u.getPassword())) {
+            if (passwordEncoder.matches(usuario.getSenha(),  u.getPassword())) {
 
                 if (!u.isEnabled()) {
                     return new ResponseEntity<>("E-mail não verificado.", HttpStatus.BAD_REQUEST);
