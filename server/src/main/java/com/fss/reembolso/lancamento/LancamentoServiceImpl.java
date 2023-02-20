@@ -10,6 +10,9 @@ import com.fss.reembolso.usuario.UsuarioRepository;
 import lombok.AllArgsConstructor;
 import org.bson.BsonBinarySubType;
 import org.bson.types.Binary;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,25 +33,27 @@ public class LancamentoServiceImpl implements LancamentoService{
     private NotificacaoRepository notificacaoRepository;
 
     @Override
-    public List<Lancamento> getTodosLancamentos(String titulo, String descricao, String status, String ano, String mes, String categoria) {
-        List<Lancamento> lancamentos = lancamentoRepository.findAll();
-        lancamentos = lancamentos.stream().filter(x ->
+    public Page<Lancamento> getTodosLancamentos(String titulo, String descricao, String status, String ano, String mes, String dia, String categoria, Pageable pageable) {
+        Page<Lancamento> paginaLancamentos = lancamentoRepository.findAll(pageable);
+
+        List<Lancamento> resultadoLancamentos = paginaLancamentos.getContent().stream().filter(x ->
                 x.getTitulo().toLowerCase().contains(titulo.toLowerCase()) &&
                         x.getDescricao().toLowerCase().contains(descricao.toLowerCase()) &&
                         x.getStatus().name().toLowerCase().contains(status.toLowerCase()) &&
                         !x.getStatus().name().toLowerCase().contains("em_rascunho") &&
                         x.getCategoria().name().toLowerCase().contains(categoria.toLowerCase()) &&
                         Integer.toString(x.getData().getYear()).contains(ano.equals("") ? Integer.toString(x.getData().getYear()) : ano) &&
-                        Integer.toString(x.getData().getMonthValue()).contains(mes.equals("") ? Integer.toString(x.getData().getMonthValue()) : mes)
-        ).collect(Collectors.toList());
+                        Integer.toString(x.getData().getMonthValue()).contains(mes.equals("") ? Integer.toString(x.getData().getMonthValue()) : mes) &&
+                        Integer.toString(x.getData().getDayOfMonth()).contains(dia.equals("") ? Integer.toString(x.getData().getDayOfMonth()) : dia)
+        ).toList();
+        paginaLancamentos = new PageImpl<>(resultadoLancamentos);
 
-        return lancamentos;
+        return paginaLancamentos;
     }
 
     @Override
-    public List<Lancamento> getLancamentosPorUsuarioId(String usuario_id) {
-        Optional<Usuario> u = usuarioRepository.findById(usuario_id);
-        return u.map(Usuario::getLancamentos).orElse(null);
+    public Page<Lancamento> getLancamentosPorUsuarioId(String usuario_id, Pageable pageable) {
+        return lancamentoRepository.findByUsuarioId(usuario_id, pageable);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.fss.reembolso.lancamento;
 
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,10 +25,12 @@ public class LancamentoController {
                                             @RequestParam(name ="status", defaultValue = "") String status,
                                             @RequestParam(name ="ano", defaultValue = "") String ano,
                                             @RequestParam(name ="mes", defaultValue = "") String mes,
-                                            @RequestParam(name ="categoria", defaultValue = "") String categoria) {
+                                            @RequestParam(name = "dia", defaultValue = "") String dia,
+                                            @RequestParam(name ="categoria", defaultValue = "") String categoria,
+                                            Pageable pageable) {
 
         return new ResponseEntity<>(
-                lancamentoService.getTodosLancamentos(titulo, descricao, status, ano, mes, categoria), HttpStatus.OK);
+                lancamentoService.getTodosLancamentos(titulo, descricao, status, ano, mes, dia, categoria, pageable), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -39,8 +42,8 @@ public class LancamentoController {
     }
 
     @GetMapping("/user")
-    public ResponseEntity<?> getLancamentosPorUsuario(@RequestParam String id) {
-        return new ResponseEntity<>(lancamentoService.getLancamentosPorUsuarioId(id), HttpStatus.OK);
+    public ResponseEntity<?> getLancamentosPorUsuario(@RequestParam String id, Pageable pageable) {
+        return new ResponseEntity<>(lancamentoService.getLancamentosPorUsuarioId(id, pageable), HttpStatus.OK);
     }
 
     @PostMapping(consumes = "multipart/form-data")
