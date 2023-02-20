@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.Map;
 
 public interface LancamentoService {
-    Page<Lancamento> getTodosLancamentos(String titulo, String descricao, String status, String ano, String mes, String categoria, Pageable pageable);
+    Page<Lancamento> getTodosLancamentos(String titulo, String descricao, String status, String ano, String mes, String dia, String categoria, Pageable pageable);
     Page<Lancamento> getLancamentosPorUsuarioId(String usuario_id, Pageable pageable);
     Lancamento salvarLancamento(Lancamento lancamento, MultipartFile img) throws IOException;
     Lancamento getLancamentoPorId(String id);

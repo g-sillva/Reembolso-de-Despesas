@@ -25,11 +25,12 @@ public class LancamentoController {
                                             @RequestParam(name ="status", defaultValue = "") String status,
                                             @RequestParam(name ="ano", defaultValue = "") String ano,
                                             @RequestParam(name ="mes", defaultValue = "") String mes,
+                                            @RequestParam(name = "dia", defaultValue = "") String dia,
                                             @RequestParam(name ="categoria", defaultValue = "") String categoria,
                                             Pageable pageable) {
 
         return new ResponseEntity<>(
-                lancamentoService.getTodosLancamentos(titulo, descricao, status, ano, mes, categoria, pageable), HttpStatus.OK);
+                lancamentoService.getTodosLancamentos(titulo, descricao, status, ano, mes, dia, categoria, pageable), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

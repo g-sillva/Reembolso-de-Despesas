@@ -33,7 +33,7 @@ public class LancamentoServiceImpl implements LancamentoService{
     private NotificacaoRepository notificacaoRepository;
 
     @Override
-    public Page<Lancamento> getTodosLancamentos(String titulo, String descricao, String status, String ano, String mes, String categoria, Pageable pageable) {
+    public Page<Lancamento> getTodosLancamentos(String titulo, String descricao, String status, String ano, String mes, String dia, String categoria, Pageable pageable) {
         Page<Lancamento> paginaLancamentos = lancamentoRepository.findAll(pageable);
 
         List<Lancamento> resultadoLancamentos = paginaLancamentos.getContent().stream().filter(x ->
@@ -43,7 +43,8 @@ public class LancamentoServiceImpl implements LancamentoService{
                         !x.getStatus().name().toLowerCase().contains("em_rascunho") &&
                         x.getCategoria().name().toLowerCase().contains(categoria.toLowerCase()) &&
                         Integer.toString(x.getData().getYear()).contains(ano.equals("") ? Integer.toString(x.getData().getYear()) : ano) &&
-                        Integer.toString(x.getData().getMonthValue()).contains(mes.equals("") ? Integer.toString(x.getData().getMonthValue()) : mes)
+                        Integer.toString(x.getData().getMonthValue()).contains(mes.equals("") ? Integer.toString(x.getData().getMonthValue()) : mes) &&
+                        Integer.toString(x.getData().getDayOfMonth()).contains(dia.equals("") ? Integer.toString(x.getData().getDayOfMonth()) : dia)
         ).toList();
         paginaLancamentos = new PageImpl<>(resultadoLancamentos);
 
