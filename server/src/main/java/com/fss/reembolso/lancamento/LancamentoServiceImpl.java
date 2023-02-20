@@ -36,6 +36,7 @@ public class LancamentoServiceImpl implements LancamentoService{
                 x.getTitulo().toLowerCase().contains(titulo.toLowerCase()) &&
                         x.getDescricao().toLowerCase().contains(descricao.toLowerCase()) &&
                         x.getStatus().name().toLowerCase().contains(status.toLowerCase()) &&
+                        !x.getStatus().name().toLowerCase().contains("em_rascunho") &&
                         x.getCategoria().name().toLowerCase().contains(categoria.toLowerCase()) &&
                         Integer.toString(x.getData().getYear()).contains(ano.equals("") ? Integer.toString(x.getData().getYear()) : ano) &&
                         Integer.toString(x.getData().getMonthValue()).contains(mes.equals("") ? Integer.toString(x.getData().getMonthValue()) : mes)

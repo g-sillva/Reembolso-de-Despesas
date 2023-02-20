@@ -57,6 +57,8 @@ public class UsuarioServiceImpl implements UsuarioService{
                 field.setAccessible(true);
                 if (field.getName().equalsIgnoreCase("email")) {
                     u.get().setAtivo(false);
+                    String codigoDeVerificacao = UUID.randomUUID().toString().replaceAll("_", "");
+                    u.get().setCodigoVerificacao(codigoDeVerificacao);
                 }
                 ReflectionUtils.setField(field, u.get(), v);
             });
@@ -101,7 +103,7 @@ public class UsuarioServiceImpl implements UsuarioService{
     public ResponseEntity<?> logarUsuario(UsuarioLoginDTO usuario) {
         Usuario u = usuarioRepository.findByEmail(usuario.getEmail());
         if (u != null) {
-            if (passwordEncoder.matches(usuario.getSenha(), u.getPassword())) {
+            if (passwordEncoder.matches(usuario.getSenha(),  u.getPassword())) {
 
                 if (!u.isEnabled()) {
                     return new ResponseEntity<>("E-mail não verificado.", HttpStatus.BAD_REQUEST);
