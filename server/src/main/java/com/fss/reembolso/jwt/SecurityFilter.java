@@ -32,6 +32,13 @@ public class SecurityFilter extends OncePerRequestFilter {
 
         if (tokenJWT != null) {
             var subject = tokenService.getSubject(tokenJWT);
+
+            if (subject == null) {
+                response.setStatus(HttpStatus.FORBIDDEN.value());
+                response.getWriter().write(convertObjectToJson(new ApiRequestException("Token JWT invalido.")));
+                return;
+            }
+
             var usuario = usuarioRepository.findByEmail(subject);
             var authentication = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);

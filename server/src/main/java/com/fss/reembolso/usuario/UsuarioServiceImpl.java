@@ -57,6 +57,8 @@ public class UsuarioServiceImpl implements UsuarioService{
                 field.setAccessible(true);
                 if (field.getName().equalsIgnoreCase("email")) {
                     u.get().setAtivo(false);
+                    String codigoDeVerificacao = UUID.randomUUID().toString().replaceAll("_", "");
+                    u.get().setCodigoVerificacao(codigoDeVerificacao);
                 }
                 ReflectionUtils.setField(field, u.get(), v);
             });
