@@ -18,9 +18,10 @@ public class NotificacaoController {
     public ResponseEntity<?> getNotificacoes(@RequestParam(name = "titulo", defaultValue = "") String titulo,
                                              @RequestParam(name = "ano", defaultValue = "") String ano,
                                              @RequestParam(name = "mes", defaultValue = "") String mes,
+                                             @RequestParam(name = "dia", defaultValue = "") String dia,
                                              @RequestParam(name = "msg", defaultValue = "") String msg,
                                              @RequestParam(name = "usuario", defaultValue = "") String usuario) {
-        return new ResponseEntity<>(notificacaoService.getNotificacoes(titulo, ano, mes, msg, usuario), HttpStatus.OK);
+        return new ResponseEntity<>(notificacaoService.getNotificacoes(titulo, ano, mes, dia, msg, usuario), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

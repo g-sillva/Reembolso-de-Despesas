@@ -20,14 +20,15 @@ public class NotificacaoServiceImpl implements NotificacaoService{
     private UsuarioRepository usuarioRepository;
 
     @Override
-    public List<Notificacao> getNotificacoes(String titulo, String ano, String mes, String msg, String usuario) {
+    public List<Notificacao> getNotificacoes(String titulo, String ano, String mes, String dia, String msg, String usuario) {
         List<Notificacao> notificacaos = notificacaoRepository.findAll();
         notificacaos = notificacaos.stream().filter(x ->
                 x.getTitulo().toLowerCase().contains(titulo.toLowerCase()) &&
                         x.getMsg().toLowerCase().contains(msg.toLowerCase()) &&
                         x.getUsuarioId().toLowerCase().contains(usuario.toLowerCase()) &&
                         Integer.toString(x.getData().getYear()).contains(ano.equals("") ? Integer.toString(x.getData().getYear()) : ano) &&
-                        Integer.toString(x.getData().getMonthValue()).contains(mes.equals("") ? Integer.toString(x.getData().getMonthValue()) : mes)
+                        Integer.toString(x.getData().getMonthValue()).contains(mes.equals("") ? Integer.toString(x.getData().getMonthValue()) : mes) &&
+                        Integer.toString(x.getData().getDayOfMonth()).contains(dia.equals("") ? Integer.toString(x.getData().getDayOfMonth()) : dia)
         ).collect(Collectors.toList());
         return notificacaos;
     }
