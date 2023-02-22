@@ -1,0 +1,34 @@
+.card-tela-inicial {
+    width: 180px;
+    height: 180px;
+    position: relative;
+    color: white;
+}
+
+.card-tela-inicial img {
+    position: absolute;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.card-tela-inicial-conteudo {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    height: 100%;
+    padding: 1rem;
+}
+
+.card-tela-inicial-conteudo p {
+    position: absolute;
+    font-size: 12px;
+}
+
+.card-tela-inicial-conteudo h2 {
+    align-self: center;
+    margin: auto 0;
+}

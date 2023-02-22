@@ -1,4 +1,14 @@
-.page-telainicial {
+.page-tela-inicial {
     width: 100%;
     height: 100%;
+    display: flex;
+}
+
+.tela-inicial-cards-container {
+    margin: 2rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
 }

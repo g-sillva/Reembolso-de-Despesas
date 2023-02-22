@@ -2,7 +2,8 @@ import React from 'react';
 
 import "./Header.css";
 
-function Header() {
+function Header({ usuario }) {
+
   return (
     <div className='header'>
       <img className='header-textura' src='/img/header_texture.png' alt='textura'/>
@@ -11,7 +12,7 @@ function Header() {
           <i className="fa-solid fa-user"></i>
           <div className='header-user-container-content'>
             <p>Olá,</p>
-            <p className='header-content-username'>Gabriel Lima</p>
+            <p className='header-content-username'>{usuario.nome}</p>
           </div>
         </div>
         <i className="fa-regular fa-bell"></i>
