@@ -1,5 +1,6 @@
 package com.fss.reembolso.notificacao;
 
+import com.fss.reembolso.exceptions.RequestResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,7 +27,7 @@ public class NotificacaoController {
     public ResponseEntity<?> getNotificacaoPorId(@PathVariable String id) {
         Notificacao n = notificacaoService.getNotificacaoPorId(id);
         if (n != null) return new ResponseEntity<>(n, HttpStatus.OK);
-        return new ResponseEntity<>("Nenhuma notificação encontrada com esse id.", HttpStatus.OK);
+        return new ResponseEntity<>(new RequestResponse("Nenhuma notificação encontrada com esse id."), HttpStatus.OK);
     }
 
     @PostMapping
@@ -38,13 +39,13 @@ public class NotificacaoController {
     public ResponseEntity<?> visualizarNotificacao(@PathVariable String id) {
         Notificacao n = notificacaoService.visualizarNotificacao(id);
         if (n != null) return new ResponseEntity<>(n, HttpStatus.OK);
-        return new ResponseEntity<>("Notificação não encontrada.", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(new RequestResponse("Notificação não encontrada."), HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletarNotificacao(@PathVariable String id) {
         if (notificacaoService.deletarNotificacao(id)) return new ResponseEntity<>("Notificação removida com sucesso!", HttpStatus.OK);
-        return new ResponseEntity<>("Notificação não encontrada.", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(new RequestResponse("Notificação não encontrada."), HttpStatus.NOT_FOUND);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.fss.reembolso.usuario;
 
+import com.fss.reembolso.exceptions.RequestResponse;
 import com.fss.reembolso.jwt.TokenDTO;
 import com.fss.reembolso.jwt.TokenService;
 import com.fss.reembolso.usuario.DTOs.UsuarioLoginDTO;
@@ -7,7 +8,6 @@ import com.fss.reembolso.usuario.DTOs.UsuarioRetornoDTO;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -87,7 +87,7 @@ public class UsuarioServiceImpl implements UsuarioService{
     @Override
     public ResponseEntity<?> salvarUsuario(Usuario u, String url) {
         if (usuarioRepository.findByEmail(u.getEmail()) != null) {
-            return new ResponseEntity<>("O e-mail já está cadastrado no sistema.", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new RequestResponse("O e-mail já está cadastrado no sistema."), HttpStatus.BAD_REQUEST);
         }
         u.setSenha(passwordEncoder.encode(u.getSenha()));
 
@@ -96,7 +96,7 @@ public class UsuarioServiceImpl implements UsuarioService{
         usuarioRepository.save(u);
 
         enviarEmailVerificacao(u, url);
-        return new ResponseEntity<>("Usuario cadastrado com sucesso!", HttpStatus.OK);
+        return new ResponseEntity<>(new RequestResponse("Usuario cadastrado com sucesso!"), HttpStatus.OK);
     }
 
     @Override
@@ -106,15 +106,15 @@ public class UsuarioServiceImpl implements UsuarioService{
             if (passwordEncoder.matches(usuario.getSenha(),  u.getPassword())) {
 
                 if (!u.isEnabled()) {
-                    return new ResponseEntity<>("E-mail não verificado.", HttpStatus.BAD_REQUEST);
+                    return new ResponseEntity<>(new RequestResponse("E-mail não verificado."), HttpStatus.BAD_REQUEST);
                 }
 
                 return new ResponseEntity<>(new TokenDTO(tokenService.gerarToken(usuario)), HttpStatus.OK);
             } else {
-                return new ResponseEntity<>("Senha incorreta.", HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(new RequestResponse("Senha incorreta."), HttpStatus.BAD_REQUEST);
             }
         }
-        return new ResponseEntity<>("E-mail incorreto.", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(new RequestResponse("E-mail incorreto."), HttpStatus.NOT_FOUND);
     }
 
     @Override
@@ -124,15 +124,15 @@ public class UsuarioServiceImpl implements UsuarioService{
             if (passwordEncoder.matches(usuario.getSenha(), u.getPassword())) {
 
                 if (!u.getRoles().contains(Role.ADMIN)) {
-                    return new ResponseEntity<>("Sem permissão de administrador.", HttpStatus.UNAUTHORIZED);
+                    return new ResponseEntity<>(new RequestResponse("Sem permissão de administrador."), HttpStatus.UNAUTHORIZED);
                 }
 
                 return new ResponseEntity<>(new TokenDTO(tokenService.gerarToken(usuario)), HttpStatus.OK);
             } else {
-                return new ResponseEntity<>("Senha incorreta.", HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(new RequestResponse("Senha incorreta."), HttpStatus.BAD_REQUEST);
             }
         }
-        return new ResponseEntity<>("E-mail incorreto.", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(new RequestResponse("E-mail incorreto."), HttpStatus.NOT_FOUND);
     }
 
     @Override

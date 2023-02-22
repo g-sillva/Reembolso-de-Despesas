@@ -1,6 +1,7 @@
 package com.fss.reembolso.usuario;
 
 import com.fss.reembolso.exceptions.ApiRequestException;
+import com.fss.reembolso.exceptions.RequestResponse;
 import com.fss.reembolso.usuario.DTOs.UsuarioLoginDTO;
 import com.fss.reembolso.usuario.DTOs.UsuarioRetornoDTO;
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,9 +34,9 @@ public class UsuarioController {
     @GetMapping("/verify")
     public ResponseEntity<?> verificarUsuario(@RequestParam String codigo) {
         if (usuarioService.verificarEmail(codigo)) {
-            return new ResponseEntity<>("E-mail verificado com sucesso!", HttpStatus.OK);
+            return new ResponseEntity<>(new RequestResponse("E-mail verificado com sucesso!"), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Erro ao verificar e-mail", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new RequestResponse("Erro ao verificar e-mail"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -54,7 +55,7 @@ public class UsuarioController {
     public ResponseEntity<?> getById(@PathVariable String id) {
         UsuarioRetornoDTO usuario = usuarioService.getUsuarioPorId(id);
         if (usuario != null) return new ResponseEntity<>(usuario, HttpStatus.OK);
-        return new ResponseEntity<>("Usuário não encontrado.", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(new RequestResponse("Usuário não encontrado."), HttpStatus.NOT_FOUND);
     }
 
     @PatchMapping("/{id}")
@@ -66,8 +67,8 @@ public class UsuarioController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUsuario(@PathVariable String id) {
-        if (usuarioService.deletarUsuario(id)) return new ResponseEntity<>("Usuário remvoido com sucesso!", HttpStatus.OK);
-        return new ResponseEntity<>("Usuário não encontrado.", HttpStatus.NOT_FOUND);
+        if (usuarioService.deletarUsuario(id)) return new ResponseEntity<>(new RequestResponse("Usuário remvoido com sucesso!"), HttpStatus.OK);
+        return new ResponseEntity<>(new RequestResponse("Usuário não encontrado."), HttpStatus.NOT_FOUND);
     }
 
     private String getSiteURL(HttpServletRequest request) {
