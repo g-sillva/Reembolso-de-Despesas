@@ -1,5 +1,6 @@
 package com.fss.reembolso.notificacao;
 
+import com.fss.reembolso.exceptions.RequestResponse;
 import com.fss.reembolso.usuario.Usuario;
 import com.fss.reembolso.usuario.UsuarioRepository;
 import lombok.AllArgsConstructor;
@@ -59,9 +60,9 @@ public class NotificacaoServiceImpl implements NotificacaoService{
             }
             usuarioRepository.save(usuario.get());
 
-            return new ResponseEntity<>("Notificação salva com sucesso!", HttpStatus.OK);
+            return new ResponseEntity<>(new RequestResponse("Notificação salva com sucesso!"), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Usuário não encontrado.", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new RequestResponse("Usuário não encontrado."), HttpStatus.NOT_FOUND);
         }
     }
 

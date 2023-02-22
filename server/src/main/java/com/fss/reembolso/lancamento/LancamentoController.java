@@ -1,5 +1,6 @@
 package com.fss.reembolso.lancamento;
 
+import com.fss.reembolso.exceptions.RequestResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -38,7 +39,7 @@ public class LancamentoController {
     public ResponseEntity<?> getLancamentoId(@PathVariable String id) {
         Lancamento l = lancamentoService.getLancamentoPorId(id);
         if (l != null) return new ResponseEntity<>(l, HttpStatus.OK);
-        return new ResponseEntity<>("Usuário não encontrado.", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(new RequestResponse("Usuário não encontrado."), HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/user")
@@ -51,7 +52,7 @@ public class LancamentoController {
                                             @RequestPart("img") MultipartFile img) throws IOException {
         Lancamento l = lancamentoService.salvarLancamento(lancamento, img);
         if (l != null) return new ResponseEntity<>(l, HttpStatus.OK);
-        return new ResponseEntity<>("Usuário não encontrado", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(new RequestResponse("Usuário não encontrado"), HttpStatus.NOT_FOUND);
     }
 
     @PatchMapping("/{id}")
@@ -60,12 +61,12 @@ public class LancamentoController {
                                            @RequestPart MultipartFile img) throws IOException {
         Lancamento l = lancamentoService.patchLancamento(id, fields, img);
         if (l != null) return new ResponseEntity<>(l, HttpStatus.OK);
-        return new ResponseEntity<>("Lançamento não encontrado", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(new RequestResponse("Lançamento não encontrado"), HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteLancamento(@PathVariable String id) {
         if (lancamentoService.deletarLancamento(id)) return new ResponseEntity<>("Lançamento deletado com sucesso!", HttpStatus.OK);
-        return new ResponseEntity<>("Lançamento não encontrado", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(new RequestResponse("Lançamento não encontrado"), HttpStatus.NOT_FOUND);
     }
 }
