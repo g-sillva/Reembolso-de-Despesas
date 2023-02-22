@@ -34,7 +34,7 @@ public class UsuarioServiceImpl implements UsuarioService{
     private JavaMailSender javaMailSender;
 
     @Override
-    public List<UsuarioRetornoDTO> getTodosUsuarios(String nome, String email, String telefone, String ano, String mes) {
+    public List<UsuarioRetornoDTO> getTodosUsuarios(String nome, String email, String telefone, String ano, String mes, String dia) {
         List<UsuarioRetornoDTO> usuarioRetornoDTOS = usuarioRepository.findAll().stream().map(UsuarioRetornoDTO::new).toList();
 
         usuarioRetornoDTOS = usuarioRetornoDTOS.stream().filter(x ->
@@ -42,7 +42,8 @@ public class UsuarioServiceImpl implements UsuarioService{
                    x.getEmail().toLowerCase().contains(email.toLowerCase()) &&
                     x.getTelefone().contains(telefone) &&
                     Integer.toString(x.getDataCadastro().getYear()).contains(ano.equals("") ? Integer.toString(x.getDataCadastro().getYear()) : ano) &&
-                    Integer.toString(x.getDataCadastro().getMonthValue()).contains(mes.equals("") ? Integer.toString(x.getDataCadastro().getMonthValue()) : mes)
+                    Integer.toString(x.getDataCadastro().getMonthValue()).contains(mes.equals("") ? Integer.toString(x.getDataCadastro().getMonthValue()) : mes) &&
+                    Integer.toString(x.getDataCadastro().getDayOfMonth()).contains(dia.equals("") ? Integer.toString(x.getDataCadastro().getDayOfMonth()) : dia)
         ).collect(Collectors.toList());
 
         return usuarioRetornoDTOS;

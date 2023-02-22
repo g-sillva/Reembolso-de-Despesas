@@ -45,9 +45,10 @@ public class UsuarioController {
                                          @RequestParam(name ="email", defaultValue = "") String email,
                                          @RequestParam(name ="telefone", defaultValue = "") String telefone,
                                          @RequestParam(name ="ano", defaultValue = "") String ano,
-                                         @RequestParam(name ="mes", defaultValue = "") String mes) {
+                                         @RequestParam(name ="mes", defaultValue = "") String mes,
+                                         @RequestParam(name = "dia", defaultValue = "") String dia) {
 
-        List<UsuarioRetornoDTO> usuarios = usuarioService.getTodosUsuarios(nome, email, telefone, ano, mes);
+        List<UsuarioRetornoDTO> usuarios = usuarioService.getTodosUsuarios(nome, email, telefone, ano, mes, dia);
         return new ResponseEntity<>(usuarios, HttpStatus.OK);
     }
 
