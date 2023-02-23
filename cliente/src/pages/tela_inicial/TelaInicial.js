@@ -17,6 +17,23 @@ function TelaInicial() {
           <CardTelaInicial titulo="Creditados" dado="0" img_url="/img/card-tela-inicial/card_creditados.png" />
         </div>
 
+        <div className='tela-inicial-lancamentos-container'>
+
+          <div className='lancamentos-container-header'>
+            <span className='linha'></span>
+            <p>SEUS LANÇAMENTOS</p>
+            <span className='linha'></span>
+          </div>
+          
+          <div className='lancamentos-content'>
+            <div>
+              <p>Você ainda não possui nenhum lançamento</p>
+              <i className="fa-regular fa-face-frown"></i>
+            </div>
+            <button className='lancamento-adicionar-btn'>ADICIONAR LANÇAMENTO</button>
+          </div>
+
+        </div>
     </section>
   )
 }

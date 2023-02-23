@@ -54,4 +54,9 @@
 .header-container .fa-bell {
     font-size: 30px;
     cursor: pointer;
+    transition: all .1s ease-out;
+}
+
+.header-container .fa-bell:hover {
+    transform: rotate(10deg);
 }
