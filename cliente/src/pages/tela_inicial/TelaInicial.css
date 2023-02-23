@@ -4,6 +4,11 @@
     display: flex;
 }
 
+.container-tela-inicial {
+    border: 1px solid var(--color-primary);
+    border-radius: 10px;
+}
+
 .tela-inicial-cards-container {
     margin: 2rem 0;
     display: flex;
@@ -38,13 +43,6 @@
     flex-direction: column;
     align-items: center;
     margin-top: 2rem;
-    gap: 2rem;
-}
-
-.lancamentos-content div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     gap: 1rem;
 }
 

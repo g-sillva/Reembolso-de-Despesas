@@ -1,4 +1,5 @@
 import React from 'react';
+import CardLancamento from '../../components/card_lancamento/CardLancamento';
 import CardTelaInicial from '../../components/card_tela_inicial/CardTelaInicial';
 import Header from '../../components/header/Header';
 import { Usuarios } from '../../data/data';
@@ -26,11 +27,14 @@ function TelaInicial() {
           </div>
           
           <div className='lancamentos-content'>
-            <div>
+            {/* <div>
               <p>Você ainda não possui nenhum lançamento</p>
               <i className="fa-regular fa-face-frown"></i>
             </div>
-            <button className='lancamento-adicionar-btn'>ADICIONAR LANÇAMENTO</button>
+            <button className='lancamento-adicionar-btn'>ADICIONAR LANÇAMENTO</button> */}
+            <CardLancamento />
+            <CardLancamento />
+            <CardLancamento />
           </div>
 
         </div>

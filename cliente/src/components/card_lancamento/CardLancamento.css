@@ -1,0 +1,114 @@
+.card-lancamento {
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    margin: 0 10px;
+    cursor: pointer;
+    position: relative;
+    bottom: 0;
+    transition: all .1s ease-in-out;
+}
+
+.card-lancamento:hover {
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    bottom: 2px;
+}
+
+.card-lancamento-esquerda:hover .card-lancamento-esquerda-status-cor {
+    width: 100%;
+}
+
+.card-lancamento-esquerda:hover .card-lancamento-esquerda,
+.card-lancamento-esquerda:hover .card-lancamento-esquerda-conteudo p,
+.card-lancamento-esquerda:hover .card-lancamento-esquerda-conteudo h4 {
+    color: white;
+    opacity: .3;
+}
+
+.card-lancamento-esquerda {
+    display: flex;
+    padding-right: 10px;
+    position: relative;
+    align-content: center;
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.card-lancamento-esquerda-status-cor {
+    display: block;
+    width: 5px;
+    height: 100%;
+    background: #5A4A9C;
+    z-index: -1;
+    position: absolute;
+    margin-right: 5px;
+    transition: all .2s ease-in-out;
+}
+
+.card-lancamento-esquerda-conteudo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    text-align: center;
+    margin-left: 10px;
+    transition: all .2s ease-in-out;
+}
+
+.card-lancamento-esquerda-conteudo h4 {
+    font-weight: 400;
+    transition: all .2s ease-in-out;
+}
+
+.card-lancamento-esquerda-conteudo h3 {
+    font-size: 16px;
+    color: white;
+    transition: all .2s ease-in-out;
+}
+
+.card-lancamento-esquerda-conteudo p {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+    gap: 5px;
+    transition: all .2s ease-in-out;
+}
+.card-lancamento-esquerda-conteudo span {
+    opacity: .3;
+}
+
+.card-lancamento-direita {
+    padding: 10px 5px 10px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.card-lancamento-direita-header {
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+.card-lancamento-direita-header .fa-pencil {
+    position: absolute;
+    font-size: 12px;
+    right: 5px;
+    top: 5px;
+}
+
+.card-lancamento-direita-header div {
+    display: flex;
+    align-content: center;
+    position: relative;
+}
+
+.card-lancamento-direita-header div h3 {
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.card-lancamento-direita-descricao {
+    font-size: 14px;
+}
