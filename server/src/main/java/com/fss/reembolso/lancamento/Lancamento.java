@@ -13,6 +13,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Document("lancamentos")
@@ -34,6 +35,9 @@ public class Lancamento {
     private LocalDate data;
 
     private Categoria categoria;
+
+    @NotBlank(message = "O valor não pode estar vazio")
+    private BigDecimal valor;
 
     @NotBlank(message = "O usuário não pode estar vazio")
     private String usuarioId;
