@@ -2,11 +2,14 @@ import React from 'react';
 import CardLancamento from '../../components/card_lancamento/CardLancamento';
 import CardTelaInicial from '../../components/card_tela_inicial/CardTelaInicial';
 import Header from '../../components/header/Header';
-import { Usuarios } from '../../data/data';
+import { Lancamentos, Usuarios } from '../../data/data';
 
 import "./TelaInicial.css";
 
 function TelaInicial() {
+
+  console.log(Lancamentos);
+
   return (
     <section className='container-tela-inicial'>
         <Header usuario={Usuarios[0]}/>
@@ -32,9 +35,9 @@ function TelaInicial() {
               <i className="fa-regular fa-face-frown"></i>
             </div>
             <button className='lancamento-adicionar-btn'>ADICIONAR LANÇAMENTO</button> */}
-            <CardLancamento />
-            <CardLancamento />
-            <CardLancamento />
+            {Lancamentos.map((x, i) => (
+              <CardLancamento key={i} valor={x.valor} status={x.status} titulo={x.titulo} descricao={x.descricao}/>
+            ))}
           </div>
 
         </div>
