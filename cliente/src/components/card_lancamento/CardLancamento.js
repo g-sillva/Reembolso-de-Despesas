@@ -19,11 +19,11 @@ function CardLancamento({ valor = "R$0,00", status = "EM RASCUNHO", data, titulo
             <h3>{titulo}</h3>
             {/* <p className='card-lancamento-warning'>!</p> */}
           </div>
-          <i class="fa-solid fa-pencil"></i>
+          <i className="fa-solid fa-pencil"></i>
         </div>
         <p className='card-lancamento-direita-descricao'>{descricao}</p>
         <div className='card-lancamento-direita-footer'>
-          <i class="fa-solid fa-image"></i>
+          <i className="fa-solid fa-image"></i>
           {/* <p className='card-lancamento-warning'>!</p> */}
         </div>
       </div>

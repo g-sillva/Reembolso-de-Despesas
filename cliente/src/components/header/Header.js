@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Notificacoes } from '../../data/data';
+import Notificacao from '../notificacao/Notificacao';
 
 import "./Header.css";
 
 function Header({ usuario }) {
+  const [notificacoes, setNotificacoes] = useState([]);
+  const [isNotificacaoAberta, setIsNotificacaoAberta] = useState(false);
 
   return (
     <div className='header'>
@@ -15,8 +19,9 @@ function Header({ usuario }) {
             <p className='header-content-username'>{usuario.nome}</p>
           </div>
         </div>
-        <i className="fa-regular fa-bell"></i>
+        <i className="fa-regular fa-bell" onClick={() => setIsNotificacaoAberta(!isNotificacaoAberta)}></i>
       </div>
+      {isNotificacaoAberta && <Notificacao conteudo={Notificacoes}/>}
     </div>
   )
 }

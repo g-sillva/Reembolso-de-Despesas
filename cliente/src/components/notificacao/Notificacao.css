@@ -1,0 +1,41 @@
+.notificacoes-container {
+    position: absolute;
+    z-index: 99;
+    background: white;
+    left: 0;
+    color: #333;
+    width: 95%;
+    margin-top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.notificacoes-container::before {
+    content:"\A";
+    top: -22px;
+    right: 25px;
+    border-top: 10px solid transparent;
+    border-bottom: 15px solid white;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    position: absolute;
+}
+
+.notificacoes-container h4 {
+    font-weight: 400;
+    margin: 1rem 0 0 1rem;
+}
+
+.notificacoes-content {
+    min-height: 100px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.nenhuma-notificacao-aviso {
+    text-align: center;
+    font-size: 14px;
+    width: 100%;
+}
