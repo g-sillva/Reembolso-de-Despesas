@@ -1,0 +1,48 @@
+.item-notificacao-container {
+    display: flex;
+    gap: 20px;
+    padding: 10px;
+    margin: 10px 0;
+    border-bottom: 1px solid rgba(0, 128, 0, 0.259);
+    margin-bottom: -1px;
+    cursor: pointer;
+}
+
+.item-notificacao-container .fa-file-invoice-dollar {
+    color: var(--color-primary);
+    font-size: 2rem;
+}
+
+.item-notificacao-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.item-notificacao-content h5 {
+    font-weight: 400;
+    font-size: 16px;
+}
+
+.item-notificacao-content .item-notificacao-descricao {
+    font-size: 14px;
+}
+
+.item-notificacao-footer {
+    position: relative;
+}
+
+.item-notificacao-footer span {
+    position: absolute;
+    display: block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    left: -10px;
+    top: 5px;
+}
+
+.item-notificacao-footer p {
+    font-size: 12px;
+}
