@@ -2,13 +2,14 @@ import React from 'react';
 
 import "./CardLancamento.css";
 
-function CardLancamento({ valor = "R$0,00", status = "EM RASCUNHO", data, titulo = "-", descricao = "-" }) {
+function CardLancamento({ valor = "0", status = "EM RASCUNHO", data, titulo = "-", descricao = "-" }) {
+  valor /= 100;
   return (
     <div className='card-lancamento'>
       <div className='card-lancamento-esquerda'>
         <span className={`card-lancamento-esquerda-status-cor card-lancamento-cor-${status.toLowerCase()}`}></span>
         <div className='card-lancamento-esquerda-conteudo'>
-          <h4>R${valor}</h4>
+          <h4>R${valor.toLocaleString('pt-br', {minimumFractionDigits: 2})}</h4>
           <h3>{status.replace("_", " ")}</h3>
           <p><span>JAN</span>2023</p>
         </div>

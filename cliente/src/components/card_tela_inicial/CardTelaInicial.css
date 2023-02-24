@@ -39,4 +39,7 @@
 .card-tela-inicial-conteudo h2 {
     align-self: center;
     margin: auto 0;
+    font-size: 20px;
+    word-break: break-all;
+    text-align: center;
 }
