@@ -64,7 +64,7 @@ export const Lancamentos = [
         "descricao": "lorem ipsum dolor asit met",
         "status": "EM_RASCUNHO",
         "data": "2023-02-16",
-        "valor": "142,20",
+        "valor": "142020",
         "categoria": "HOSPEDAGEM",
         "usuarioId": "63ee6194bf338854006f338d",
         "img": {
@@ -77,8 +77,8 @@ export const Lancamentos = [
         "titulo": "Segundo lançamento de teste",
         "descricao": "lorem ipsum dolor asit met",
         "status": "ENVIADO",
-        "data": "2023-02-16",
-        "valor": "69,12",
+        "data": "2023-02-17",
+        "valor": "6912",
         "categoria": "OUTRO",
         "usuarioId": "63ee6194bf338854006f338d",
         "img": {
@@ -91,8 +91,8 @@ export const Lancamentos = [
         "titulo": "Terceiro lançamento de teste",
         "descricao": "lorem ipsum dolor asit met",
         "status": "AGUARDANDO_REEMBOLSO",
-        "data": "2023-02-16",
-        "valor": "142,20",
+        "data": "2023-02-20",
+        "valor": "14220",
         "categoria": "AGUARDANDO_REEMBOLSO",
         "usuarioId": "63ee6194bf338854006f338d",
         "img": {
@@ -105,8 +105,8 @@ export const Lancamentos = [
         "titulo": "Quarto lançamento de teste",
         "descricao": "lorem ipsum dolor asit met",
         "status": "CREDITADO",
-        "data": "2023-02-16",
-        "valor": "142,20",
+        "data": "2023-02-01",
+        "valor": "14220",
         "categoria": "AGUARDANDO_REEMBOLSO",
         "usuarioId": "63ee6194bf338854006f338d",
         "img": {

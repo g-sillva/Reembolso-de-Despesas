@@ -15,15 +15,39 @@ function TelaInicial() {
     setLancamentos(lancamentosOriginal.filter(x => x.titulo.toLowerCase().includes(titulo.toLowerCase())));
   }
 
+  const handleSomarValores = () => {
+    var atual = lancamentos.reduce((total, x) => total + Number(x.valor), 0) / 100;
+    return atual.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
+  }
+
+  const handleDataUltimo = () => {
+    let x = lancamentos;
+    if (x.length === 0) return "-"
+    x = x.sort((a,b) => {
+      let aSplit = a.data.split("-");
+      let bSplit = b.data.split("-");
+      
+      let aDate = new Date(aSplit[2], aSplit[1], aSplit[0]);
+      let bDate = new Date(bSplit[2], bSplit[1], bSplit[0]);
+      return bDate.getTime() - aDate.getTime();
+    });
+
+    return x[0].data.substring(8, 10) + "/" + x[0].data.substring(5, 7);
+  }
+
+  const handleCreditados = () => {
+    return lancamentos.filter(x => x.status === "CREDITADO").length;
+  }
+
   return (
     <section className='container-tela-inicial'>
         <Header usuario={Usuarios[0]}/> 
 
         <div className='tela-inicial-cards-container'>
-          <CardTelaInicial titulo="$ Total" dado="R$0,00" img_url="/img/card-tela-inicial/card_total.png" />
-          <CardTelaInicial titulo="Lancamento" dado="0" img_url="/img/card-tela-inicial/card_qnt_lancamentos.png" />
-          <CardTelaInicial titulo="Data Último" dado="-" img_url="/img/card-tela-inicial/card_data.png" />
-          <CardTelaInicial titulo="Creditados" dado="0" img_url="/img/card-tela-inicial/card_creditados.png" />
+          <CardTelaInicial titulo="$ Total" dado={handleSomarValores()} img_url="/img/card-tela-inicial/card_total.png" />
+          <CardTelaInicial titulo="Lancamento" dado={lancamentos.length} img_url="/img/card-tela-inicial/card_qnt_lancamentos.png" />
+          <CardTelaInicial titulo="Data Último" dado={handleDataUltimo()} img_url="/img/card-tela-inicial/card_data.png" />
+          <CardTelaInicial titulo="Creditados" dado={handleCreditados()} img_url="/img/card-tela-inicial/card_creditados.png" />
         </div>
 
         <div className='tela-inicial-lancamentos-container'>
