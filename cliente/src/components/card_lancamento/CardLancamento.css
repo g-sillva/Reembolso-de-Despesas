@@ -51,6 +51,7 @@
     flex-direction: column;
     justify-content: space-evenly;
     text-align: center;
+    width: 100%;
     margin-left: 10px;
     transition: all .2s ease-in-out;
 }
@@ -88,17 +89,31 @@
 
 .card-lancamento-direita-header {
     display: flex;
-    width: 95%;
+    width: 100%;
     align-content: center;
     justify-content: space-between;
     position: relative;
 }
 
+.card-lancamento-direita-header h3 {
+    width: 95%;
+}
+
 .card-lancamento-direita-header .fa-pencil {
     position: absolute;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 12px;
     right: 5px;
     top: 5px;
+    transition: all .3s ease-in-out;
+}
+.card-lancamento-direita-header .fa-pencil:hover {
+    background: #ebebeb;
 }
 
 .card-lancamento-direita-header div {
@@ -114,4 +129,13 @@
 
 .card-lancamento-direita-descricao {
     font-size: 14px;
+}
+
+
+.card-lancamento-cor-em_rascunho {
+    background: #F7AA17 !important;
+}
+
+.card-lancamento-cor-creditado {
+    background: var(--color-primary) !important;
 }

@@ -6,7 +6,7 @@ function CardLancamento({ valor = "R$0,00", status = "EM RASCUNHO", data, titulo
   return (
     <div className='card-lancamento'>
       <div className='card-lancamento-esquerda'>
-        <span className='card-lancamento-esquerda-status-cor'></span>
+        <span className={`card-lancamento-esquerda-status-cor card-lancamento-cor-${status.toLowerCase()}`}></span>
         <div className='card-lancamento-esquerda-conteudo'>
           <h4>R${valor}</h4>
           <h3>{status.replace("_", " ")}</h3>
