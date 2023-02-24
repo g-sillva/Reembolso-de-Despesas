@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import CardLancamento from '../../components/card_lancamento/CardLancamento';
 import CardTelaInicial from '../../components/card_tela_inicial/CardTelaInicial';
 import Header from '../../components/header/Header';
@@ -7,12 +7,17 @@ import { Lancamentos, Usuarios } from '../../data/data';
 import "./TelaInicial.css";
 
 function TelaInicial() {
+  const [lancamentos, setLancamentos] = useState(Lancamentos);
 
-  console.log(Lancamentos);
+  const lancamentosOriginal = Lancamentos;
+
+  const buscarLancamentoPorTitulo = (titulo) => {
+    setLancamentos(lancamentosOriginal.filter(x => x.titulo.toLowerCase().includes(titulo.toLowerCase())));
+  }
 
   return (
     <section className='container-tela-inicial'>
-        <Header usuario={Usuarios[0]}/>
+        <Header usuario={Usuarios[0]}/> 
 
         <div className='tela-inicial-cards-container'>
           <CardTelaInicial titulo="$ Total" dado="R$0,00" img_url="/img/card-tela-inicial/card_total.png" />
@@ -28,6 +33,7 @@ function TelaInicial() {
             <p>SEUS LANÇAMENTOS</p>
             <span className='linha'></span>
           </div>
+
           
           <div className='lancamentos-content'>
             {/* <div>
@@ -35,9 +41,30 @@ function TelaInicial() {
               <i className="fa-regular fa-face-frown"></i>
             </div>
             <button className='lancamento-adicionar-btn'>ADICIONAR LANÇAMENTO</button> */}
-            {Lancamentos.map((x, i) => (
-              <CardLancamento key={i} valor={x.valor} status={x.status} titulo={x.titulo} descricao={x.descricao}/>
-            ))}
+            <div className='lancamentos-content-header'>
+              <button className='lancamento-adicionar-btn'>ADICIONAR LANÇAMENTO</button>
+
+              <div className='lancamento-content-header-search-container'>
+
+                <div className='input-container'>
+                  <i className="fa-solid fa-magnifying-glass"></i>
+                  <input type="text"
+                         placeholder='Pesquise pelo título de um lançamento' 
+                         onChange={(e) => buscarLancamentoPorTitulo(e.target.value)}/>
+                </div>
+
+                <div className='filter-container'>
+                  <i className="fa-solid fa-filter"></i>
+                  <p>2</p>
+                </div>
+              </div>
+            </div>
+
+            <div className='lancamentos-container'>
+              {lancamentos.map((x, i) => (
+                <CardLancamento key={i} valor={x.valor} status={x.status} titulo={x.titulo} descricao={x.descricao}/>
+              ))}
+            </div>
           </div>
 
         </div>

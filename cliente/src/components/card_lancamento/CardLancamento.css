@@ -82,7 +82,6 @@
 .card-lancamento-direita {
     padding: 10px 5px 10px 10px;
     display: flex;
-    width: 70%;
     flex-direction: column;
     gap: 5px;
 }
