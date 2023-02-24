@@ -39,6 +39,24 @@ export const Usuarios = [
     }
 ];
 
+export const Notificacoes = [
+    {
+        "id": "63ee85470d812527df4b7d13",
+        "titulo":"O seu lançamento mudou de status!",
+        "data": "2023-02-16",
+        "visto": false,
+        "msg":"O lançamento: 'Primeiro lançamento de teste' teve o seu status alterado para AGUARDANDO_REEMBOLSO",
+        "usuarioId":"63ee6194bf338854006f338d"
+    },
+    {
+        "id": "63ee85470d812529df4b7d13",
+        "titulo":"O seu lançamento mudou de status!",
+        "data": "2023-02-16",
+        "visto": true,
+        "msg":"O lançamento: 'Segundo lançamento de teste' teve o seu status alterado para CREDITADO","usuarioId":"63ee6194bf338854006f338d"
+    },
+]
+
 export const Lancamentos = [
     {
         "id": "63ee7368080f686b3219f4fb",

@@ -4,7 +4,7 @@
     background: white;
     left: 0;
     color: #333;
-    width: 100%;
+    width: 95%;
     margin-top: 10px;
     left: 50%;
     transform: translateX(-50%);
@@ -15,7 +15,7 @@
 .notificacoes-container::before {
     content:"\A";
     top: -22px;
-    right: 35px;
+    right: 25px;
     border-top: 10px solid transparent;
     border-bottom: 15px solid white;
     border-left: 10px solid transparent;
@@ -32,7 +32,6 @@
     min-height: 100px;
     max-height: 400px;
     overflow-y: auto;
-    margin: 10px 0;
 }
 
 .nenhuma-notificacao-aviso {

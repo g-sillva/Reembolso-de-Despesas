@@ -1,16 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import "./ItemNotificacao.css";
 
-function ItemNotificacao() {
+function ItemNotificacao({ titulo, descricao, data, visto, aberto, onBtnClick}) {
   return (
-    <div className='item-notificacao-container'>
+    <div className='item-notificacao-container' onClick={() => onBtnClick()}>
         <i className="fa-solid fa-file-invoice-dollar"></i>
         <div className='item-notificacao-content'>
-            <h5>Mudança de Status</h5>
-            <p className='item-notificacao-descricao'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod</p>
+            <h5>{titulo}</h5>
+            <p className={`item-notificacao-descricao ${aberto && "item-notificacao-aberto"}`}>
+              {descricao.length > 80 ? aberto ? descricao : descricao.substr(0, 80) + "..." : descricao}
+            </p>
             <div className='item-notificacao-footer'>
-                <span></span>
+                {!visto && <span></span>}
                 <p>2 horas atrás</p>
             </div>
         </div>

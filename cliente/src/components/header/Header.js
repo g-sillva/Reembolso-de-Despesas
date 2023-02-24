@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Notificacoes } from '../../data/data';
 import Notificacao from '../notificacao/Notificacao';
 
 import "./Header.css";
@@ -20,7 +21,7 @@ function Header({ usuario }) {
         </div>
         <i className="fa-regular fa-bell" onClick={() => setIsNotificacaoAberta(!isNotificacaoAberta)}></i>
       </div>
-      {isNotificacaoAberta && <Notificacao />}
+      {isNotificacaoAberta && <Notificacao conteudo={Notificacoes}/>}
     </div>
   )
 }
