@@ -94,7 +94,7 @@ function TelaInicial() {
           </div>
         </div>
 
-        {isFiltroModalAberto && <ModalFiltro />}
+        {isFiltroModalAberto && <ModalFiltro onCloseClick={() => setIsFiltroModalAberto(false)}/>}
     </section>
   )
 }

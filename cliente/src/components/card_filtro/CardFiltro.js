@@ -18,7 +18,7 @@ const filtros_categorias = [
   {"nome": "outro", "valor": "outro"},
 ];
 
-function CardFiltro() {
+function CardFiltro({ onCloseClick }) {
   const [statusSelecionados, setStatusSelecionados] = useState([]);
   const [categoriasSelecionados, setCategoriasSelecionados] = useState([]);
 
@@ -43,7 +43,7 @@ function CardFiltro() {
     <div className='card-filtro-container'>
       <div className='card-filtro-dark-bg'></div>
       <div className='card-filtro-content'>
-        <i className="fa-solid fa-xmark"></i>
+        <i className="fa-solid fa-xmark" onClick={onCloseClick}></i>
         <div className='card-filtro-header'>
           <h2>Filtros</h2>
           <p>Insira os filtros desejados</p>
