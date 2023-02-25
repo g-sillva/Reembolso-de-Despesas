@@ -9,7 +9,12 @@ import "./TelaInicial.css";
 
 function TelaInicial() {
   const [lancamentos, setLancamentos] = useState(Lancamentos);
+  const [filtrosPorStatus, setFiltrosPorStatus] = useState([]);
+  const [filtrosPorCategoria, setFiltrosPorCategoria] = useState([]);
   const [isFiltroModalAberto, setIsFiltroModalAberto] = useState(false);
+
+  console.log(filtrosPorStatus);
+  console.log(filtrosPorCategoria);
 
   const lancamentosOriginal = Lancamentos;
 
@@ -94,7 +99,9 @@ function TelaInicial() {
           </div>
         </div>
 
-        {isFiltroModalAberto && <ModalFiltro onCloseClick={() => setIsFiltroModalAberto(false)}/>}
+        {isFiltroModalAberto && <ModalFiltro onCloseClick={() => setIsFiltroModalAberto(false)}
+                                             enviarFiltrosPorStatus={(x) => setFiltrosPorStatus(x)}
+                                             enviarFiltrosPorCategoria={(x) => setFiltrosPorCategoria(x)} />}
     </section>
   )
 }

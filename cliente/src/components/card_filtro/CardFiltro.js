@@ -18,7 +18,7 @@ const filtros_categorias = [
   {"nome": "outro", "valor": "outro"},
 ];
 
-function CardFiltro({ onCloseClick }) {
+function CardFiltro({ onCloseClick, enviarFiltrosPorStatus, enviarFiltrosPorCategoria }) {
   const [statusSelecionados, setStatusSelecionados] = useState([]);
   const [categoriasSelecionados, setCategoriasSelecionados] = useState([]);
 
@@ -38,6 +38,11 @@ function CardFiltro({ onCloseClick }) {
     }
   }
 
+  const handleClicarFiltrar = () => {
+    enviarFiltrosPorStatus(statusSelecionados);
+    enviarFiltrosPorCategoria(categoriasSelecionados);
+    onCloseClick();
+  }
 
   return (
     <div className='card-filtro-container'>
@@ -48,7 +53,7 @@ function CardFiltro({ onCloseClick }) {
           <h2>Filtros</h2>
           <p>Insira os filtros desejados</p>
         </div>
-        <form method='post'>
+        <form onSubmit={(event) => event.preventDefault()}>
 
           <h3>Status</h3>
           <div className='card-filtro-form-container'>
@@ -76,8 +81,7 @@ function CardFiltro({ onCloseClick }) {
             ))}
           </div>
 
-          <input type="submit" value="FILTRAR"/>
-
+          <input type="submit" value="FILTRAR" onClick={() => handleClicarFiltrar()}/>
         </form>
       </div>
     </div>
