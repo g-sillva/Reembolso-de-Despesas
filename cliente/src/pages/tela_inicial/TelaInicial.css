@@ -1,7 +1,7 @@
-.page-tela-inicial {
-    width: 100%;
+.container-tela-inicial {
     height: 100%;
-    display: flex;
+    overflow-y: auto;
+    position: relative;
 }
 
 .container-tela-inicial {

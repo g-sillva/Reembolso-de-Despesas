@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import CardLancamento from '../../components/card_lancamento/CardLancamento';
 import CardTelaInicial from '../../components/card_tela_inicial/CardTelaInicial';
 import Header from '../../components/header/Header';
+import ModalFiltro from '../../components/card_filtro/CardFiltro';
 import { Lancamentos, Usuarios } from '../../data/data';
 
 import "./TelaInicial.css";
 
 function TelaInicial() {
   const [lancamentos, setLancamentos] = useState(Lancamentos);
+  const [isFiltroModalAberto, setIsFiltroModalAberto] = useState(false);
 
   const lancamentosOriginal = Lancamentos;
 
@@ -77,7 +79,7 @@ function TelaInicial() {
                          onChange={(e) => buscarLancamentoPorTitulo(e.target.value)}/>
                 </div>
 
-                <div className='filter-container'>
+                <div className='filter-container' onClick={() => setIsFiltroModalAberto(!isFiltroModalAberto)}>
                   <i className="fa-solid fa-filter"></i>
                   <p>2</p>
                 </div>
@@ -90,8 +92,9 @@ function TelaInicial() {
               ))}
             </div>
           </div>
-
         </div>
+
+        {isFiltroModalAberto && <ModalFiltro />}
     </section>
   )
 }

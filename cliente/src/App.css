@@ -25,7 +25,6 @@
 }
 
 .main-container {
-  overflow-y: auto;
   width: 390px;
   height: 844px;
   border-radius: 10px;

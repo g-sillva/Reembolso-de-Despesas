@@ -1,0 +1,149 @@
+.card-filtro-container {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+}
+
+.card-filtro-dark-bg {
+    background: rgba(0, 0, 0, 0.2);
+    height: 20%;
+}
+
+.card-filtro-content {
+    height: 82%;
+    margin-top: -1rem;
+    padding: 1rem;
+    border-radius: 20px;
+    background: white;
+    z-index: 9999;
+}
+
+.card-filtro-content .fa-xmark {
+    font-size: 20px;
+    opacity: .5;
+    float: right;
+    cursor: pointer;
+    transition: all .1s ease-out;
+}
+
+.card-filtro-content .fa-xmark:hover {
+    opacity: 1;
+}
+
+.card-filtro-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin: 2rem 0;
+}
+
+.card-filtro-header h2 {
+    color: var(--color-primary);
+    font-size: 22px;
+}
+
+.card-filtro-header p {
+    font-size: 14px;
+    color: #8C9791;
+}
+
+.card-filtro-content {
+    padding: 1rem 2rem;
+}
+
+.card-filtro-content form h3 {
+    font-size: 14px;
+    color: #333;
+    margin-top: 2rem;
+}
+
+.card-filtro-form-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 1rem;
+}
+
+.card-filtrocheckbox-item-container {
+    display: flex;
+    gap: 10px;
+}
+
+.card-filtrocheckbox-item-container {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    border: 1px solid var(--color-primary);
+    padding: 5px 10px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all .1s ease-in-out;
+}
+
+.card-filtrocheckbox-item-container i {
+    max-width: 0;
+    opacity: 0;
+    transition: all .1s ease-out;
+}
+
+.card-filtrocheckbox-item-container p {
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.card-filtrocheckbox-item-icon-show {
+    opacity: 1 !important;
+    max-width: 500px !important;
+}
+
+.card-filtrocheckbox-item-container:hover {
+    background: var(--color-primary);
+    opacity: .8;
+    color: white;
+}
+
+.card-filtro-form-container input {
+   transform: scale(1.2);
+}
+
+.card-filtrocheckbox-item-active {
+    background: var(--color-primary);
+    color: white;
+}
+
+.card-filtro-form-price-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.card-filtro-form-price-container input {
+    padding: 10px;
+    width: 150px;
+    border: 1px solid transparent;
+    outline: none;
+    border-bottom: 1px solid var(--color-primary);
+}
+
+.card-filtro-content form input[type=submit] {
+    background: var(--color-primary);
+    width: 100%;
+    padding: 1rem;
+    margin-top: 50px;
+    color: white;
+    font-weight: 700;
+    border: 1px solid var(--color-primary);
+    cursor: pointer;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    transition: all .1s ease-in-out;
+}
+
+.card-filtro-content form input[type=submit]:hover {
+    opacity: .8;
+}
