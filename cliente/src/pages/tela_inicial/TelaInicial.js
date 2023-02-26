@@ -1,15 +1,45 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CardLancamento from '../../components/card_lancamento/CardLancamento';
 import CardTelaInicial from '../../components/card_tela_inicial/CardTelaInicial';
 import Header from '../../components/header/Header';
+import ModalFiltro from '../../components/card_filtro/CardFiltro';
 import { Lancamentos, Usuarios } from '../../data/data';
 
 import "./TelaInicial.css";
 
 function TelaInicial() {
   const [lancamentos, setLancamentos] = useState(Lancamentos);
+  const [filtrosPorStatus, setFiltrosPorStatus] = useState([]);
+  const [filtrosPorCategoria, setFiltrosPorCategoria] = useState([]);
+  const [filtroPorPrecoMin, setFiltroPorPrecoMin] = useState("");
+  const [filtroPorPrecoMax, setFiltroPorPrecoMax] = useState("");
+  const [quantidadeFiltros, setQuantidadeFiltros] = useState(0);
+  const [isFiltroModalAberto, setIsFiltroModalAberto] = useState(false);
 
   const lancamentosOriginal = Lancamentos;
+
+  useEffect(() => {
+    setLancamentos(lancamentosOriginal);
+    setQuantidadeFiltros(0);
+
+    if (filtroPorPrecoMin !== "") {
+      setLancamentos(lancamentos.filter(x => Number(x.valor) >= filtroPorPrecoMin));
+      setQuantidadeFiltros(quantidadeFiltros + 1);
+    }
+    if (filtroPorPrecoMax !== "") {
+      setLancamentos(lancamentos.filter(x => Number(x.valor) <= filtroPorPrecoMax));
+      setQuantidadeFiltros(quantidadeFiltros + 1);
+    }
+    if (filtrosPorStatus.length !== 0) {
+      setLancamentos(lancamentos.filter(x => filtrosPorStatus.includes(x.status.toLowerCase())));
+    }
+    if (filtrosPorCategoria.length !== 0) {
+      setLancamentos(lancamentos.filter(x => filtrosPorCategoria.includes(x.categoria.toLowerCase())));
+    }
+
+    setQuantidadeFiltros(quantidadeFiltros + filtrosPorStatus.length + filtrosPorCategoria.length);
+
+  }, [filtrosPorStatus, filtrosPorCategoria, filtroPorPrecoMin, filtroPorPrecoMax]);
 
   const buscarLancamentoPorTitulo = (titulo) => {
     setLancamentos(lancamentosOriginal.filter(x => x.titulo.toLowerCase().includes(titulo.toLowerCase())));
@@ -22,7 +52,8 @@ function TelaInicial() {
 
   const handleDataUltimo = () => {
     let x = lancamentos;
-    if (x.length === 0) return "-"
+    if (x.length === 0) return "-";
+
     x = x.sort((a,b) => {
       let aSplit = a.data.split("-");
       let bSplit = b.data.split("-");
@@ -60,16 +91,10 @@ function TelaInicial() {
 
           
           <div className='lancamentos-content'>
-            {/* <div>
-              <p>Você ainda não possui nenhum lançamento</p>
-              <i className="fa-regular fa-face-frown"></i>
-            </div>
-            <button className='lancamento-adicionar-btn'>ADICIONAR LANÇAMENTO</button> */}
             <div className='lancamentos-content-header'>
               <button className='lancamento-adicionar-btn'>ADICIONAR LANÇAMENTO</button>
 
               <div className='lancamento-content-header-search-container'>
-
                 <div className='input-container'>
                   <i className="fa-solid fa-magnifying-glass"></i>
                   <input type="text"
@@ -77,21 +102,37 @@ function TelaInicial() {
                          onChange={(e) => buscarLancamentoPorTitulo(e.target.value)}/>
                 </div>
 
-                <div className='filter-container'>
+                <div className='filter-container' onClick={() => setIsFiltroModalAberto(!isFiltroModalAberto)}>
                   <i className="fa-solid fa-filter"></i>
-                  <p>2</p>
+                  {quantidadeFiltros !== 0 && <p>{quantidadeFiltros}</p>}
                 </div>
               </div>
             </div>
 
-            <div className='lancamentos-container'>
+            {!isFiltroModalAberto && <div className='lancamentos-container'>
               {lancamentos.map((x, i) => (
                 <CardLancamento key={i} valor={x.valor} status={x.status} titulo={x.titulo} descricao={x.descricao}/>
               ))}
             </div>
-          </div>
+            }
 
+            {lancamentos.length === 0 &&
+              <div className='lancamento-content-nenhum-container'>
+                <p>Nenhum lançamento encontrado!</p>
+                <i className="fa-regular fa-face-frown"></i>
+              </div>}
+          </div>
         </div>
+
+        {isFiltroModalAberto && <ModalFiltro onCloseClick={() => setIsFiltroModalAberto(false)}
+                                             enviarFiltrosPorStatus={(x) => setFiltrosPorStatus(x)}
+                                             enviarFiltrosPorCategoria={(x) => setFiltrosPorCategoria(x)}
+                                             enviarFiltrosPorPrecoMin={(x) => setFiltroPorPrecoMin(x)}
+                                             enviarFiltrosPorPrecoMax={(x) => setFiltroPorPrecoMax(x)}
+                                             filtrosPorStatusSelecionaods={filtrosPorStatus}
+                                             filtrosPorCategoriaSelecionaods={filtrosPorCategoria}
+                                             filtroPrecoMinSelecionado={filtroPorPrecoMin}
+                                             filtroPrecoMaxSelecionado={filtroPorPrecoMax} />}
     </section>
   )
 }
