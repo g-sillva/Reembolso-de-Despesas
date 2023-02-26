@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CardLancamento from '../../components/card_lancamento/CardLancamento';
 import CardTelaInicial from '../../components/card_tela_inicial/CardTelaInicial';
 import Header from '../../components/header/Header';
@@ -13,10 +13,19 @@ function TelaInicial() {
   const [filtrosPorCategoria, setFiltrosPorCategoria] = useState([]);
   const [isFiltroModalAberto, setIsFiltroModalAberto] = useState(false);
 
-  console.log(filtrosPorStatus);
-  console.log(filtrosPorCategoria);
-
   const lancamentosOriginal = Lancamentos;
+
+  useEffect(() => {
+    setLancamentos(lancamentosOriginal);
+
+    if (filtrosPorStatus.length !== 0) {
+      setLancamentos(lancamentos.filter(x => filtrosPorStatus.includes(x.status.toLowerCase())));
+    }
+    if (filtrosPorCategoria.length !== 0) {
+      setLancamentos(lancamentos.filter(x => filtrosPorCategoria.includes(x.categoria.toLowerCase())));
+    }
+
+  }, [filtrosPorStatus, filtrosPorCategoria]);
 
   const buscarLancamentoPorTitulo = (titulo) => {
     setLancamentos(lancamentosOriginal.filter(x => x.titulo.toLowerCase().includes(titulo.toLowerCase())));
@@ -29,7 +38,8 @@ function TelaInicial() {
 
   const handleDataUltimo = () => {
     let x = lancamentos;
-    if (x.length === 0) return "-"
+    if (x.length === 0) return "-";
+
     x = x.sort((a,b) => {
       let aSplit = a.data.split("-");
       let bSplit = b.data.split("-");
@@ -86,7 +96,7 @@ function TelaInicial() {
 
                 <div className='filter-container' onClick={() => setIsFiltroModalAberto(!isFiltroModalAberto)}>
                   <i className="fa-solid fa-filter"></i>
-                  <p>2</p>
+                  {filtrosPorStatus.length + filtrosPorCategoria.length !== 0 && <p>{filtrosPorStatus.length + filtrosPorCategoria.length}</p>}
                 </div>
               </div>
             </div>
@@ -101,7 +111,9 @@ function TelaInicial() {
 
         {isFiltroModalAberto && <ModalFiltro onCloseClick={() => setIsFiltroModalAberto(false)}
                                              enviarFiltrosPorStatus={(x) => setFiltrosPorStatus(x)}
-                                             enviarFiltrosPorCategoria={(x) => setFiltrosPorCategoria(x)} />}
+                                             enviarFiltrosPorCategoria={(x) => setFiltrosPorCategoria(x)}
+                                             filtrosPorStatusSelecionaods={filtrosPorStatus}
+                                             filtrosPorCategoriaSelecionaods={filtrosPorCategoria} />}
     </section>
   )
 }

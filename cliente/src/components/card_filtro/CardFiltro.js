@@ -18,9 +18,9 @@ const filtros_categorias = [
   {"nome": "outro", "valor": "outro"},
 ];
 
-function CardFiltro({ onCloseClick, enviarFiltrosPorStatus, enviarFiltrosPorCategoria }) {
-  const [statusSelecionados, setStatusSelecionados] = useState([]);
-  const [categoriasSelecionados, setCategoriasSelecionados] = useState([]);
+function CardFiltro({ onCloseClick, enviarFiltrosPorStatus, enviarFiltrosPorCategoria, filtrosPorStatusSelecionaods, filtrosPorCategoriaSelecionaods }) {
+  const [statusSelecionados, setStatusSelecionados] = useState(filtrosPorStatusSelecionaods);
+  const [categoriasSelecionados, setCategoriasSelecionados] = useState(filtrosPorCategoriaSelecionaods);
 
   const handleSelecionarStatus = (i) => {
     if (statusSelecionados.includes(filtros_status[i].valor)) {
