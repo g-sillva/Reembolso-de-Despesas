@@ -20,6 +20,7 @@ function TelaInicial() {
 
   useEffect(() => {
     setLancamentos(lancamentosOriginal);
+    setQuantidadeFiltros(0);
 
     if (filtroPorPrecoMin !== "") {
       setLancamentos(lancamentos.filter(x => Number(x.valor) >= filtroPorPrecoMin));
@@ -90,16 +91,10 @@ function TelaInicial() {
 
           
           <div className='lancamentos-content'>
-            {/* <div>
-              <p>Você ainda não possui nenhum lançamento</p>
-              <i className="fa-regular fa-face-frown"></i>
-            </div>
-            <button className='lancamento-adicionar-btn'>ADICIONAR LANÇAMENTO</button> */}
             <div className='lancamentos-content-header'>
               <button className='lancamento-adicionar-btn'>ADICIONAR LANÇAMENTO</button>
 
               <div className='lancamento-content-header-search-container'>
-
                 <div className='input-container'>
                   <i className="fa-solid fa-magnifying-glass"></i>
                   <input type="text"
@@ -118,7 +113,14 @@ function TelaInicial() {
               {lancamentos.map((x, i) => (
                 <CardLancamento key={i} valor={x.valor} status={x.status} titulo={x.titulo} descricao={x.descricao}/>
               ))}
-            </div>}
+            </div>
+            }
+
+            {lancamentos.length === 0 &&
+              <div className='lancamento-content-nenhum-container'>
+                <p>Nenhum lançamento encontrado!</p>
+                <i className="fa-regular fa-face-frown"></i>
+              </div>}
           </div>
         </div>
 
