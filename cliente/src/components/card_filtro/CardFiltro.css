@@ -9,13 +9,13 @@
 }
 
 .card-filtro-dark-bg {
-    height: 20%;
+    height: 28%;
     animation: 1s animacao-aparecer-fundo ease-out forwards;
     animation-delay: .5s;
 }
 
 .card-filtro-content {
-    height: 82%;
+    height: 75%;
     padding: 1rem;
     border-radius: 20px;
     background: white;

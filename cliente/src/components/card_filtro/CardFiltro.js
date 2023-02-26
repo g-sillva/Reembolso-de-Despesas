@@ -18,9 +18,19 @@ const filtros_categorias = [
   {"nome": "outro", "valor": "outro"},
 ];
 
-function CardFiltro({ onCloseClick, enviarFiltrosPorStatus, enviarFiltrosPorCategoria, filtrosPorStatusSelecionaods, filtrosPorCategoriaSelecionaods }) {
+function CardFiltro({ onCloseClick, 
+                      enviarFiltrosPorStatus, 
+                      enviarFiltrosPorCategoria,
+                      enviarFiltrosPorPrecoMin,
+                      enviarFiltrosPorPrecoMax,
+                      filtrosPorStatusSelecionaods, 
+                      filtrosPorCategoriaSelecionaods,
+                      filtroPrecoMinSelecionado,
+                      filtroPrecoMaxSelecionado }) {
   const [statusSelecionados, setStatusSelecionados] = useState(filtrosPorStatusSelecionaods);
   const [categoriasSelecionados, setCategoriasSelecionados] = useState(filtrosPorCategoriaSelecionaods);
+  const [precoMinSelecionado, setPrecoMinSelecionado] = useState(filtroPrecoMinSelecionado);
+  const [precoMaxSelecionado, setPrecoMaxSelecionado] = useState(filtroPrecoMaxSelecionado);
 
   const handleSelecionarStatus = (i) => {
     if (statusSelecionados.includes(filtros_status[i].valor)) {
@@ -41,6 +51,8 @@ function CardFiltro({ onCloseClick, enviarFiltrosPorStatus, enviarFiltrosPorCate
   const handleClicarFiltrar = () => {
     enviarFiltrosPorStatus(statusSelecionados);
     enviarFiltrosPorCategoria(categoriasSelecionados);
+    enviarFiltrosPorPrecoMin(precoMinSelecionado);
+    enviarFiltrosPorPrecoMax(precoMaxSelecionado);
     onCloseClick();
   }
 
@@ -67,8 +79,8 @@ function CardFiltro({ onCloseClick, enviarFiltrosPorStatus, enviarFiltrosPorCate
 
           <h3>Preço</h3>
           <div className='card-filtro-form-price-container'>
-            <input type="number" placeholder='Preço Min.'/>
-            <input type="number" placeholder='Preço Max.'/>
+            <input type="number" placeholder='Preço Min.' value={precoMinSelecionado} onChange={(e) => setPrecoMinSelecionado(e.target.value)}/>
+            <input type="number" placeholder='Preço Max.' value={precoMaxSelecionado} onChange={(e) => setPrecoMaxSelecionado(e.target.value)}/>
           </div>
 
           <h3>Categoria</h3>
