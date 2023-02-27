@@ -1,8 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import "./CardEditarLancamento.css";
 
 function CardEditarLancamento({ onCloseClick }) {
+  const [titulo, setTitulo] = useState("");
+  const [valor, setValor] = useState("");
+  const [categoria, setCategoria] = useState("");
+  const [descricao, setDescricao] = useState("");
+  const [comprovativo, setComprovativo] = useState("");
+
+  console.log(titulo);
+  console.log(valor);
+  console.log(categoria);
+  console.log(descricao);
+  console.log(comprovativo);
+
   return (
     <div className='card-editar-lancamento-container'>
     <div className='card-editar-lancamento-dark-bg'></div>
@@ -15,13 +27,13 @@ function CardEditarLancamento({ onCloseClick }) {
       <form onSubmit={(event) => event.preventDefault()}>
 
         <div className='card-editar-lancamento-input'>
-          <input type="text" name='titulo' placeholder='Título *' maxLength="50" required/>
-          <p>0/50</p>
+          <input type="text" name='titulo' placeholder='Título *' maxLength="50" value={titulo} required onChange={(e) => setTitulo(e.target.value)}/>
+          <p>{titulo.length}/50</p>
         </div>
 
         <div className='card-editar-lancamento-input-flex'>
-          <input type="number" name='valor' placeholder='Valor *' required/>
-          <select id='categoria' name='categoria' required>
+          <input type="number" name='valor' placeholder='Valor *' value={valor} required onChange={(e) => setValor(e.target.value)}/>
+          <select id='categoria' name='categoria' value={categoria} required onChange={(e) => setCategoria(e.target.value)}>
             <option value="categoria" disabled selected>Categoria</option>
             <option value="ALIEMENTACAO">Alimentação</option>
             <option value="TRANSPORTE_GASOLINA">Transporte/Gasolina</option>
@@ -33,16 +45,17 @@ function CardEditarLancamento({ onCloseClick }) {
         </div>
 
         <div className='card-editar-lancamento-textarea'>
-          <textarea rows="10" placeholder='Descrição' maxLength="500" name='descricao'></textarea> 
-          <p>0/500</p>
+          <textarea rows="10" placeholder='Descrição' maxLength="500" value={descricao} name='descricao' onChange={(e) => setDescricao(e.target.value)}></textarea> 
+          <p>{descricao.length}/500</p>
         </div>
 
         <div className='card-editar-lancamento-upload'>
-          <label for='upload-img'>
-            <p>Comprovativo *</p>
+          <label htmlFor='upload-img'>
+            <p className='titulo-lancamento-upload'>Comprovativo *</p>
             <i className="fa-solid fa-cloud-arrow-up"></i>
+            <p className='nome-arquivo-lancamento-upload'>{comprovativo}</p>
           </label>
-          <input id='upload-img' type="file" name='comprovativo'/>
+          <input id='upload-img' type="file" name='comprovativo' value={comprovativo} onChange={(e) => setComprovativo(e.target.value)}/>
         </div>
         <p className='card-editar-lancamento-upload-msg'>Apenas arquivos menores que 5Mb no formato PNG ou JPEG</p>
 

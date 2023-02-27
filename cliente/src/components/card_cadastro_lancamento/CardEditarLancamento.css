@@ -166,11 +166,20 @@
     transition: all .1s ease-in-out;
 }
 
-.card-editar-lancamento-upload label p {
+.card-editar-lancamento-upload label .titulo-lancamento-upload {
     opacity: .5;
     position: absolute;
     font-size: 14px;
     top: 10px;
+}
+
+.card-editar-lancamento-upload label .nome-arquivo-lancamento-upload {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: .8;
+    font-size: 12px;
 }
 
 .card-editar-lancamento-upload input {
