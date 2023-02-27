@@ -9,13 +9,13 @@
 }
 
 .card-editar-lancamento-dark-bg {
-    height: 20%;
+    height: 12%;
     animation: 1s animacao-aparecer-fundo ease-out forwards;
     animation-delay: .5s;
 }
 
 .card-editar-lancamento-content {
-    height: 83%;
+    height: 92%;
     padding: 1rem;
     border-radius: 20px;
     background: white;
@@ -143,6 +143,7 @@
 
 .card-editar-lancamento-upload {
     width: 100%;
+    height: 150px;
     display: flex;
 }
 
@@ -150,13 +151,17 @@
     cursor: pointer;
     position: relative;
     width: 100%;
-    height: 80px;
+    height: 100%;
     border: 1px solid var(--color-primary);
     border-radius: 10px;
     display: flex;
     padding: 10px;
     flex-direction: column;
     justify-content: center;
+}
+
+.card-editar-lancamento-upload label:hover {
+    opacity: .8;
 }
 
 .card-editar-lancamento-upload label i {
@@ -180,6 +185,13 @@
     transform: translateX(-50%);
     opacity: .8;
     font-size: 12px;
+}
+
+.card-editar-lancamento-upload img{
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .card-editar-lancamento-upload input {

@@ -2,7 +2,13 @@ import React, { useState } from 'react';
 
 import "./CardEditarLancamento.css";
 
-function CardEditarLancamento({ tituloCard = "", tituloLanc = "", valorCard = "", categoriaCard = 'Categoria', descricaoCard = "", comprovativoCard = "", onCloseClick}) {
+function CardEditarLancamento({ tituloCard = "", 
+                                tituloLanc = "", 
+                                valorCard = "", 
+                                categoriaCard = 'Categoria', 
+                                descricaoCard = "", 
+                                comprovativoCard = "", 
+                                onCloseClick}) {
   const [titulo, setTitulo] = useState(tituloLanc);
   const [valor, setValor] = useState(valorCard);
   const [categoria, setCategoria] = useState(categoriaCard);
@@ -44,12 +50,35 @@ function CardEditarLancamento({ tituloCard = "", tituloLanc = "", valorCard = ""
         </div>
 
         <div className='card-editar-lancamento-upload'>
-          <label htmlFor='upload-img'>
-            <p className='titulo-lancamento-upload'>Comprovativo *</p>
-            <i className="fa-solid fa-cloud-arrow-up"></i>
-            <p className='nome-arquivo-lancamento-upload'>{comprovativo}</p>
-          </label>
-          <input id='upload-img' type="file" name='comprovativo' value={comprovativo} onChange={(e) => setComprovativo(e.target.value)}/>
+          {comprovativoCard === "" ? 
+          (
+            <>
+              <label htmlFor='upload-img'>
+                <p className='titulo-lancamento-upload'>Comprovativo *</p>
+                <i className="fa-solid fa-cloud-arrow-up"></i>
+                <p className='nome-arquivo-lancamento-upload'>{comprovativo}</p>
+              </label>
+              <input id='upload-img' 
+                    type="file"
+                    name='comprovativo' 
+                    value={comprovativo}
+                    onChange={(e) => console.log(e)}/>
+            </>
+          )
+            :
+            (
+              <>
+                <label htmlFor='upload-img'>
+                  <p className='titulo-lancamento-upload'>Comprovativo *</p>
+                  <img src={`data:image/jpeg;base64,${comprovativo.data}`} />
+                </label>
+                <input id='upload-img' 
+                                    type="file"
+                                    name='comprovativo'/>
+              </>
+              
+            )
+            }
         </div>
         <p className='card-editar-lancamento-upload-msg'>Apenas arquivos menores que 5Mb no formato PNG ou JPEG</p>
 

@@ -170,7 +170,7 @@ function TelaInicial() {
                                                valorCard={currentModalData.valor}
                                                categoriaCard={currentModalData.categoria}
                                                descricaoCard={currentModalData.descricao}
-                                               comprovativoCard={""}/>}
+                                               comprovativoCard={currentModalData.img}/>}
     </section>
   )
 }
