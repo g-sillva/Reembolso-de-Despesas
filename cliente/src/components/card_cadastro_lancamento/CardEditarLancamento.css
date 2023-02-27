@@ -1,0 +1,211 @@
+.card-editar-lancamento-container {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    overflow: hidden;
+}
+
+.card-editar-lancamento-dark-bg {
+    height: 20%;
+    animation: 1s animacao-aparecer-fundo ease-out forwards;
+    animation-delay: .5s;
+}
+
+.card-editar-lancamento-content {
+    height: 83%;
+    padding: 1rem;
+    border-radius: 20px;
+    background: white;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    z-index: 99999;
+    animation: .5s animacao-aparecer-modal ease-in-out forwards;
+}
+
+.card-editar-lancamento-content .fa-xmark {
+    font-size: 20px;
+    opacity: .5;
+    float: right;
+    cursor: pointer;
+    transition: all .1s ease-out;
+}
+
+.card-editar-lancamento-content .fa-xmark:hover {
+    opacity: 1;
+}
+
+.card-editar-lancamento-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin: 2rem 0;
+}
+
+.card-editar-lancamento-header h2 {
+    color: var(--color-primary);
+    font-size: 22px;
+}
+
+.card-editar-lancamento-header p {
+    font-size: 14px;
+    color: #8C9791;
+}
+
+.card-editar-lancamento-content {
+    padding: 1rem 2rem;
+}
+
+.card-editar-lancamento-content form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.card-editar-lancamento-input {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--color-primary);
+}
+
+.card-editar-lancamento-input input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    outline: none;
+    border: none;
+    color: #333;
+}
+
+.card-editar-lancamento-input p {
+    opacity: .5;
+    font-size: 12px;
+}
+
+.card-editar-lancamento-input-flex {
+    display: flex;
+    gap: 1rem;
+}
+
+.card-editar-lancamento-input-flex input, select {
+    padding: 10px;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid var(--color-primary);
+    font-size: 14px;
+    width: 100%;
+    color: #333;
+}
+
+.card-editar-lancamento-textarea {
+    position: relative;
+}
+
+.card-editar-lancamento-textarea textarea {
+    font-size: 14px;
+    border: none;
+    outline: none;
+    padding: 10px;
+    resize: none;
+    width: 100%;
+    color: #333;
+    border-bottom: 1px solid var(--color-primary);
+}
+
+.card-editar-lancamento-textarea p {
+    position: absolute;
+    right: 0;
+    font-size: 12px;
+    opacity: .5;
+    bottom: 10px;
+}
+
+.card-editar-lancamento-content form input[type=submit] {
+    background: var(--color-primary);
+    width: 100%;
+    padding: 1rem;
+    margin-top: 20px;
+    color: white;
+    font-weight: 700;
+    border: 1px solid var(--color-primary);
+    cursor: pointer;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    transition: all .1s ease-in-out;
+}
+
+.card-editar-lancamento-content form input[type=submit]:hover {
+    opacity: .8;
+}
+
+.card-editar-lancamento-upload {
+    width: 100%;
+    display: flex;
+}
+
+.card-editar-lancamento-upload label {
+    cursor: pointer;
+    position: relative;
+    width: 100%;
+    height: 80px;
+    border: 1px solid var(--color-primary);
+    border-radius: 10px;
+    display: flex;
+    padding: 10px;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.card-editar-lancamento-upload label i {
+    font-size: 2rem;
+    color: var(--color-primary);
+    align-self: center;
+    transition: all .1s ease-in-out;
+}
+
+.card-editar-lancamento-upload label p {
+    opacity: .5;
+    position: absolute;
+    font-size: 14px;
+    top: 10px;
+}
+
+.card-editar-lancamento-upload input {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+}
+
+.card-editar-lancamento-upload label:hover i {
+    font-size: 2.2rem;
+    transform: rotate(10deg);
+}
+
+.card-editar-lancamento-upload-msg {
+    font-size: 12px;
+    position: relative;
+    bottom: 10px;
+    text-align: center;
+    opacity: .5;
+}
+
+@keyframes animacao-aparecer-modal {
+    from {
+        margin-top: 170%;
+    }
+    to {
+        margin-top: -1rem;
+    }
+}
+
+@keyframes animacao-aparecer-fundo {
+    from {
+        background: rgba(0, 0, 0, 0);
+    }
+    to {
+        background: rgba(0, 0, 0, 0.4);
+    }
+}

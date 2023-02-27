@@ -6,15 +6,19 @@ import ModalFiltro from '../../components/card_filtro/CardFiltro';
 import { Lancamentos, Usuarios } from '../../data/data';
 
 import "./TelaInicial.css";
+import CardEditarLancamento from '../../components/card_cadastro_lancamento/CardEditarLancamento';
 
 function TelaInicial() {
   const [lancamentos, setLancamentos] = useState(Lancamentos);
+
   const [filtrosPorStatus, setFiltrosPorStatus] = useState([]);
   const [filtrosPorCategoria, setFiltrosPorCategoria] = useState([]);
   const [filtroPorPrecoMin, setFiltroPorPrecoMin] = useState("");
   const [filtroPorPrecoMax, setFiltroPorPrecoMax] = useState("");
   const [quantidadeFiltros, setQuantidadeFiltros] = useState(0);
+
   const [isFiltroModalAberto, setIsFiltroModalAberto] = useState(false);
+  const [isEditarModalAberto, setIsEditarModalAberto] = useState(false);
 
   const lancamentosOriginal = Lancamentos;
 
@@ -92,7 +96,7 @@ function TelaInicial() {
           
           <div className='lancamentos-content'>
             <div className='lancamentos-content-header'>
-              <button className='lancamento-adicionar-btn'>ADICIONAR LANÇAMENTO</button>
+              <button className='lancamento-adicionar-btn' onClick={() => setIsEditarModalAberto(true)}>ADICIONAR LANÇAMENTO</button>
 
               <div className='lancamento-content-header-search-container'>
                 <div className='input-container'>
@@ -109,7 +113,7 @@ function TelaInicial() {
               </div>
             </div>
 
-            {!isFiltroModalAberto && <div className='lancamentos-container'>
+            {(!isFiltroModalAberto && !isEditarModalAberto) && <div className='lancamentos-container'>
               {lancamentos.map((x, i) => (
                 <CardLancamento key={i} valor={x.valor} status={x.status} titulo={x.titulo} descricao={x.descricao}/>
               ))}
@@ -133,6 +137,7 @@ function TelaInicial() {
                                              filtrosPorCategoriaSelecionaods={filtrosPorCategoria}
                                              filtroPrecoMinSelecionado={filtroPorPrecoMin}
                                              filtroPrecoMaxSelecionado={filtroPorPrecoMax} />}
+        {isEditarModalAberto && <CardEditarLancamento onCloseClick={() => setIsEditarModalAberto(false)}/>}
     </section>
   )
 }
