@@ -1,4 +1,11 @@
 .card-lancamento {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card-lancamento-container {
     border-radius: 10px;
     border: 1px solid rgba(0, 0, 0, 0.1);
     overflow: hidden;
@@ -10,7 +17,7 @@
     transition: all .1s ease-in-out;
 }
 
-.card-lancamento:hover {
+.card-lancamento-container:hover {
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     bottom: 2px;
 }

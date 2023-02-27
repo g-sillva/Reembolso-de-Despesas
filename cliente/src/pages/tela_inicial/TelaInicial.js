@@ -19,8 +19,19 @@ function TelaInicial() {
 
   const [isFiltroModalAberto, setIsFiltroModalAberto] = useState(false);
   const [isEditarModalAberto, setIsEditarModalAberto] = useState(false);
+  const [isAdicionarModalAberto, setIsAdicionarModalAberto] = useState(false);
+
+  const [currentModalData, setCurrentModalData] = useState(lancamentos[0]);
 
   const lancamentosOriginal = Lancamentos;
+
+  useEffect(() => {
+    if (isFiltroModalAberto || isAdicionarModalAberto || isEditarModalAberto) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [isFiltroModalAberto, isEditarModalAberto, isAdicionarModalAberto]);
 
   useEffect(() => {
     setLancamentos(lancamentosOriginal);
@@ -47,6 +58,11 @@ function TelaInicial() {
 
   const buscarLancamentoPorTitulo = (titulo) => {
     setLancamentos(lancamentosOriginal.filter(x => x.titulo.toLowerCase().includes(titulo.toLowerCase())));
+  }
+
+  const handleAbrirEdicaoLancamento = (lancamento) => {
+    setCurrentModalData(lancamento);
+    setIsEditarModalAberto(true);
   }
 
   const handleSomarValores = () => {
@@ -96,7 +112,7 @@ function TelaInicial() {
           
           <div className='lancamentos-content'>
             <div className='lancamentos-content-header'>
-              <button className='lancamento-adicionar-btn' onClick={() => setIsEditarModalAberto(true)}>ADICIONAR LANÇAMENTO</button>
+              <button className='lancamento-adicionar-btn' onClick={() => setIsAdicionarModalAberto(true)}>ADICIONAR LANÇAMENTO</button>
 
               <div className='lancamento-content-header-search-container'>
                 <div className='input-container'>
@@ -113,12 +129,19 @@ function TelaInicial() {
               </div>
             </div>
 
-            {(!isFiltroModalAberto && !isEditarModalAberto) && <div className='lancamentos-container'>
+            {(!isEditarModalAberto && !isAdicionarModalAberto && !isFiltroModalAberto) && <div className="lancamentos-container">
               {lancamentos.map((x, i) => (
-                <CardLancamento key={i} valor={x.valor} status={x.status} titulo={x.titulo} descricao={x.descricao}/>
+                <CardLancamento key={i} 
+                                valor={x.valor} 
+                                status={x.status} 
+                                titulo={x.titulo} 
+                                descricao={x.descricao} 
+                                categoriaCard={x.categoria} 
+                                comprovativo={x.comprovativo}
+                                aoAbrirEdicao={() => handleAbrirEdicaoLancamento(x)}/>
               ))}
-            </div>
-            }
+            </div>}
+
 
             {lancamentos.length === 0 &&
               <div className='lancamento-content-nenhum-container'>
@@ -137,7 +160,17 @@ function TelaInicial() {
                                              filtrosPorCategoriaSelecionaods={filtrosPorCategoria}
                                              filtroPrecoMinSelecionado={filtroPorPrecoMin}
                                              filtroPrecoMaxSelecionado={filtroPorPrecoMax} />}
-        {isEditarModalAberto && <CardEditarLancamento onCloseClick={() => setIsEditarModalAberto(false)}/>}
+
+        {isAdicionarModalAberto && <CardEditarLancamento onCloseClick={() => setIsAdicionarModalAberto(false)}
+                                                      tituloCard="Adicionar Lançamento"/>}
+
+        {isEditarModalAberto && <CardEditarLancamento onCloseClick={() => setIsEditarModalAberto(false)}
+                                               tituloCard="Editar Lançamento"
+                                               tituloLanc={currentModalData.titulo}
+                                               valorCard={currentModalData.valor}
+                                               categoriaCard={currentModalData.categoria}
+                                               descricaoCard={currentModalData.descricao}
+                                               comprovativoCard={""}/>}
     </section>
   )
 }

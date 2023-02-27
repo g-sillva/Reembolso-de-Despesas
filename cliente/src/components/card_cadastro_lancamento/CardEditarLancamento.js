@@ -2,18 +2,12 @@ import React, { useState } from 'react';
 
 import "./CardEditarLancamento.css";
 
-function CardEditarLancamento({ onCloseClick }) {
-  const [titulo, setTitulo] = useState("");
-  const [valor, setValor] = useState("");
-  const [categoria, setCategoria] = useState("");
-  const [descricao, setDescricao] = useState("");
-  const [comprovativo, setComprovativo] = useState("");
-
-  console.log(titulo);
-  console.log(valor);
-  console.log(categoria);
-  console.log(descricao);
-  console.log(comprovativo);
+function CardEditarLancamento({ tituloCard = "", tituloLanc = "", valorCard = "", categoriaCard = 'Categoria', descricaoCard = "", comprovativoCard = "", onCloseClick}) {
+  const [titulo, setTitulo] = useState(tituloLanc);
+  const [valor, setValor] = useState(valorCard);
+  const [categoria, setCategoria] = useState(categoriaCard);
+  const [descricao, setDescricao] = useState(descricaoCard);
+  const [comprovativo, setComprovativo] = useState(comprovativoCard);
 
   return (
     <div className='card-editar-lancamento-container'>
@@ -21,7 +15,7 @@ function CardEditarLancamento({ onCloseClick }) {
     <div className='card-editar-lancamento-content'>
       <i className="fa-solid fa-xmark" onClick={onCloseClick}></i>
       <div className='card-editar-lancamento-header'>
-        <h2>Adicionar um Lançamento</h2>
+        <h2>{tituloCard}</h2>
         <p>Por favor, preencha as informações abaixo</p>
       </div>
       <form onSubmit={(event) => event.preventDefault()}>
@@ -34,7 +28,7 @@ function CardEditarLancamento({ onCloseClick }) {
         <div className='card-editar-lancamento-input-flex'>
           <input type="number" name='valor' placeholder='Valor *' value={valor} required onChange={(e) => setValor(e.target.value)}/>
           <select id='categoria' name='categoria' value={categoria} required onChange={(e) => setCategoria(e.target.value)}>
-            <option value="categoria" disabled selected>Categoria</option>
+            <option value="categoria" disabled>Categoria</option>
             <option value="ALIEMENTACAO">Alimentação</option>
             <option value="TRANSPORTE_GASOLINA">Transporte/Gasolina</option>
             <option value="HOSPEDAGEM">Hospedagem</option>

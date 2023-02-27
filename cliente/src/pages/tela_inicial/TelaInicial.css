@@ -49,6 +49,7 @@
 .lancamentos-content .lancamentos-container {
     display: flex;
     flex-direction: column;
+    overflow: hidden !important;
     width: 100%;
     align-items: center;
     gap: 1.5rem;
