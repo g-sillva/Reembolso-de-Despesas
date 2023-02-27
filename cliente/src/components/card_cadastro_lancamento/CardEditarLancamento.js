@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import "./CardEditarLancamento.css";
 
@@ -14,6 +14,25 @@ function CardEditarLancamento({ tituloCard = "",
   const [categoria, setCategoria] = useState(categoriaCard);
   const [descricao, setDescricao] = useState(descricaoCard);
   const [comprovativo, setComprovativo] = useState(comprovativoCard);
+  
+  const [imagemSelecionada, setImagemSelecionada] = useState();
+  const [imagemPreview, setImagemPreview] = useState();
+
+
+  useEffect(() => {
+    if (!imagemSelecionada) {
+      setImagemPreview(undefined);
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(imagemSelecionada);
+
+    setImagemPreview(objectUrl)
+    return () => URL.revokeObjectURL(objectUrl)
+ }, [imagemSelecionada])
+
+  console.log("Imagem selecionada: " + imagemSelecionada);
+  console.log("Comprovativo: " + comprovativo);
 
   return (
     <div className='card-editar-lancamento-container'>
@@ -50,7 +69,7 @@ function CardEditarLancamento({ tituloCard = "",
         </div>
 
         <div className='card-editar-lancamento-upload'>
-          {comprovativoCard === "" ? 
+          {comprovativoCard === "" && imagemSelecionada === "" ? 
           (
             <>
               <label htmlFor='upload-img'>
@@ -62,21 +81,32 @@ function CardEditarLancamento({ tituloCard = "",
                     type="file"
                     name='comprovativo' 
                     value={comprovativo}
-                    onChange={(e) => console.log(e)}/>
+                    onChange={(e) => setImagemSelecionada(e.target.files[0])}/>
             </>
           )
             :
             (
               <>
-                <label htmlFor='upload-img'>
-                  <p className='titulo-lancamento-upload'>Comprovativo *</p>
-                  <img src={`data:image/jpeg;base64,${comprovativo.data}`} />
-                </label>
-                <input id='upload-img' 
-                                    type="file"
-                                    name='comprovativo'/>
+              {imagemSelecionada ? 
+              (
+                <>
+                  <label htmlFor='upload-img'>
+                    <p className='titulo-lancamento-upload'>Comprovativo *</p>
+                    <img src={imagemPreview} />
+                  </label>
+                  <input id='upload-img' type="file" name='comprovativo'/>
+                </>
+              ) : 
+              (
+                <>
+                  <label htmlFor='upload-img'>
+                    <p className='titulo-lancamento-upload'>Comprovativo 32*</p>
+                    <img src={`data:image/jpeg;base64,${imagemPreview}`} />
+                  </label>
+                  <input id='upload-img' type="file" name='comprovativo'/>
+                </>
+              )}
               </>
-              
             )
             }
         </div>
