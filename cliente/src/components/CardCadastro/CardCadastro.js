@@ -41,4 +41,6 @@ function CardCadastro({ aoClicarLinkCadastro }) {
   )
 }
 
+// esse comentário é um teste
+
 export default CardCadastro;
