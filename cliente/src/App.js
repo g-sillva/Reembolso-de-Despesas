@@ -1,15 +1,21 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import Cadastro from './pages/cadastro';
-import Login from './pages/login';
+import LoginCadastro from './components/LoginCadastro/LoginCadastro';
+import CardCadastro from './components/CardCadastro/CardCadastro';
+import CardLogin from './components/CardLogin/CardLogin';
+import CardConfirmacaoCadastro from './components/CardConfirmacaoCadastro/CardConfirmacaoCadastro';
 
 function App() {
   return (
     <div className='app'>
+      <div class="main-container">
         <Routes>
-            <Route path='/login' element={<Login />}/>
-            <Route path='/cadastro' element={<Cadastro />}/>
+            <Route path='/Login' element={<LoginCadastro />}/>
+            <Route path='/CardCadastro' element={<CardCadastro />}/>
+            <Route path='/CardLogin' element={<CardLogin />}/>
+            <Route path='/CardConfirmacaoCadastro' element={<CardConfirmacaoCadastro />}/>
         </Routes>
+      </div>
     </div>
   );
 }

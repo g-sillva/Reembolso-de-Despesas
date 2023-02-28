@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
+:root {
+  --color-primary: #2BD477;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -16,7 +20,8 @@
 }
 
 .main-container {
-  width: 480px;
-  height: 720px;
-  border: 1px solid #2BD477;
+  width: 390px;
+  height: 844px;
+  position: relative;
+  border-radius: 10px;
 }
