@@ -31,7 +31,7 @@ function CardLancamento({ valor = "0",
               <h3>{titulo}</h3>
               {/* <p className='card-lancamento-warning'>!</p> */}
             </div>
-            {<i className="fa-solid fa-pencil" onClick={aoAbrirEdicao}></i>}
+            {status !== "CREDITADO" && <i className="fa-solid fa-pencil" onClick={aoAbrirEdicao}></i>}
           </div>
           <p className='card-lancamento-direita-descricao'>{descricao}</p>
           <div className='card-lancamento-direita-footer'>
