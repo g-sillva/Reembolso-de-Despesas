@@ -18,7 +18,6 @@ function CardEditarLancamento({ tituloCard = "",
   const [imagemSelecionada, setImagemSelecionada] = useState();
   const [imagemPreview, setImagemPreview] = useState();
 
-
   useEffect(() => {
     if (!imagemSelecionada) {
       setImagemPreview(undefined);
@@ -30,9 +29,6 @@ function CardEditarLancamento({ tituloCard = "",
     setImagemPreview(objectUrl)
     return () => URL.revokeObjectURL(objectUrl)
  }, [imagemSelecionada])
-
-  console.log("Imagem selecionada: " + imagemSelecionada);
-  console.log("Comprovativo: " + comprovativo);
 
   return (
     <div className='card-editar-lancamento-container'>
@@ -69,7 +65,31 @@ function CardEditarLancamento({ tituloCard = "",
         </div>
 
         <div className='card-editar-lancamento-upload'>
-          {comprovativoCard === "" && imagemSelecionada === "" ? 
+          {imagemSelecionada && (
+                <>
+                <label htmlFor='upload-img'>
+                  <p className='titulo-lancamento-upload'>Comprovativo 3*</p>
+                  <img src={imagemPreview} />
+                </label>
+                <input id='upload-img' 
+                       type="file" 
+                       name='comprovativo' 
+                       onChange={(e) => setImagemSelecionada(e.target.files[0])}/>
+              </>
+          )}
+          {comprovativoCard !== "" && (
+              <>
+                <label htmlFor='upload-img'>
+                  <p className='titulo-lancamento-upload'>Comprovativo 32*</p>
+                  <img src={`data:image/jpeg;base64,${comprovativoCard.data}`} />
+                </label>
+                <input id='upload-img' 
+                       type="file" 
+                       name='comprovativo' 
+                       onChange={(e) => setImagemSelecionada(e.target.files[0])}/>
+              </>
+          )}
+          {comprovativoCard === "" && !imagemSelecionada&&
           (
             <>
               <label htmlFor='upload-img'>
@@ -84,30 +104,6 @@ function CardEditarLancamento({ tituloCard = "",
                     onChange={(e) => setImagemSelecionada(e.target.files[0])}/>
             </>
           )
-            :
-            (
-              <>
-              {imagemSelecionada ? 
-              (
-                <>
-                  <label htmlFor='upload-img'>
-                    <p className='titulo-lancamento-upload'>Comprovativo *</p>
-                    <img src={imagemPreview} />
-                  </label>
-                  <input id='upload-img' type="file" name='comprovativo'/>
-                </>
-              ) : 
-              (
-                <>
-                  <label htmlFor='upload-img'>
-                    <p className='titulo-lancamento-upload'>Comprovativo 32*</p>
-                    <img src={`data:image/jpeg;base64,${imagemPreview}`} />
-                  </label>
-                  <input id='upload-img' type="file" name='comprovativo'/>
-                </>
-              )}
-              </>
-            )
             }
         </div>
         <p className='card-editar-lancamento-upload-msg'>Apenas arquivos menores que 5Mb no formato PNG ou JPEG</p>
