@@ -1,4 +1,4 @@
-package com.fss.reembolso.usuario.controller.login;
+package com.fss.reembolso.usuario.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
