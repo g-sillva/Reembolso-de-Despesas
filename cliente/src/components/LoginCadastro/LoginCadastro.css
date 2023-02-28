@@ -5,6 +5,7 @@
     background: var(--color-primary);
     align-items: center;
     flex-direction: column;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
 .cadastro-login-logo {
