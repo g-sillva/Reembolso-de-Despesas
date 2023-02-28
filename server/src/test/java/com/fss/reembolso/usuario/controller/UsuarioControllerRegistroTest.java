@@ -1,9 +1,11 @@
 package com.fss.reembolso.usuario.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fss.reembolso.usuario.DTOs.UsuarioLoginDTO;
+import com.fss.reembolso.usuario.DTOs.UsuarioRegistroDTO;
 import com.fss.reembolso.usuario.Usuario;
 import com.fss.reembolso.usuario.UsuarioController;
 import com.fss.reembolso.usuario.UsuarioRepository;
@@ -38,10 +40,10 @@ public class UsuarioControllerRegistroTest {
     }
 
     @Test
-    public void deveLogarERetornarToken() throws Exception {
-        Usuario usuario = new Usuario();
-        usuario.setNome("erick");
-        usuario.setEmail("erickmalaguezrowedder@gmail.com");
+    public void deveRegistrarComEmailNovoNoSistemaEDadosObrigatoriosPresentes() throws Exception {
+        UsuarioRegistroDTO usuario = new UsuarioRegistroDTO();
+        usuario.setNome("teste");
+        usuario.setEmail("email_test2@gmail.com");
         usuario.setTelefone("5190482031");
         usuario.setSenha("1234");
 
@@ -56,7 +58,47 @@ public class UsuarioControllerRegistroTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("message").value("Usuario cadastrado com sucesso!"));
         Usuario usuarioEntidade = usuarioRepository.findByEmail(usuario.getEmail());
-        assertThat(usuarioEntidade.getNome()).isEqualTo("erick");
+        assertThat(usuarioEntidade.getNome()).isEqualTo("teste");
+
+        Usuario u = usuarioRepository.findByEmail(usuario.getEmail());
+        usuarioRepository.delete(u);
     }
 
+    @Test
+    public void deveRetornarErroAoRegistrarComEmailJaExistente() throws Exception {
+        UsuarioRegistroDTO usuario = new UsuarioRegistroDTO();
+        usuario.setNome("teste");
+        usuario.setEmail("email_test2@gmail.com");
+        usuario.setTelefone("5190482031");
+        usuario.setSenha("1234");
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+        ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
+        String requestJson = ow.writeValueAsString(usuario);
+
+        mockMvc.perform(post("/api/clientes/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestJson))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("message").value("O e-mail já está cadastrado no sistema."));
+    }
+    @Test
+    public void deveRetornarErroAoRegistrarSemAlgumCampo() throws Exception {
+        UsuarioRegistroDTO usuario = new UsuarioRegistroDTO();
+        usuario.setNome("teste");
+        usuario.setTelefone("5190482031");
+        usuario.setSenha("1234");
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+        ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
+        String requestJson = ow.writeValueAsString(usuario);
+
+        mockMvc.perform(post("/api/clientes/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestJson))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("message").value("email: O e-mail não pode estar vazio"));
+    }
 }

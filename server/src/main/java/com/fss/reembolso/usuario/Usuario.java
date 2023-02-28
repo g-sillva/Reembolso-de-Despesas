@@ -2,6 +2,7 @@ package com.fss.reembolso.usuario;
 
 import com.fss.reembolso.lancamento.Lancamento;
 import com.fss.reembolso.notificacao.Notificacao;
+import com.fss.reembolso.usuario.DTOs.UsuarioRegistroDTO;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -66,6 +67,13 @@ public class Usuario implements UserDetails {
         List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
         roles.forEach(x -> list.add(new SimpleGrantedAuthority("ROLE_" + x)));
         return list;
+    }
+
+    public Usuario(UsuarioRegistroDTO usuarioRegistro) {
+        this.nome = usuarioRegistro.getNome();
+        this.email = usuarioRegistro.getEmail();
+        this.telefone = usuarioRegistro.getTelefone();
+        this.senha = usuarioRegistro.getSenha();
     }
 
     @Override
