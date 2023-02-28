@@ -61,7 +61,7 @@ export const Lancamentos = [
     {
         "id": "63ee7368080f686b3219f4fb",
         "titulo": "Primeiro lançamento de teste",
-        "descricao": "lorem ipsum dolor asit met",
+        "descricao": "lorem ipsum dolor asit met    ",
         "status": "EM_RASCUNHO",
         "data": "2023-02-16",
         "valor": "142020",
