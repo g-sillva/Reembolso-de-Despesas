@@ -1,0 +1,129 @@
+.tela-adm-container {
+    width: 1280px;
+    height: 720px;
+    background-color: #FFFFFF;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+/* Header */
+
+.header-adm {
+    display: flex;
+    width: 100%;
+    height: 80px;
+    background: #2BD477;
+    align-items: center;
+    color: #FFFFFF;
+    font-size: 1rem;
+    margin-bottom: 3rem;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.097);
+}
+
+.header-adm-left {
+    display: flex;
+    width: 20%;
+    margin-left: 2rem;
+}
+
+.header-usuario-adm {
+    margin-right: 10px;
+}
+
+.header-boas-vindas-adm-link {
+    font-weight: bold;
+    color: #FFFFFF;
+}
+
+.header-adm-center {
+    display: flex;
+    width: 60%;    
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.header-adm-titulo-logo {
+    font-weight: normal;
+    font-weight: bold;
+}
+
+.header-adm-right {
+    display: flex;
+    width: 20%;
+    justify-content: flex-end;
+    margin-right: 2rem;
+}
+
+.header-adm-sair {
+    font-weight: normal;
+    font-weight: bold;
+    border: none;
+    background: #2BD477;
+    color: #FFFFFF;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* Tabela */
+
+.filtragem-adm-container {
+    display: flex;
+    width: 90%;
+    justify-content: flex-end;
+    margin: 0 auto; 
+}
+
+.filtragem-adm {
+    margin-right: 1rem;
+} 
+
+.tabela-adm-container {
+    width: 90%;
+    margin: 0 auto;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    border-radius: 10px; 
+    margin-top: 1.5rem;
+} 
+
+.tabela-adm-coluna {
+   height: 50px;
+   background-color: #FBFBFB; 
+}
+
+.tabela-adm-titulo {
+   padding: 10px    ;
+   border-bottom: 1px solid rgba(128, 128, 128, 0.126);
+   font-weight: 500;
+   color: #000000;
+ }
+
+ .tabela-adm-dados {
+    padding: 10px;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.126);
+    font-weight: normal;
+    color: #333333;
+    text-align: center;
+    align-items: center;
+ }
+
+.tabela-adm-dados-status {
+    background-color: #5A4A9C;
+    color: #FFFFFF;
+    padding: 8px 10px;
+    border-radius: 10px;
+
+}
+
+.tabela-adm-dados-acoes {
+    color: #7695E9;
+    background: #FFFFFF;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.tabela-adm-dados-acoes:hover {
+    color: #2b5eea;
+    transition: 0.3s;
+}
+
+

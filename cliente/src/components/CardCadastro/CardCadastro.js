@@ -32,7 +32,7 @@ function CardCadastro({ aoClicarBotaoCadastro, aoClicarLinkCadastro }) {
         <label for='password-confirm' className='card-cadastro-label'>Confirmar senha *</label>
         <input type='password' id='senha-cadastro-b' className='card-cadastro-input' onChange='confereSenha();'></input>
 
-        <div className='card-cadastro-container-b'>
+        <div className='card-cadastro-container-C'>
           <input type='checkbox' id='card-cadastro-input-C'></input><label for='checkbox-confim' id='card-cadastro-label-C'>Eu concordo com os <a className='card-cadastro-label-L' href='https://www.google.com.br/'>Temos e condições de uso</a>.</label>
         </div>  
 

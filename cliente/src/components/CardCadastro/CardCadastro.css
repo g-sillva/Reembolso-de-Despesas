@@ -5,11 +5,11 @@
 
 .card-cadastro-container {
     display: flex;
-    width: 100%;
-    height: 100%;
+    width: 390px;
+    height: 855px;
+    border-radius: 10px;
     background: var(--color-primary);
     position: absolute;
-    bottom: 0;
     background: #FFFFFF;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     align-items: center;
@@ -123,6 +123,7 @@
 .card-cadastro-logar-conta-L {
     color: #2BD477;
     text-align: center;
+    text-decoration: underline;
 }
 
 .card-cadastro-logar-conta-L:hover {
