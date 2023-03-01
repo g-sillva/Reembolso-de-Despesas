@@ -250,4 +250,24 @@ public class UsuarioControllerTest {
                 .andExpect(jsonPath("nome").value("teste"));
     }
 
+    @Test
+    public void deveDeletarUsuarioExistente() throws Exception {
+        String token = tokenService.gerarToken(new UsuarioLoginDTO("email_test@gmail.com", "1234"));
+
+        mockMvc.perform(delete("/api/clientes/63fe7c4d4b0aea0dc76f3ce7")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + token))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("message").value("Usuário remvoido com sucesso!"));
+    }
+
+    @Test
+    public void deveRetornarErroDeletarUsuarioInexistente() throws Exception {
+        String token = tokenService.gerarToken(new UsuarioLoginDTO("erickmalaguezrowedder@gmail.com", "1234"));
+
+        mockMvc.perform(delete("/api/clientes/63fe7c4d4b0aea0dc76f3ce7")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + token))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("message").value("Usuário não encontrado."));
+    }
+
 }
