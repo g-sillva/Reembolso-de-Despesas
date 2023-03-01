@@ -7,30 +7,18 @@ import com.fss.reembolso.jwt.TokenService;
 import com.fss.reembolso.lancamento.Enums.Categoria;
 import com.fss.reembolso.usuario.DTOs.UsuarioLoginDTO;
 import com.fss.reembolso.usuario.UsuarioRepository;
-import jakarta.xml.bind.SchemaOutputResolver;
-import org.apache.commons.compress.utils.IOUtils;
-import org.bson.BsonBinarySubType;
-import org.bson.types.Binary;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-
-import java.math.BigDecimal;
-import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -178,5 +166,44 @@ public class LancamentoControllerTest {
                         .header(HttpHeaders.AUTHORIZATION, "Bearer " + token))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("status").value("ENVIADO"));
+    }
+
+    @Test
+    public void deveEditarStatusUmLancamentoComIdInvalido() throws Exception {
+        String token = tokenService.gerarToken(new UsuarioLoginDTO("capak69333@iucake.com", "1234"));
+        MockMultipartFile fields = new MockMultipartFile("fields", "", "application/json", "{ \"status\": \"ENVIADO\" }".getBytes());
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+
+        MockMultipartHttpServletRequestBuilder builder =
+                MockMvcRequestBuilders.multipart("/api/lancamentos/aaabbc12");
+        builder.with(request -> {
+            request.setMethod("PATCH");
+            return request;
+        });
+
+        mockMvc.perform(builder
+                        .file(fields)
+                        .characterEncoding("UTF-8")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + token))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("message").value("Lançamento não encontrado"));
+    }
+
+    @Test
+    public void deveEditarDeletarUmLancamentoComIdValido() throws Exception {
+        String token = tokenService.gerarToken(new UsuarioLoginDTO("capak69333@iucake.com", "1234"));
+        mockMvc.perform(delete("/api/lancamentos/63ff97275126326911fee7aa")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + token))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("message").value("Lançamento deletado com sucesso!"));
+    }
+
+    @Test
+    public void deveEditarDeletarUmLancamentoComIdInvalido() throws Exception {
+        String token = tokenService.gerarToken(new UsuarioLoginDTO("capak69333@iucake.com", "1234"));
+        mockMvc.perform(delete("/api/lancamentos/aabbcc")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + token))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("message").value("Lançamento não encontrado"));
     }
 }

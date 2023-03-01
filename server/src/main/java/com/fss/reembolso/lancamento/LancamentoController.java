@@ -66,7 +66,7 @@ public class LancamentoController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteLancamento(@PathVariable String id) {
-        if (lancamentoService.deletarLancamento(id)) return new ResponseEntity<>("Lançamento deletado com sucesso!", HttpStatus.OK);
+        if (lancamentoService.deletarLancamento(id)) return new ResponseEntity<>(new RequestResponse("Lançamento deletado com sucesso!"), HttpStatus.OK);
         return new ResponseEntity<>(new RequestResponse("Lançamento não encontrado"), HttpStatus.NOT_FOUND);
     }
 }
