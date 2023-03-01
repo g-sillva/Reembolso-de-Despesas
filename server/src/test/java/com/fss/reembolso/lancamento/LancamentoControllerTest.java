@@ -19,10 +19,13 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MockMvcBuilder;
+import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -154,5 +157,26 @@ public class LancamentoControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("titulo").value("Lancamento de teste 1"));
 
+    }
+
+    @Test
+    public void deveEditarStatusUmLancamentoComIdValido() throws Exception {
+        String token = tokenService.gerarToken(new UsuarioLoginDTO("capak69333@iucake.com", "1234"));
+        MockMultipartFile fields = new MockMultipartFile("fields", "", "application/json", "{ \"status\": \"ENVIADO\" }".getBytes());
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+
+        MockMultipartHttpServletRequestBuilder builder =
+                MockMvcRequestBuilders.multipart("/api/lancamentos/63ee7368080f686b3219f4fb");
+        builder.with(request -> {
+            request.setMethod("PATCH");
+            return request;
+        });
+
+        mockMvc.perform(builder
+                        .file(fields)
+                        .characterEncoding("UTF-8")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + token))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("status").value("ENVIADO"));
     }
 }

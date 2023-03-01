@@ -57,8 +57,8 @@ public class LancamentoController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<?> patchLancamento (@PathVariable String id,
-                                           @RequestPart Map<String, Object> fields,
-                                           @RequestPart MultipartFile img) throws IOException {
+                                           @RequestPart(required = false) Map<String, Object> fields,
+                                           @RequestPart(required = false) MultipartFile img) throws IOException {
         Lancamento l = lancamentoService.patchLancamento(id, fields, img);
         if (l != null) return new ResponseEntity<>(l, HttpStatus.OK);
         return new ResponseEntity<>(new RequestResponse("Lançamento não encontrado"), HttpStatus.NOT_FOUND);

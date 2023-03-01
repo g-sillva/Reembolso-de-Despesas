@@ -37,7 +37,6 @@ public class Lancamento {
 
     private Categoria categoria;
 
-    @NotNull(message = "O valor não pode estar vazio")
     private Long valor;
 
     @NotBlank(message = "O usuário não pode estar vazio")
