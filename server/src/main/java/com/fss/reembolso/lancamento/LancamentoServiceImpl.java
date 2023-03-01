@@ -83,7 +83,7 @@ public class LancamentoServiceImpl implements LancamentoService{
         Optional<Lancamento> l = lancamentoRepository.findById(id);
         if (l.isPresent()) {
 
-            if (!img.isEmpty()) {
+            if (img != null && !img.isEmpty()) {
                 l.get().setImg(new Binary(BsonBinarySubType.BINARY, img.getBytes()));
             }
 
@@ -107,7 +107,6 @@ public class LancamentoServiceImpl implements LancamentoService{
                     ReflectionUtils.setField(field, l.get(), v);
                 }
             });
-            System.out.println(l.get());
             lancamentoRepository.save(l.get());
             return l.get();
         }

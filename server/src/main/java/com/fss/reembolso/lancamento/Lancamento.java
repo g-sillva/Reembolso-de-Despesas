@@ -4,6 +4,7 @@ import com.fss.reembolso.lancamento.Enums.Categoria;
 import com.fss.reembolso.lancamento.Enums.Status;
 import com.fss.reembolso.usuario.Usuario;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,8 +37,7 @@ public class Lancamento {
 
     private Categoria categoria;
 
-    @NotBlank(message = "O valor não pode estar vazio")
-    private BigDecimal valor;
+    private Long valor;
 
     @NotBlank(message = "O usuário não pode estar vazio")
     private String usuarioId;

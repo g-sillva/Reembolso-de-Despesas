@@ -39,7 +39,7 @@ public class LancamentoController {
     public ResponseEntity<?> getLancamentoId(@PathVariable String id) {
         Lancamento l = lancamentoService.getLancamentoPorId(id);
         if (l != null) return new ResponseEntity<>(l, HttpStatus.OK);
-        return new ResponseEntity<>(new RequestResponse("Usuário não encontrado."), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(new RequestResponse("Lancamento não encontrado."), HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/user")
@@ -51,14 +51,14 @@ public class LancamentoController {
     public ResponseEntity<?> postLancamento(@RequestPart("lancamento") Lancamento lancamento,
                                             @RequestPart("img") MultipartFile img) throws IOException {
         Lancamento l = lancamentoService.salvarLancamento(lancamento, img);
-        if (l != null) return new ResponseEntity<>(l, HttpStatus.OK);
+        if (l != null) return new ResponseEntity<>(l, HttpStatus.CREATED);
         return new ResponseEntity<>(new RequestResponse("Usuário não encontrado"), HttpStatus.NOT_FOUND);
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<?> patchLancamento (@PathVariable String id,
-                                           @RequestPart Map<String, Object> fields,
-                                           @RequestPart MultipartFile img) throws IOException {
+                                           @RequestPart(required = false) Map<String, Object> fields,
+                                           @RequestPart(required = false) MultipartFile img) throws IOException {
         Lancamento l = lancamentoService.patchLancamento(id, fields, img);
         if (l != null) return new ResponseEntity<>(l, HttpStatus.OK);
         return new ResponseEntity<>(new RequestResponse("Lançamento não encontrado"), HttpStatus.NOT_FOUND);
@@ -66,7 +66,7 @@ public class LancamentoController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteLancamento(@PathVariable String id) {
-        if (lancamentoService.deletarLancamento(id)) return new ResponseEntity<>("Lançamento deletado com sucesso!", HttpStatus.OK);
+        if (lancamentoService.deletarLancamento(id)) return new ResponseEntity<>(new RequestResponse("Lançamento deletado com sucesso!"), HttpStatus.OK);
         return new ResponseEntity<>(new RequestResponse("Lançamento não encontrado"), HttpStatus.NOT_FOUND);
     }
 }

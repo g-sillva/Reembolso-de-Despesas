@@ -4,6 +4,7 @@ import com.fss.reembolso.exceptions.RequestResponse;
 import com.fss.reembolso.jwt.TokenDTO;
 import com.fss.reembolso.jwt.TokenService;
 import com.fss.reembolso.usuario.DTOs.UsuarioLoginDTO;
+import com.fss.reembolso.usuario.DTOs.UsuarioRegistroDTO;
 import com.fss.reembolso.usuario.DTOs.UsuarioRetornoDTO;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -86,17 +87,19 @@ public class UsuarioServiceImpl implements UsuarioService{
     }
 
     @Override
-    public ResponseEntity<?> salvarUsuario(Usuario u, String url) {
+    public ResponseEntity<?> salvarUsuario(UsuarioRegistroDTO u, String url) {
         if (usuarioRepository.findByEmail(u.getEmail()) != null) {
             return new ResponseEntity<>(new RequestResponse("O e-mail já está cadastrado no sistema."), HttpStatus.BAD_REQUEST);
         }
         u.setSenha(passwordEncoder.encode(u.getSenha()));
 
-        String codigoDeVerificacao = UUID.randomUUID().toString().replaceAll("_", "");
-        u.setCodigoVerificacao(codigoDeVerificacao);
-        usuarioRepository.save(u);
+        Usuario usuario = new Usuario(u);
 
-        enviarEmailVerificacao(u, url);
+        String codigoDeVerificacao = UUID.randomUUID().toString().replaceAll("_", "");
+        usuario.setCodigoVerificacao(codigoDeVerificacao);
+        usuarioRepository.save(usuario);
+
+        enviarEmailVerificacao(usuario, url);
         return new ResponseEntity<>(new RequestResponse("Usuario cadastrado com sucesso!"), HttpStatus.OK);
     }
 

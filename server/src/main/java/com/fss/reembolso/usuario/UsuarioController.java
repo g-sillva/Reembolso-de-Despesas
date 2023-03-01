@@ -3,6 +3,7 @@ package com.fss.reembolso.usuario;
 import com.fss.reembolso.exceptions.ApiRequestException;
 import com.fss.reembolso.exceptions.RequestResponse;
 import com.fss.reembolso.usuario.DTOs.UsuarioLoginDTO;
+import com.fss.reembolso.usuario.DTOs.UsuarioRegistroDTO;
 import com.fss.reembolso.usuario.DTOs.UsuarioRetornoDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -27,7 +28,7 @@ public class UsuarioController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUsuario(@RequestBody @Valid Usuario u, HttpServletRequest req) {
+    public ResponseEntity<?> registerUsuario(@RequestBody @Valid UsuarioRegistroDTO u, HttpServletRequest req) {
         return usuarioService.salvarUsuario(u, getSiteURL(req));
     }
 
