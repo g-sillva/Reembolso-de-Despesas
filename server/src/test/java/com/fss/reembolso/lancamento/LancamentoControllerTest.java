@@ -1,18 +1,36 @@
 package com.fss.reembolso.lancamento;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fss.reembolso.jwt.TokenService;
+import com.fss.reembolso.lancamento.Enums.Categoria;
 import com.fss.reembolso.usuario.DTOs.UsuarioLoginDTO;
 import com.fss.reembolso.usuario.UsuarioRepository;
+import jakarta.xml.bind.SchemaOutputResolver;
+import org.apache.commons.compress.utils.IOUtils;
+import org.bson.BsonBinarySubType;
+import org.bson.types.Binary;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MockMvcBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
+
+import java.math.BigDecimal;
+import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -31,6 +49,9 @@ public class LancamentoControllerTest {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private WebApplicationContext webApplicationContext;
 
     @Test
     public void contextLoads() throws Exception {
@@ -102,5 +123,36 @@ public class LancamentoControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("content").isEmpty());
+    }
+
+    @Test
+    public void deveAdicionarUmNovoLancamento() throws Exception {
+        String token = tokenService.gerarToken(new UsuarioLoginDTO("capak69333@iucake.com", "1234"));
+
+        MockMultipartFile img = new MockMultipartFile("img", "img_test.png", MediaType.MULTIPART_FORM_DATA_VALUE, "C:\\Users\\silva\\Desktop\\img_test.png".getBytes());
+
+        Lancamento lancamento = new Lancamento();
+        lancamento.setTitulo("Lancamento de teste 1");
+        lancamento.setCategoria(Categoria.SOFTWARE);
+        lancamento.setValor(8990L);
+        lancamento.setUsuarioId("63ee2a9cc17b4446be0217b4");
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+        ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
+        String requestJson = ow.writeValueAsString(lancamento);
+
+        MockMultipartFile lancamentoData = new MockMultipartFile("lancamento", "", "application/json", requestJson.getBytes());
+
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/api/lancamentos")
+                        .file(img)
+                        .file(lancamentoData)
+                        .characterEncoding("UTF-8")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("titulo").value("Lancamento de teste 1"));
+
     }
 }

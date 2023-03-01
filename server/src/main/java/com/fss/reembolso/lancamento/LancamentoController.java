@@ -51,7 +51,7 @@ public class LancamentoController {
     public ResponseEntity<?> postLancamento(@RequestPart("lancamento") Lancamento lancamento,
                                             @RequestPart("img") MultipartFile img) throws IOException {
         Lancamento l = lancamentoService.salvarLancamento(lancamento, img);
-        if (l != null) return new ResponseEntity<>(l, HttpStatus.OK);
+        if (l != null) return new ResponseEntity<>(l, HttpStatus.CREATED);
         return new ResponseEntity<>(new RequestResponse("Usuário não encontrado"), HttpStatus.NOT_FOUND);
     }
 
