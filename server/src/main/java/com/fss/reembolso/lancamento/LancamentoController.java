@@ -39,7 +39,7 @@ public class LancamentoController {
     public ResponseEntity<?> getLancamentoId(@PathVariable String id) {
         Lancamento l = lancamentoService.getLancamentoPorId(id);
         if (l != null) return new ResponseEntity<>(l, HttpStatus.OK);
-        return new ResponseEntity<>(new RequestResponse("Usuário não encontrado."), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(new RequestResponse("Lancamento não encontrado."), HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/user")
