@@ -28,7 +28,7 @@ public class NotificacaoController {
     public ResponseEntity<?> getNotificacaoPorId(@PathVariable String id) {
         Notificacao n = notificacaoService.getNotificacaoPorId(id);
         if (n != null) return new ResponseEntity<>(n, HttpStatus.OK);
-        return new ResponseEntity<>(new RequestResponse("Nenhuma notificação encontrada com esse id."), HttpStatus.OK);
+        return new ResponseEntity<>(new RequestResponse("Nenhuma notificação encontrada com esse id."), HttpStatus.NOT_FOUND);
     }
 
     @PostMapping
@@ -45,7 +45,7 @@ public class NotificacaoController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletarNotificacao(@PathVariable String id) {
-        if (notificacaoService.deletarNotificacao(id)) return new ResponseEntity<>("Notificação removida com sucesso!", HttpStatus.OK);
+        if (notificacaoService.deletarNotificacao(id)) return new ResponseEntity<>(new RequestResponse("Notificação removida com sucesso!"), HttpStatus.OK);
         return new ResponseEntity<>(new RequestResponse("Notificação não encontrada."), HttpStatus.NOT_FOUND);
     }
 
