@@ -52,6 +52,7 @@
     overflow: hidden !important;
     width: 100%;
     align-items: center;
+    padding: 1rem;
     gap: 1.5rem;
 }
 

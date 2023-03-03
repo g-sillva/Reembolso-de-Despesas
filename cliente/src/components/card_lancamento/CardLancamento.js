@@ -16,28 +16,29 @@ function CardLancamento({ valor = "0",
   valor /= 100;
   return (
     <div className='card-lancamento'>
-      <div className='card-lancamento-container'>
-        <div className='card-lancamento-esquerda'>
-          <span className={`card-lancamento-esquerda-status-cor card-lancamento-cor-${status.toLowerCase()}`}></span>
-          <div className='card-lancamento-esquerda-conteudo'>
-            <h4>R${valor.toLocaleString('pt-br', {minimumFractionDigits: 2})}</h4>
-            <h3>{status.replace("_", " ")}</h3>
-            <p><span>JAN</span>2023</p>
-          </div>
+      <div className='card-lancamento-top-container'>
+        <div className='card-lancamento-textos-container'>
+          <h4 className='card-lancamento-texto-titulo'>{titulo}</h4>
+          <p className='card-lancamento-texto-descricao'>{descricao}</p>
+          <p className='card-lancamento-texto-categoria'>{categoria.replace("_", " ")}</p>
         </div>
-        <div className='card-lancamento-direita'>
-          <div className='card-lancamento-direita-header'>
-            <div>
-              <h3>{titulo}</h3>
-              {/* <p className='card-lancamento-warning'>!</p> */}
-            </div>
-            {status !== "CREDITADO" && <i className="fa-solid fa-pencil" onClick={aoAbrirEdicao}></i>}
+        <div className='card-lancamento-icones-container'>
+          <i className="fa-solid fa-pen"></i>
+          <i className="fa-regular fa-image"></i>
+        </div>
+      </div>
+      <div className='card-lancamento-bottom-container'>
+        <div className='card-lancamento-bottom-status-container'>
+          <div className='card-lancamento-bottom-status-bar'>
+            <div className='card-lancamento-bottom-status-bar-full'></div>
+            <div className='card-lancamento-bottom-status-bar-current'></div>
+            <p>%</p>
           </div>
-          <p className='card-lancamento-direita-descricao'>{descricao}</p>
-          <div className='card-lancamento-direita-footer'>
-            <i className="fa-solid fa-image"></i>
-            {/* <p className='card-lancamento-warning'>!</p> */}
-          </div>
+          <p className='card-lancamento-bottom-status-text'>{status.replace("_", " ")}</p>
+        </div>
+        <div className='card-lancamento-bottom-text-container'>
+          <p className='card-lancamento-bottom-text-date'><span>JAV</span> 2023</p>
+          <h5>R${valor}</h5>
         </div>
       </div>
     </div>

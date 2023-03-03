@@ -61,7 +61,7 @@ export const Lancamentos = [
     {
         "id": "63ee7368080f686b3219f4fb",
         "titulo": "Primeiro lançamento de teste",
-        "descricao": "lorem ipsum dolor asit met    ",
+        "descricao": "Some quick example text to build on the Card title and make up the bulk of the card’s content",
         "status": "EM_RASCUNHO",
         "data": "2023-02-16",
         "valor": "142020",
@@ -75,7 +75,7 @@ export const Lancamentos = [
     {
         "id": "63ee7368080f686b3219f4fb",
         "titulo": "Segundo lançamento de teste",
-        "descricao": "lorem ipsum dolor asit met",
+        "descricao": "Some quick example text to build on the Card title and make up the bulk of the card’s content",
         "status": "ENVIADO",
         "data": "2023-02-17",
         "valor": "6912",
@@ -89,11 +89,11 @@ export const Lancamentos = [
     {
         "id": "63ee7368080f686b3219f4fb",
         "titulo": "Terceiro lançamento de teste",
-        "descricao": "lorem ipsum dolor asit met",
+        "descricao": "Some quick example text to build on the Card title and make up the bulk of the card’s content",
         "status": "AGUARDANDO_REEMBOLSO",
         "data": "2023-02-20",
         "valor": "14220",
-        "categoria": "AGUARDANDO_REEMBOLSO",
+        "categoria": "OUTRO",
         "usuarioId": "63ee6194bf338854006f338d",
         "img": {
             "type": 0,
@@ -103,11 +103,11 @@ export const Lancamentos = [
     {
         "id": "63ee7368080f686b3219f4fb",
         "titulo": "Quarto lançamento de teste",
-        "descricao": "lorem ipsum dolor asit met",
+        "descricao": "Some quick example text to build on the Card title and make up the bulk of the card’s content",
         "status": "CREDITADO",
         "data": "2023-02-01",
         "valor": "14220",
-        "categoria": "AGUARDANDO_REEMBOLSO",
+        "categoria": "SOFTWARE",
         "usuarioId": "63ee6194bf338854006f338d",
         "img": {
             "type": 0,
