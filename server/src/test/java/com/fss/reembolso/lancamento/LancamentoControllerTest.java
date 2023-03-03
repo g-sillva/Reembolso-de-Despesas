@@ -39,9 +39,6 @@ public class LancamentoControllerTest {
     private TokenService tokenService;
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
-
-    @Autowired
     private WebApplicationContext webApplicationContext;
 
     @Test

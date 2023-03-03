@@ -61,7 +61,7 @@ public class NotificacaoServiceImpl implements NotificacaoService{
             }
             usuarioRepository.save(usuario.get());
 
-            return new ResponseEntity<>(new RequestResponse("Notificação salva com sucesso!"), HttpStatus.OK);
+            return new ResponseEntity<>(new RequestResponse("Notificação salva com sucesso!"), HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>(new RequestResponse("Usuário não encontrado."), HttpStatus.NOT_FOUND);
         }
