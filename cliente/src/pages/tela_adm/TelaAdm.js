@@ -25,7 +25,57 @@ function TelaAdm() {
       </header>
 
       <div className='filtragem-adm-container'>
-        <img src='/img/filtro-adm.png' alt='' className='filtragem-adm'></img>
+        <h2>Filtrar por:</h2> 
+        <details>
+          <summary>Colaborador</summary>
+          <input type='text'></input>
+        </details>
+
+        <details>
+          <summary>Categoria</summary>
+          <input type='checkbox' id='checkbox-adm-geral' name='geral' checked></input>
+          <label for='geral'>Geral</label>
+          <input type='checkbox' id='checkbox-adm-alimentacao' name='alimentacao'></input>
+          <label for='alimentacao'>Alimentação</label>
+
+          <input type='checkbox' id='checkbox-adm-transporte' name='transporte'></input>
+          <label for='transporte'>Transporte</label>
+
+          <input type='checkbox' id='checkbox-adm-hospedagem' name='hospedagem'></input>
+          <label for='hospedagem'>Hospedagem</label>
+
+          <input type='checkbox' id='checkbox-adm-treinamento' name='treinamento'></input>
+          <label for='treinamento'>Treinamento</label>
+
+          <input type='checkbox' id='checkbox-adm-software' name='software'></input>
+          <label for='software'>Software</label>
+        </details>  
+
+        <details>
+          <summary>Status</summary>
+          <input type='checkbox' id='checkbox-adm-recebido' name='recebido'></input>
+          <label for='recebido'>Recebido</label>
+
+          <input type='checkbox' id='checkbox-adm-analise' name='analise'></input>
+          <label for='analise'>Em análise</label>
+
+          <input type='checkbox' id='checkbox-adm-creditado' name='creditado'></input>
+          <label for='creditado'>Creditado</label>
+
+          <input type='checkbox' id='checkbox-adm-aprovado' name='aprovado'></input>
+          <label for='aprovado'>Aprovado</label>
+
+          <input type='checkbox' id='checkbox-adm-negado' name='negado'></input>
+          <label for='negado'>Negado</label>
+        </details>
+
+        <details>
+          <summary>Data</summary>
+          <input type='date' id='checkbox-adm-data' name='data'></input>
+          <label for='data'>Data</label>
+        </details>
+
+        {/* <img src='/img/filtro-adm.png' alt='' className='filtragem-adm'></img> */}
       </div>
 
       <div className='tabela-adm-container'>
