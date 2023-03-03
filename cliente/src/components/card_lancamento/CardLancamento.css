@@ -14,6 +14,28 @@
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
+.card-lancamento-preview-bg {
+    position: fixed;
+    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 99999999;
+}
+
+.card-lancamento-preview-img {
+    position: fixed;
+    width: 100%;
+    max-width: 390px;
+    max-height: 800px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999999999;
+    object-fit: cover;
+}
+
 .card-lancamento-top-container {
     display: flex;
     justify-content: space-between;

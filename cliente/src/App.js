@@ -7,7 +7,7 @@ import TelaInicial from './pages/tela_inicial/TelaInicial';
 function App() {
   return (
     <div className='app'>
-      <div className='main-container'>
+      <div>
           <Routes>
               <Route path='/' element={<TelaInicial />}/>
               <Route path='/login' element={<Login />}/>
