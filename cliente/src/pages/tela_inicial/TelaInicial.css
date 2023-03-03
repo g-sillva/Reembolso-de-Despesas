@@ -1,17 +1,11 @@
 .container-tela-inicial {
-    height: 100%;
     overflow-y: auto;
     position: relative;
     width: 390px;
     height: 844px;
-    border-radius: 10px;
-}
-
-.container-tela-inicial {
     box-shadow: rgba(100, 100, 100, 0.1) 0px 7px 29px 0;
     border-radius: 10px;
 }
-
 .tela-inicial-cards-container {
     margin: 2rem 0;
     display: flex;
