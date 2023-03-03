@@ -9,7 +9,14 @@ function FormCadastro({ aoClicarLinkCadastro }) {
   const handleSubmit = () => {
     console.log("clicou submit");
   }
-  console.log(formCadastro);
+
+  const handleTelChange = (e) => {
+    const re = /^[0-9\b]+$/;
+
+    if (e.target.value === '' || re.test(e.target.value)) {
+        setFormCadastro({...formCadastro, telefone: e.target.value})
+    }
+  }
 
   return (
     <section className='card-cadastro-container'>
@@ -43,7 +50,7 @@ function FormCadastro({ aoClicarLinkCadastro }) {
               id='card-cadastro-input-T' 
               className='card-cadastro-input'
               value={formCadastro.telefone}
-              onChange={(e) => setFormCadastro({...formCadastro, telefone: e.target.telefone})}></input>
+              onChange={(e) => handleTelChange(e)}></input>
 
         <label htmlFor='password' className='card-cadastro-label'>Senha *</label>
         <input type='password' 
