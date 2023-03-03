@@ -23,7 +23,7 @@ function CardLancamento({ valor = "0",
           <p className='card-lancamento-texto-categoria'>{categoria.replace("_", " ")}</p>
         </div>
         <div className='card-lancamento-icones-container'>
-          <i className="fa-solid fa-pen"></i>
+          <i className="fa-solid fa-pen" onClick={aoAbrirEdicao}></i>
           <i className="fa-regular fa-image"></i>
         </div>
       </div>
