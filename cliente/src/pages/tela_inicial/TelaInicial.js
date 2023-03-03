@@ -137,7 +137,7 @@ function TelaInicial() {
                                 titulo={x.titulo} 
                                 descricao={x.descricao} 
                                 categoria={x.categoria} 
-                                comprovativo={x.comprovativo}
+                                comprovativo={x.img.data}
                                 aoAbrirEdicao={() => handleAbrirEdicaoLancamento(x)}/>
               ))}
             </div>}
