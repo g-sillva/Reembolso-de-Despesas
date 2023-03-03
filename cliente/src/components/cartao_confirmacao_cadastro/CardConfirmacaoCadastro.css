@@ -1,0 +1,58 @@
+@keyframes card-confirmacao-cadastro-container {
+    from{transform:translateY(0)}
+    from{transform:translateY(100%)}
+}
+
+.card-confirmacao-cadastro-container {
+    display: flex;
+    width: 390px;
+    height: 844px;
+    background: #FFFFFF;
+    border-radius: 1rem 1rem 0 0;
+    position: absolute;
+    bottom: 0;
+    align-items: center;
+    flex-direction: column;
+    animation-name: card-confirmacao-cadastro-container;
+    animation-duration: 0.8s;
+    text-align: center;
+    justify-content: center;
+    box-shadow: rgba(100, 100, 111, 0.1) 0px 7px 29px 0px;
+}
+
+.card-confirmacao-cadastro-titulo {
+    color: #2BD477;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+}
+
+.card-confirmacao-cadastro-bottom {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2.5rem;
+}
+
+.card-confirmacao-cadastro-img {
+    width: 320px;
+    margin: 0 auto  ;
+}
+
+.card-confirmacao-cadastro-status {
+    color: #2BD477;
+    margin-top: 4rem;
+    margin-bottom: 2.5rem;
+    font-size: 2rem;
+}
+
+.card-confirmacao-cadastro-subtitulo {
+    margin: 0 auto;
+    font-size: 1.3rem;
+    color: #202924;
+    font-weight: normal;
+    max-width: 90%;
+}
+
+.card-confirmacao-cadastro-subtitulo-L {
+    color: #2BD477;
+}

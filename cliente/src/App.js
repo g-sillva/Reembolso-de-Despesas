@@ -1,17 +1,20 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import Cadastro from './pages/cadastro';
-import Login from './pages/login';
+import LoginCadastro from './pages/tela_login_cadastro/LoginCadastro';
 import TelaInicial from './pages/tela_inicial/TelaInicial';
+import TelaAdm from './pages/tela_adm/TelaAdm';
 
 function App() {
   return (
     <div className='app'>
       <div>
           <Routes>
-              <Route path='/' element={<TelaInicial />}/>
-              <Route path='/login' element={<Login />}/>
-              <Route path='/cadastro' element={<Cadastro />}/>
+            <Route path='/LoginCadastro' element={<LoginCadastro />}/>
+
+            {/* TO DO: Mostrar confirmação no componente de cadastro */}
+            {/* <Route path='/ConfirmacaoCadastro' element={<CardConfirmacaoCadastro />}/> */}
+            <Route path= '' element={<TelaInicial />}/>
+            <Route path='/TelaAdm' element={<TelaAdm />}/>
           </Routes>
         </div>
     </div>
