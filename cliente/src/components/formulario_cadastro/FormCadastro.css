@@ -41,11 +41,24 @@
     flex-direction: column;
 }
 
+.card-cadastro-form-input-container {
+    display: flex;
+    flex-direction: column;
+}
+
 .card-cadastro-label {
     color: #8C9791;
-    font-size: 1.1rem;
+    font-size: 16px;
     margin-left: 0.7rem;
-    padding-bottom: 0.8rem;
+    position: relative;
+    top: 30px;
+    transition: all .1s ease-in;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.cadastro-label-active {
+    top: 0;
 }
 
 .card-cadastro-input {
@@ -53,10 +66,9 @@
     border-bottom: 1px solid #2BD477;
     margin-bottom: 1rem;
     outline: none;
-    padding-left: 0.8rem;
-    padding-right: 0.8rem;
-    padding-bottom: 0.3rem;
-    font-size: 1rem;
+    background: transparent;
+    padding: 10px;
+    font-size: 16px;
 }
 
 #card-cadastro-input-T {

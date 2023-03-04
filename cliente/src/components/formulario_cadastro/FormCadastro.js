@@ -6,7 +6,8 @@ function FormCadastro({ aoClicarLinkCadastro }) {
   const [isCardConfirmacaoCadastro, setCardConfirmacaoCadastro] = useState(false);
   const [formCadastro, setFormCadastro] = useState({"nome": "", "email": "", "confirmacao_email": "", "telefone": "", "senha": "", "confirmacao_senha": "", "erro": ""});
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     console.log("clicou submit");
   }
 
@@ -23,48 +24,66 @@ function FormCadastro({ aoClicarLinkCadastro }) {
       <h1 className='card-cadastro-titulo'>Cadastrar</h1>
       <h2 className='card-cadastro-descricao'>Por favor, preencha as informações abaixo.</h2>
 
-      <form onSubmit={e => e.preventDefault()} action='#' method='post' className='card-cadastro-form'>
-        <label htmlFor='name' className='card-cadastro-label'>Nome *</label>
-        <input type='text' 
-               id='nome-cadastro' 
-               className='card-cadastro-input' 
-               value={formCadastro.nome}
-               onChange={(e) => setFormCadastro({...formCadastro, nome: e.target.value})}></input>
+      <form onSubmit={e => handleSubmit(e)} method='post' className='card-cadastro-form'>
+        <div className='card-cadastro-form-input-container'>
+          <label htmlFor='name' className="card-cadastro-label" style={{top: formCadastro.nome !== "" && "0px"}}>Nome *</label>
+          <input type='text' 
+                id='nome-cadastro' 
+                className='card-cadastro-input' 
+                value={formCadastro.nome}
+                required
+                onChange={(e) => setFormCadastro({...formCadastro, nome: e.target.value})}></input>
+        </div>
 
-        <label htmlFor='email' className='card-cadastro-label'>E-mail *</label>
-        <input type='email' 
-               id='email-cadastro' 
-               className='card-cadastro-input' 
-               value={formCadastro.email}
-               onChange={(e) => setFormCadastro({...formCadastro, email: e.target.value})}></input>
+        <div className='card-cadastro-form-input-container'>
+          <label htmlFor='email' className='card-cadastro-label' style={{top: formCadastro.email !== "" && "0px"}}>E-mail *</label>
+          <input type='email' 
+                id='email-cadastro' 
+                className='card-cadastro-input' 
+                value={formCadastro.email}
+                required
+                onChange={(e) => setFormCadastro({...formCadastro, email: e.target.value})}></input>
+        </div>
 
-        <label htmlFor='email-confirm' className='card-cadastro-label'>Confirmar e-mail *</label>
-        <input type='email' 
-               id='email-cadastro-b' 
-               className='card-cadastro-input'
-               value={formCadastro.confirmacao_email}
-               onChange={(e) => setFormCadastro({...formCadastro, confirmacao_email: e.target.value})}></input>
+        <div className='card-cadastro-form-input-container'>
+          <label htmlFor='email-confirm' className='card-cadastro-label' style={{top: formCadastro.confirmacao_email !== "" && "0px"}}>Confirmar e-mail *</label>
+          <input type='email' 
+                id='email-cadastro-b' 
+                className='card-cadastro-input'
+                required
+                value={formCadastro.confirmacao_email}
+                onChange={(e) => setFormCadastro({...formCadastro, confirmacao_email: e.target.value})}></input>
+        </div>
 
-        <label htmlFor='tel' className='card-cadastro-label'>Telefone *</label>
-        <input type='tel' 
-              id='card-cadastro-input-T' 
-              className='card-cadastro-input'
-              value={formCadastro.telefone}
-              onChange={(e) => handleTelChange(e)}></input>
+        <div className='card-cadastro-form-input-container'>
+          <label htmlFor='tel' className='card-cadastro-label' style={{top: formCadastro.telefone !== "" && "0px"}}>Telefone *</label>
+          <input type='tel' 
+                id='card-cadastro-input-T' 
+                className='card-cadastro-input'
+                value={formCadastro.telefone}
+                required
+                onChange={(e) => handleTelChange(e)}></input>
+        </div>
 
-        <label htmlFor='password' className='card-cadastro-label'>Senha *</label>
-        <input type='password' 
-               id='senha-cadastro' 
-               className='card-cadastro-input' 
-               value={formCadastro.senha}
-               onChange={(e) => setFormCadastro({...formCadastro, senha: e.target.value})}></input>
+        <div className='card-cadastro-form-input-container'>
+          <label htmlFor='password' className='card-cadastro-label' style={{top: formCadastro.senha !== "" && "0px"}}>Senha *</label>
+          <input type='password' 
+                id='senha-cadastro' 
+                className='card-cadastro-input' 
+                value={formCadastro.senha}
+                required
+                onChange={(e) => setFormCadastro({...formCadastro, senha: e.target.value})}></input>
+        </div>
 
-        <label htmlFor='password-confirm' className='card-cadastro-label'>Confirmar senha *</label>
-        <input type='password' 
-               id='senha-cadastro-b' 
-               className='card-cadastro-input' 
-               value={formCadastro.confirmacao_senha}
-               onChange={(e) => setFormCadastro({...formCadastro, confirmacao_senha: e.target.value})}></input>
+        <div className='card-cadastro-form-input-container'>
+          <label htmlFor='password-confirm' className='card-cadastro-label' style={{top: formCadastro.confirmacao_senha !== "" && "0px"}}>Confirmar senha *</label>
+          <input type='password' 
+                id='senha-cadastro-b' 
+                className='card-cadastro-input' 
+                value={formCadastro.confirmacao_senha}
+                required
+                onChange={(e) => setFormCadastro({...formCadastro, confirmacao_senha: e.target.value})}></input>
+        </div>
 
         <div className='card-cadastro-container-C'>
           <input type='checkbox' id='card-cadastro-input-C'></input>
@@ -73,8 +92,7 @@ function FormCadastro({ aoClicarLinkCadastro }) {
           </label>
         </div>  
 
-        <input onClick={() => setCardConfirmacaoCadastro(!isCardConfirmacaoCadastro)} 
-               type='submit' value='CADASTRAR' id='card-cadastro-B-cadastrar'></input>
+        <input type='submit' value='CADASTRAR' id='card-cadastro-B-cadastrar'></input>
 
         <div className='card-cadastro-logar-conta-container'>
           <h2 className='card-cadastro-logar-conta'>Já possui cadastro? <p onClick={aoClicarLinkCadastro} className='card-cadastro-logar-conta-L'>Acesse sua conta</p></h2>
