@@ -1,10 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './FormCadastro.css'
 import CardConfirmacaoCadastro from '../cartao_confirmacao_cadastro/CardConfirmacaoCadastro'
 
 function FormCadastro({ aoClicarLinkCadastro }) {
   const [isCardConfirmacaoCadastro, setCardConfirmacaoCadastro] = useState(false);
   const [formCadastro, setFormCadastro] = useState({"nome": "", "email": "", "confirmacao_email": "", "telefone": "", "senha": "", "confirmacao_senha": "", "erro": ""});
+  const [isSenhaErrada, setIsSenhaErrada] = useState(false);
+  const [isEmailErrado, setIsEmailErrado] = useState(false);
+
+  useEffect(() => {
+    setIsSenhaErrada(formCadastro.senha !== formCadastro.confirmacao_senha && formCadastro.confirmacao_senha !== "" && formCadastro.senha !== "");
+    setIsEmailErrado(formCadastro.email !== formCadastro.confirmacao_email && formCadastro.confirmacao_email !== "" && formCadastro.email !== "");
+  }, [formCadastro]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,7 +33,9 @@ function FormCadastro({ aoClicarLinkCadastro }) {
 
       <form onSubmit={e => handleSubmit(e)} method='post' className='card-cadastro-form'>
         <div className='card-cadastro-form-input-container'>
-          <label htmlFor='name' className="card-cadastro-label" style={{top: formCadastro.nome !== "" && "0px"}}>Nome *</label>
+          <label htmlFor='name' 
+                 className="card-cadastro-label" 
+                 style={{top: formCadastro.nome !== "" && "0px"}}>Nome *</label>
           <input type='text' 
                 id='nome-cadastro' 
                 className='card-cadastro-input' 
@@ -36,7 +45,9 @@ function FormCadastro({ aoClicarLinkCadastro }) {
         </div>
 
         <div className='card-cadastro-form-input-container'>
-          <label htmlFor='email' className='card-cadastro-label' style={{top: formCadastro.email !== "" && "0px"}}>E-mail *</label>
+          <label htmlFor='email' 
+                 className='card-cadastro-label' 
+                 style={{top: formCadastro.email !== "" && "0px"}}>E-mail *</label>
           <input type='email' 
                 id='email-cadastro' 
                 className='card-cadastro-input' 
@@ -46,17 +57,22 @@ function FormCadastro({ aoClicarLinkCadastro }) {
         </div>
 
         <div className='card-cadastro-form-input-container'>
-          <label htmlFor='email-confirm' className='card-cadastro-label' style={{top: formCadastro.confirmacao_email !== "" && "0px"}}>Confirmar e-mail *</label>
+          <label htmlFor='email-confirm' 
+                 className='card-cadastro-label' 
+                 style={{top: formCadastro.confirmacao_email !== "" && "0px"}}>Confirmar e-mail *</label>
           <input type='email' 
                 id='email-cadastro-b' 
                 className='card-cadastro-input'
                 required
                 value={formCadastro.confirmacao_email}
                 onChange={(e) => setFormCadastro({...formCadastro, confirmacao_email: e.target.value})}></input>
+                {isEmailErrado && <p className='card-cadastro-erro-msg'>ERRO: O e-mail precisa ser o mesmo</p>}
         </div>
 
         <div className='card-cadastro-form-input-container'>
-          <label htmlFor='tel' className='card-cadastro-label' style={{top: formCadastro.telefone !== "" && "0px"}}>Telefone *</label>
+          <label htmlFor='tel' 
+                 className='card-cadastro-label' 
+                 style={{top: formCadastro.telefone !== "" && "0px"}}>Telefone *</label>
           <input type='tel' 
                 id='card-cadastro-input-T' 
                 className='card-cadastro-input'
@@ -66,7 +82,9 @@ function FormCadastro({ aoClicarLinkCadastro }) {
         </div>
 
         <div className='card-cadastro-form-input-container'>
-          <label htmlFor='password' className='card-cadastro-label' style={{top: formCadastro.senha !== "" && "0px"}}>Senha *</label>
+          <label htmlFor='password' 
+                 className='card-cadastro-label' 
+                 style={{top: formCadastro.senha !== "" && "0px"}}>Senha *</label>
           <input type='password' 
                 id='senha-cadastro' 
                 className='card-cadastro-input' 
@@ -76,13 +94,16 @@ function FormCadastro({ aoClicarLinkCadastro }) {
         </div>
 
         <div className='card-cadastro-form-input-container'>
-          <label htmlFor='password-confirm' className='card-cadastro-label' style={{top: formCadastro.confirmacao_senha !== "" && "0px"}}>Confirmar senha *</label>
+          <label htmlFor='password-confirm' 
+                 className='card-cadastro-label' 
+                 style={{top: formCadastro.confirmacao_senha !== "" && "0px"}}>Confirmar senha *</label>
           <input type='password' 
                 id='senha-cadastro-b' 
                 className='card-cadastro-input' 
                 value={formCadastro.confirmacao_senha}
                 required
                 onChange={(e) => setFormCadastro({...formCadastro, confirmacao_senha: e.target.value})}></input>
+                { isSenhaErrada && <p className='card-cadastro-erro-msg'>ERRO: A senha precisa ser a mesma</p> }
         </div>
 
         <div className='card-cadastro-container-C'>

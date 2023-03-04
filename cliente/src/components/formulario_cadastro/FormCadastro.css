@@ -44,6 +44,7 @@
 .card-cadastro-form-input-container {
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .card-cadastro-label {
@@ -142,4 +143,12 @@
     color: #009231;
     transition: 0.3s ease;
     cursor: pointer;
+}
+
+.card-cadastro-erro-msg {
+    font-size: 12px;
+    position: absolute;
+    bottom: -5px;
+    width: 100%;
+    color: red;
 }
