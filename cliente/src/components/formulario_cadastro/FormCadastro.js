@@ -64,6 +64,7 @@ function FormCadastro({ aoClicarLinkCadastro }) {
                 id='email-cadastro-b' 
                 className='card-cadastro-input'
                 required
+                style={{borderColor: isEmailErrado && "red"}}
                 value={formCadastro.confirmacao_email}
                 onChange={(e) => setFormCadastro({...formCadastro, confirmacao_email: e.target.value})}></input>
                 {isEmailErrado && <p className='card-cadastro-erro-msg'>ERRO: O e-mail precisa ser o mesmo</p>}
@@ -101,6 +102,7 @@ function FormCadastro({ aoClicarLinkCadastro }) {
                 id='senha-cadastro-b' 
                 className='card-cadastro-input' 
                 value={formCadastro.confirmacao_senha}
+                style={{borderColor: isSenhaErrada && "red"}}
                 required
                 onChange={(e) => setFormCadastro({...formCadastro, confirmacao_senha: e.target.value})}></input>
                 { isSenhaErrada && <p className='card-cadastro-erro-msg'>ERRO: A senha precisa ser a mesma</p> }

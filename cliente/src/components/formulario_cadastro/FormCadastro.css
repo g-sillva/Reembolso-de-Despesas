@@ -78,7 +78,6 @@
 
 .card-cadastro-container-C {
     margin-top: 1rem;   
-    text-align: center;
 }
 
 #card-cadastro-input-C {
@@ -87,9 +86,8 @@
 }
 
 #card-cadastro-label-C {
-    font-size: 1.1rem;
+    font-size: 16px;
     color: #5B5B5B;
-    max-width: 30px;
 }
 
 .card-cadastro-label-L {
