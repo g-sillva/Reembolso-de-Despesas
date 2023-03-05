@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/notificacoes")
 @AllArgsConstructor
+@CrossOrigin("http://localhost:3000")
 public class NotificacaoController {
 
     private NotificacaoService notificacaoService;
