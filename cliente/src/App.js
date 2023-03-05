@@ -10,6 +10,8 @@ function App() {
   const [context, setContext] = useState(null);
 
   return (
+    
+// Para commit teste
     <div className='app'>
       <Context.Provider value={[context, setContext]}>
         <div>
@@ -28,3 +30,4 @@ function App() {
 }
 
 export default App;
+
