@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import './FormCadastro.css'
-import CardConfirmacaoCadastro from '../cartao_confirmacao_cadastro/CardConfirmacaoCadastro'
+import CardConfirmacaoCadastro from '../cartao_confirmacao_cadastro/CardConfirmacaoCadastro';
+import Context from '../../Context';
 
 function FormCadastro({ aoClicarLinkCadastro }) {
   const [isCardConfirmacaoCadastro, setCardConfirmacaoCadastro] = useState(false);
   const [formCadastro, setFormCadastro] = useState({"nome": "", "email": "", "confirmacao_email": "", "telefone": "", "senha": "", "confirmacao_senha": "", "erro": ""});
   const [isSenhaErrada, setIsSenhaErrada] = useState(false);
   const [isEmailErrado, setIsEmailErrado] = useState(false);
+  const [contexto, setContexto] = useContext(Context);
 
   useEffect(() => {
     setIsSenhaErrada(formCadastro.senha !== formCadastro.confirmacao_senha && formCadastro.confirmacao_senha !== "" && formCadastro.senha !== "");
@@ -15,7 +17,6 @@ function FormCadastro({ aoClicarLinkCadastro }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("clicou submit");
   }
 
   const handleTelChange = (e) => {
