@@ -8,6 +8,7 @@
     width: 390px;
     height: 844px;
     background: #FFFFFF;
+    z-index: 999;
     border-radius: 1rem 1rem 0 0;
     position: absolute;
     bottom: 0;
@@ -18,6 +19,15 @@
     text-align: center;
     justify-content: center;
     box-shadow: rgba(100, 100, 111, 0.1) 0px 7px 29px 0px;
+}
+
+.card-confirmacao-cadastro-container .fa-xmark {
+    color: var(--color-primary);
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    font-size: 1.5rem;
+    cursor: pointer;
 }
 
 .card-confirmacao-cadastro-titulo {
@@ -47,7 +57,7 @@
 
 .card-confirmacao-cadastro-subtitulo {
     margin: 0 auto;
-    font-size: 1.3rem;
+    font-size: 18px;
     color: #202924;
     font-weight: normal;
     max-width: 90%;

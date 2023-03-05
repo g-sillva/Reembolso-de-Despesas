@@ -1,22 +1,50 @@
 import React, { useEffect, useState, useContext } from 'react'
 import './FormCadastro.css'
 import CardConfirmacaoCadastro from '../cartao_confirmacao_cadastro/CardConfirmacaoCadastro';
-import Context from '../../Context';
+import axios from 'axios';
 
 function FormCadastro({ aoClicarLinkCadastro }) {
-  const [isCardConfirmacaoCadastro, setCardConfirmacaoCadastro] = useState(false);
-  const [formCadastro, setFormCadastro] = useState({"nome": "", "email": "", "confirmacao_email": "", "telefone": "", "senha": "", "confirmacao_senha": "", "erro": ""});
+  const [isCardConfirmacaoCadastro, setIsCardConfirmacaoCadastro] = useState(false);
+  const [formCadastro, setFormCadastro] = useState({nome: "", email: "", confirmacao_email: "", telefone: "", senha: "", confirmacao_senha: "", erro: "", termos_aceitos: false});
   const [isSenhaErrada, setIsSenhaErrada] = useState(false);
   const [isEmailErrado, setIsEmailErrado] = useState(false);
-  const [contexto, setContexto] = useContext(Context);
+  const [isFormPreenchido, setIsFormPreenchido] = useState(false);
 
   useEffect(() => {
     setIsSenhaErrada(formCadastro.senha !== formCadastro.confirmacao_senha && formCadastro.confirmacao_senha !== "" && formCadastro.senha !== "");
     setIsEmailErrado(formCadastro.email !== formCadastro.confirmacao_email && formCadastro.confirmacao_email !== "" && formCadastro.email !== "");
+    setIsFormPreenchido(formCadastro.nome !== "" && 
+                        formCadastro.confirmacao_email !== "" && 
+                        formCadastro.email !== "" && 
+                        formCadastro.email === formCadastro.confirmacao_email &&
+                        formCadastro.senha === formCadastro.confirmacao_senha &&
+                        formCadastro.confirmacao_senha !== "" &&
+                        formCadastro.senha !== "" &&
+                        formCadastro.telefone !== "" &&
+                        formCadastro.telefone.length === 11 &&
+                        formCadastro.termos_aceitos);
   }, [formCadastro]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (isSenhaErrada || isEmailErrado) return;
+
+    const usuarioObj = {
+      nome: formCadastro.nome,
+      email: formCadastro.email,
+      telefone: formCadastro.telefone,
+      senha: formCadastro.senha
+  }
+
+
+    axios.post('https://reembolso-de-despesas-production.up.railway.app/api/clientes/register', usuarioObj)
+        .then((res) => {
+            if (res.data.message === "Usuario cadastrado com sucesso!") {
+              setIsCardConfirmacaoCadastro(true);
+            }
+        }).catch((error) => {
+            console.log(error);
+        });
   }
 
   const handleTelChange = (e) => {
@@ -80,7 +108,11 @@ function FormCadastro({ aoClicarLinkCadastro }) {
                 className='card-cadastro-input'
                 value={formCadastro.telefone}
                 required
+                minLength="11"
+                maxLength="11"
                 onChange={(e) => handleTelChange(e)}></input>
+          {formCadastro.telefone !== "" && formCadastro.telefone.length !== 11 && <p className='card-cadastro-erro-msg'>ERRO: O telefone precisa ser válido</p>}
+
         </div>
 
         <div className='card-cadastro-form-input-container'>
@@ -110,22 +142,21 @@ function FormCadastro({ aoClicarLinkCadastro }) {
         </div>
 
         <div className='card-cadastro-container-C'>
-          <input type='checkbox' id='card-cadastro-input-C'></input>
+          <input type='checkbox' id='card-cadastro-input-C' required onClick={(e) => setFormCadastro({...formCadastro, termos_aceitos: e.target.checked})}></input>
           <label htmlFor='checkbox-confim' id='card-cadastro-label-C'>
-            Eu concordo com os <a className='card-cadastro-label-L' href='https://www.google.com.br/'>Temos e condições de uso</a>.
+            Eu concordo com os <a className='card-cadastro-label-L' href='https://www.google.com.br/'>Temos e condições de uso *</a>.
           </label>
         </div>  
 
-        <input type='submit' value='CADASTRAR' id='card-cadastro-B-cadastrar'></input>
+        <input type='submit' value='CADASTRAR' id='card-cadastro-B-cadastrar' className={`${isFormPreenchido && "card-cadastro-btn-submit-enabled"}`}></input>
 
         <div className='card-cadastro-logar-conta-container'>
           <h2 className='card-cadastro-logar-conta'>Já possui cadastro? <p onClick={aoClicarLinkCadastro} className='card-cadastro-logar-conta-L'>Acesse sua conta</p></h2>
         </div>
       </form>
 
-      {isCardConfirmacaoCadastro && <CardConfirmacaoCadastro aoClicarBotaoCadastro={() => {
-        setCardConfirmacaoCadastro(true);
-      }}/>}
+      {isCardConfirmacaoCadastro && <CardConfirmacaoCadastro email={formCadastro.email}
+                                                             aoClicarSair={() => setIsCardConfirmacaoCadastro(false)}/>}
     </section>
   )
 }
