@@ -15,6 +15,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/lancamentos")
 @AllArgsConstructor
+@CrossOrigin("http://localhost:3000")
 public class LancamentoController {
 
     private LancamentoService lancamentoService;
