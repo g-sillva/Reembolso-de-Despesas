@@ -68,24 +68,26 @@ function CardEditarLancamento({ tituloCard = "",
           {imagemSelecionada && (
                 <>
                 <label htmlFor='upload-img'>
-                  <p className='titulo-lancamento-upload'>Comprovativo 3*</p>
+                  <p className='titulo-lancamento-upload'>Comprovativo *</p>
                   <img src={imagemPreview} />
                 </label>
                 <input id='upload-img' 
                        type="file" 
                        name='comprovativo' 
+                       accept="image/*"
                        onChange={(e) => setImagemSelecionada(e.target.files[0])}/>
               </>
           )}
-          {comprovativoCard !== "" && (
+          {comprovativoCard !== "" && imagemSelecionada === undefined && (
               <>
                 <label htmlFor='upload-img'>
-                  <p className='titulo-lancamento-upload'>Comprovativo 32*</p>
+                  <p className='titulo-lancamento-upload'>Comprovativo *</p>
                   <img src={`data:image/jpeg;base64,${comprovativoCard.data}`} />
                 </label>
                 <input id='upload-img' 
                        type="file" 
-                       name='comprovativo' 
+                       name='comprovativo'
+                       accept="image/*"
                        onChange={(e) => setImagemSelecionada(e.target.files[0])}/>
               </>
           )}
@@ -100,6 +102,7 @@ function CardEditarLancamento({ tituloCard = "",
               <input id='upload-img' 
                     type="file"
                     name='comprovativo' 
+                    accept="image/*"
                     value={comprovativo}
                     onChange={(e) => setImagemSelecionada(e.target.files[0])}/>
             </>
