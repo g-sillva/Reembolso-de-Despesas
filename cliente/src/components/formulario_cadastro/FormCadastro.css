@@ -28,7 +28,7 @@
 
 .card-cadastro-descricao {
     margin-bottom: 2rem;
-    font-size: 1.1rem;
+    font-size: 16px;
     max-width: 80%;
     color: #8C9791;
     font-weight: normal;
@@ -49,6 +49,7 @@
 
 .card-cadastro-label {
     color: #8C9791;
+    margin-top: 10px;
     font-size: 16px;
     margin-left: 0.7rem;
     position: relative;
@@ -105,17 +106,23 @@
     font-size: 1.1rem;
     font-weight: bold;
     color: #FFFFFF;
-    background: #2BD477;
-    border: none;
+    background-color: #2BD477;
+    border: 1px solid #2BD477;
     border-radius: 10px;
     cursor: pointer;
+    transition: 0.3s ease;
+    pointer-events: none;
+    opacity: .5;
 }
 
 #card-cadastro-B-cadastrar:hover {
     background-color: #FFFFFF;
     color: #2BD477;
-    border: 1px solid #2BD477;
-    transition: 0.3s ease;
+}
+
+.card-cadastro-btn-submit-enabled {
+    pointer-events: all !important;
+    opacity: 1 !important;
 }
 
 .card-cadastro-logar-conta-container {
