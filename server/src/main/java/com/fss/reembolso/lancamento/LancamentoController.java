@@ -14,7 +14,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/lancamentos")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 @AllArgsConstructor
 public class LancamentoController {
 
