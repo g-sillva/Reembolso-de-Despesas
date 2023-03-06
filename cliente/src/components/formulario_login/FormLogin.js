@@ -8,18 +8,29 @@ function FormLogin({ aoClicarLinkLogin }) {
   const [formLogin, setFormLogin] = useState({email: "", senha: "", confirmacao_senha: "", erro: ""});
   const handleSubmit = (e) => {
     e.preventDefault();
-  const usuarioObj = {
-    email: formLogin.email,
-    senha: formLogin.senha
-  }
 
+    const usuarioObj = {
+      email: formLogin.email,
+      senha: formLogin.senha
+    }
 
     axios.post('https://reembolso-de-despesas-production.up.railway.app/api/clientes/login', usuarioObj)
         .then((res) => {
-        setContext(res.data.token)
+
+          axios.get(`https://reembolso-de-despesas-production.up.railway.app/api/clientes?email=${usuarioObj.email}`, {
+            headers: {
+              'Authorization': `Bearer ${res.data.token}`
+            }
+          })
+
+          .then((userRes) => {
+            setContext({"usuario": userRes.data[0], "token": res.data.token});
+          })
+
         }).catch((error) => {
             console.log(error);
         });
+
   }
 
   return (
@@ -30,10 +41,10 @@ function FormLogin({ aoClicarLinkLogin }) {
 
     <div>
       <form onSubmit={e => handleSubmit(e)} action='#' method='post' className='card-login-form'>
-        <label for='email' className='card-login-label'>E-mail *</label>
+        <label htmlFor='email' className='card-login-label'>E-mail *</label>
         <input onChange={(e) => setFormLogin({...formLogin, email: e.target.value})} type='email' id='email' className='card-login-input' required></input>
 
-        <label for='password' className='card-login-label'>Senha *</label>
+        <label htmlFor='password' className='card-login-label'>Senha *</label>
         <input onChange={(e) => setFormLogin({...formLogin, senha: e.target.value})} type='password' id='password' className='card-login-input' required></input>
 
         <input type='submit' value='ENTRAR' id='card-login-B-logar'></input>
