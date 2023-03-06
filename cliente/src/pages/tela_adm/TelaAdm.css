@@ -67,14 +67,12 @@
 
 .filtragem-adm-container {
     display: flex;
-    width: 90%;
-    justify-content: flex-end;
-    margin: 0 auto; 
+    justify-content: space-between;
+    margin-right: 4.2rem;
+    margin-left: 4.2rem;
+    margin-bottom: 2.2rem;
+    align-items: center;
 }
-
-.filtragem-adm {
-    margin-right: 1rem;
-} 
 
 .tabela-adm-container {
     width: 90%;

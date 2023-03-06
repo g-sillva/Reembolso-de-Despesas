@@ -1,5 +1,6 @@
 package com.fss.reembolso.usuario;
 
+import com.fss.reembolso.exceptions.ApiRequestException;
 import com.fss.reembolso.exceptions.RequestResponse;
 import com.fss.reembolso.usuario.DTOs.UsuarioLoginDTO;
 import com.fss.reembolso.usuario.DTOs.UsuarioRegistroDTO;
@@ -17,7 +18,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/clientes")
 @AllArgsConstructor
-@CrossOrigin("http://localhost:3000")
 public class UsuarioController {
 
     private UsuarioService usuarioService;
