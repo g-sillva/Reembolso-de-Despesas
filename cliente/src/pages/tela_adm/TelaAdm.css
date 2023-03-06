@@ -124,4 +124,61 @@
     transition: 0.3s;
 }
 
+.foto-adm-comprovante {
+    cursor: pointer;
+}
+
+/* Filtros */
+
+.filtragem-adm-container {
+    text-align: center;
+    align-items: center;
+    border-bottom: 1px solid #2BD477;
+}
+
+.filtragem-adm-filtrar-por {
+    color: #2BD477;
+    font-weight: normal;
+    font-size: 18px;
+    margin-bottom: 0.5rem;
+}
+
+.filtragem-adm-categoria-titulo {
+    margin-bottom: 0.5rem;
+    font-size: 18px;
+    color: #333333CC;
+}
+
+.filtragem-adm-categoria-input-texto {
+    margin-bottom: 0.5rem;
+    padding: 0.2rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    color: #333333CC;
+    border: 1px solid #333333CC;
+    border-radius: 10px;
+    outline: none;
+    font-size: 1rem;
+}
+
+.filtragem-adm-categoria-input-checkbox {
+    margin-bottom: 0.5rem;
+}
+
+.filtragem-adm-categoria-input-data {
+    margin-bottom: 0.5rem;
+    padding: 0.2rem;
+    font-size: 1rem;
+    color: #333333CC;
+    border: 1px solid #333333CC;
+    border-radius: 10px;
+    outline: none;
+}
+
+.filtragem-adm-categoria-opcao {
+    margin-right: 0.8rem;
+    margin-left: 0.3rem;
+    color: #333333CC;
+}
+
 
