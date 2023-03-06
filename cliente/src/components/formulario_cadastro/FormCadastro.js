@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './FormCadastro.css'
 import CardConfirmacaoCadastro from '../cartao_confirmacao_cadastro/CardConfirmacaoCadastro'
 
@@ -34,7 +34,7 @@ const handleSubmit = (e) => {
     senha: formCadastro.senha
   }
 
-  axios.post('', usuarioObj)
+  axios.post('https://reembolso-de-despesas-production.up.railway.app/api/clientes/register', usuarioObj)
   .then((res) => {
     if (res.data.message === 'Usuário cadastrado com sucesso!') {
       setCardConfirmacaoCadastro(true);
@@ -58,7 +58,7 @@ const handleTelChange = (e) => {
       <h2 className='card-cadastro-descricao'>Por favor, preencha as informações abaixo.</h2>
 
       <form onSubmit={e => handleSubmit(e)} action='#' method='post' className='card-cadastro-form'>
-      <div className='card-cadastro-form-input-container'>
+        <div className='card-cadastro-form-input-container'>
           <label htmlFor='name' 
                  className="card-cadastro-label" 
                  style={{top: formCadastro.nome !== "" && "0px"}}>Nome *</label>
