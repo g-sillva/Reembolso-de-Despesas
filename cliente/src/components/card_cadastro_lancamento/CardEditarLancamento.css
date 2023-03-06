@@ -189,8 +189,9 @@
 
 .card-editar-lancamento-upload img{
     border-radius: 10px;
-    width: 60%;
-    height: 100%;
+    width: 100%;
+    height: 80%;
+    margin-top: auto;
     align-self: center;
     object-fit: cover;
 }

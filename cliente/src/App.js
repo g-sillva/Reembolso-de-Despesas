@@ -15,9 +15,6 @@ function App() {
         <div>
             <Routes>
               <Route path='/LoginCadastro' element={<LoginCadastro />}/>
-
-              {/* TO DO: Mostrar confirmação no componente de cadastro */}
-              {/* <Route path='/ConfirmacaoCadastro' element={<CardConfirmacaoCadastro />}/> */}
               <Route path= '' element={<TelaInicial />}/>
               <Route path='/TelaAdm' element={<TelaAdm />}/>
             </Routes>
