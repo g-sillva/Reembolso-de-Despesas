@@ -27,7 +27,7 @@ function FormLogin({ aoClicarLinkLogin }) {
     <h2 className='card-login-descricao'>Por favor, preencha as informações abaixo.</h2>
 
     <div>
-      <form action='#' method='post' className='card-login-form'>
+      <form onSubmit={e => handleSubmit(e)} action='#' method='post' className='card-login-form'>
         <label for='email' className='card-login-label'>E-mail *</label>
         <input type='email' id='email' className='card-login-input' required></input>
 
