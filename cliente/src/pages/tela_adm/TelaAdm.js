@@ -25,54 +25,56 @@ function TelaAdm() {
       </header>
 
       <div className='filtragem-adm-container'>
-        <h2>Filtrar por:</h2> 
-        <details>
-          <summary>Colaborador</summary>
-          <input type='text'></input>
+        <h2 class='filtragem-adm-filtrar-por'>Filtrar por:</h2> 
+
+        <details className='filtragem-adm-categoria'>
+          <summary className='filtragem-adm-categoria-titulo'>Colaborador</summary>
+          <input class='filtragem-adm-categoria-input-texto' type='text'></input>
         </details>
 
-        <details>
-          <summary>Categoria</summary>
-          <input type='checkbox' id='checkbox-adm-geral' name='geral' checked></input>
-          <label for='geral'>Geral</label>
-          <input type='checkbox' id='checkbox-adm-alimentacao' name='alimentacao'></input>
-          <label for='alimentacao'>Alimentação</label>
+        <details className='filtragem-adm-categoria'>
+          <summary className='filtragem-adm-categoria-titulo'>Categoria</summary>
 
-          <input type='checkbox' id='checkbox-adm-transporte' name='transporte'></input>
-          <label for='transporte'>Transporte</label>
+            <input class='filtragem-adm-categoria-input-checkbox' type='checkbox' id='checkbox-adm-geral' name='geral'></input>
+            <label className='filtragem-adm-categoria-opcao' for='geral'>Geral</label>
 
-          <input type='checkbox' id='checkbox-adm-hospedagem' name='hospedagem'></input>
-          <label for='hospedagem'>Hospedagem</label>
+          <input class='filtragem-adm-categoria-input-checkbox' type='checkbox' id='checkbox-adm-alimentacao' name='alimentacao'></input>
+          <label className='filtragem-adm-categoria-opcao' for='alimentacao'>Alimentação</label>
 
-          <input type='checkbox' id='checkbox-adm-treinamento' name='treinamento'></input>
-          <label for='treinamento'>Treinamento</label>
+          <input class='filtragem-adm-categoria-input-checkbox' type='checkbox' id='checkbox-adm-transporte' name='transporte'></input>
+          <label className='filtragem-adm-categoria-opcao' for='transporte'>Transporte</label>
 
-          <input type='checkbox' id='checkbox-adm-software' name='software'></input>
-          <label for='software'>Software</label>
+          <input class='filtragem-adm-categoria-input-checkbox' type='checkbox' id='checkbox-adm-hospedagem' name='hospedagem'></input>
+          <label className='filtragem-adm-categoria-opcao' for='hospedagem'>Hospedagem</label>
+
+          <input class='filtragem-adm-categoria-input-checkbox' type='checkbox' id='checkbox-adm-treinamento' name='treinamento'></input>
+          <label className='filtragem-adm-categoria-opcao' for='treinamento'>Treinamento</label>
+
+          <input class='filtragem-adm-categoria-input-checkbox' type='checkbox' id='checkbox-adm-software' name='software'></input>
+          <label className='filtragem-adm-categoria-opcao' for='software'>Software</label>
         </details>  
 
-        <details>
-          <summary>Status</summary>
-          <input type='checkbox' id='checkbox-adm-recebido' name='recebido'></input>
-          <label for='recebido'>Recebido</label>
+        <details className='filtragem-adm-categoria'>
+          <summary className='filtragem-adm-categoria-titulo'>Status</summary>
+          <input class='filtragem-adm-categoria-input-checkbox' type='checkbox' id='checkbox-adm-recebido' name='recebido'></input>
+          <label className='filtragem-adm-categoria-opcao' for='recebido'>Recebido</label>
 
-          <input type='checkbox' id='checkbox-adm-analise' name='analise'></input>
-          <label for='analise'>Em análise</label>
+          <input class='filtragem-adm-categoria-input-checkbox' type='checkbox' id='checkbox-adm-analise' name='analise'></input>
+          <label className='filtragem-adm-categoria-opcao' for='analise'>Em análise</label>
 
-          <input type='checkbox' id='checkbox-adm-creditado' name='creditado'></input>
-          <label for='creditado'>Creditado</label>
+          <input class='filtragem-adm-categoria-input-checkbox' type='checkbox' id='checkbox-adm-creditado' name='creditado'></input>
+          <label className='filtragem-adm-categoria-opcao' for='creditado'>Creditado</label>
 
-          <input type='checkbox' id='checkbox-adm-aprovado' name='aprovado'></input>
-          <label for='aprovado'>Aprovado</label>
+          <input class='filtragem-adm-categoria-input-checkbox' type='checkbox' id='checkbox-adm-aprovado' name='aprovado'></input>
+          <label className='filtragem-adm-categoria-opcao' for='aprovado'>Aprovado</label>
 
-          <input type='checkbox' id='checkbox-adm-negado' name='negado'></input>
-          <label for='negado'>Negado</label>
+          <input class='filtragem-adm-categoria-input-checkbox' type='checkbox' id='checkbox-adm-negado' name='negado'></input>
+          <label className='filtragem-adm-categoria-opcao' for='negado'>Negado</label>
         </details>
 
-        <details>
-          <summary>Data</summary>
-          <input type='date' id='checkbox-adm-data' name='data'></input>
-          <label for='data'>Data</label>
+        <details className='filtragem-adm-categoria'>
+          <summary className='filtragem-adm-categoria-titulo'>Data</summary>
+          <input class='filtragem-adm-categoria-input-data' type='date' id='checkbox-adm-data' name='data'></input>
         </details>
 
         {/* <img src='/img/filtro-adm.png' alt='' className='filtragem-adm'></img> */}
