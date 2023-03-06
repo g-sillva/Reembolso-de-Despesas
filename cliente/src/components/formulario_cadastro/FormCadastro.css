@@ -28,7 +28,7 @@
 
 .card-cadastro-descricao {
     margin-bottom: 2rem;
-    font-size: 1.1rem;
+    font-size: 16px;
     max-width: 80%;
     color: #8C9791;
     font-weight: normal;
@@ -41,11 +41,26 @@
     flex-direction: column;
 }
 
+.card-cadastro-form-input-container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
 .card-cadastro-label {
     color: #8C9791;
-    font-size: 1.1rem;
+    margin-top: 10px;
+    font-size: 16px;
     margin-left: 0.7rem;
-    padding-bottom: 0.8rem;
+    position: relative;
+    top: 30px;
+    transition: all .1s ease-in;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.cadastro-label-active {
+    top: 0;
 }
 
 .card-cadastro-input {
@@ -53,10 +68,9 @@
     border-bottom: 1px solid #2BD477;
     margin-bottom: 1rem;
     outline: none;
-    padding-left: 0.8rem;
-    padding-right: 0.8rem;
-    padding-bottom: 0.3rem;
-    font-size: 1rem;
+    background: transparent;
+    padding: 10px;
+    font-size: 16px;
 }
 
 #card-cadastro-input-T {
@@ -65,7 +79,6 @@
 
 .card-cadastro-container-C {
     margin-top: 1rem;   
-    text-align: center;
 }
 
 #card-cadastro-input-C {
@@ -74,9 +87,8 @@
 }
 
 #card-cadastro-label-C {
-    font-size: 1.1rem;
+    font-size: 16px;
     color: #5B5B5B;
-    max-width: 30px;
 }
 
 .card-cadastro-label-L {
@@ -94,17 +106,23 @@
     font-size: 1.1rem;
     font-weight: bold;
     color: #FFFFFF;
-    background: #2BD477;
-    border: none;
+    background-color: #2BD477;
+    border: 1px solid #2BD477;
     border-radius: 10px;
     cursor: pointer;
+    transition: 0.3s ease;
+    pointer-events: none;
+    opacity: .5;
 }
 
 #card-cadastro-B-cadastrar:hover {
     background-color: #FFFFFF;
     color: #2BD477;
-    border: 1px solid #2BD477;
-    transition: 0.3s ease;
+}
+
+.card-cadastro-btn-submit-enabled {
+    pointer-events: all !important;
+    opacity: 1 !important;
 }
 
 .card-cadastro-logar-conta-container {
@@ -130,4 +148,12 @@
     color: #009231;
     transition: 0.3s ease;
     cursor: pointer;
+}
+
+.card-cadastro-erro-msg {
+    font-size: 12px;
+    position: absolute;
+    bottom: -5px;
+    width: 100%;
+    color: red;
 }
