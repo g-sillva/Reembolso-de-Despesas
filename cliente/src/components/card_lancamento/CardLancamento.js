@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import "./CardLancamento.css";
 
@@ -42,8 +42,10 @@ function CardLancamento({ valor = "0",
       )}
       <div className='card-lancamento-top-container'>
         <div className='card-lancamento-textos-container'>
-          <h4 className='card-lancamento-texto-titulo' style={{color: titulo === "-" && "red"}}>{titulo}</h4>
-          <p className='card-lancamento-texto-descricao'>{descricao}</p>
+          <h4 className='card-lancamento-texto-titulo' style={{color: titulo === "-" && "red"}}>
+            {titulo.length > 24 ? titulo.substring(0, 24) + "..." : titulo}
+          </h4>
+          <p className='card-lancamento-texto-descricao'>{descricao.length > 110 ? descricao.substring(0, 110) + "..." : descricao}</p>
           <p className='card-lancamento-texto-categoria' style={{backgroundColor: categoria === "Categoria" && "#FF4747"}} >{categoria.replace("_", " ")}</p>
         </div>
         <div className='card-lancamento-icones-container'>
