@@ -1,63 +1,66 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import './FormCadastro.css'
-import CardConfirmacaoCadastro from '../cartao_confirmacao_cadastro/CardConfirmacaoCadastro'
+import CardConfirmacaoCadastro from '../cartao_confirmacao_cadastro/CardConfirmacaoCadastro';
+import axios from 'axios';
 
-function FormCadastro({ aoClicarBotaoCadastro, aoClicarLinkCadastro }) {
-  const [isCardConfirmacaoCadastro, setCardConfirmacaoCadastro] = useState(false);
-  const [formCadastro, setFormCadastro] = useState({nome: '', email: '', confirmacao_email: '', telefone: '', senha: '', confirmacao_senha: ''});
+function FormCadastro({ aoClicarLinkCadastro }) {
+  const [isCardConfirmacaoCadastro, setIsCardConfirmacaoCadastro] = useState(false);
+  const [formCadastro, setFormCadastro] = useState({nome: "", email: "", confirmacao_email: "", telefone: "", senha: "", confirmacao_senha: "", erro: "", termos_aceitos: false});
   const [isSenhaErrada, setIsSenhaErrada] = useState(false);
+  const [isEmailErrado, setIsEmailErrado] = useState(false);
   const [isFormPreenchido, setIsFormPreenchido] = useState(false);
 
-useEffect(() => {
-  setIsSenhaErrada(formCadastro.senha !== formCadastro.confirmacao_senha && formCadastro.confirmacao_senha !== "" && formCadastro.senha)
-  setIsEmailErrado(formCadastro.email !== formCadastro.confirmacao_email && formCadastro.confirmacao_email !== "" && formCadastro.email)
-  setIsFormPreenchido(formCadastro.nome !== '' && 
-                      formCadastro.confirmacao_email !== '' && 
-                      formCadastro.email !== '' &&
-                      formCadastro.email === formCadastro.confirmacao_email &&
-                      formCadastro.senha === formCadastro.confirmacao_senha &&
-                      formCadastro.confirmacao_senha !== '' &&
-                      formCadastro.senha !== '' &&
-                      formCadastro.telefone !== '' &&
-                      formCadastro.telefone.length === 11 &&
-                      formCadastro.termos_aceitos);
-}, [formCadastro]);
+  useEffect(() => {
+    setIsSenhaErrada(formCadastro.senha !== formCadastro.confirmacao_senha && formCadastro.confirmacao_senha !== "" && formCadastro.senha !== "");
+    setIsEmailErrado(formCadastro.email !== formCadastro.confirmacao_email && formCadastro.confirmacao_email !== "" && formCadastro.email !== "");
+    setIsFormPreenchido(formCadastro.nome !== "" && 
+                        formCadastro.confirmacao_email !== "" && 
+                        formCadastro.email !== "" && 
+                        formCadastro.email === formCadastro.confirmacao_email &&
+                        formCadastro.senha === formCadastro.confirmacao_senha &&
+                        formCadastro.confirmacao_senha !== "" &&
+                        formCadastro.senha !== "" &&
+                        formCadastro.telefone !== "" &&
+                        formCadastro.telefone.length === 11 &&
+                        formCadastro.termos_aceitos);
+  }, [formCadastro]);
 
-const handleSubmit = (e) => {
-  e.preventDefault();
-  if (isSenhaErrada || setIsEmailErrado) return;
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (isSenhaErrada || isEmailErrado) return;
 
-  const usuarioObj = {
-    nome: formCadastro.nome,
-    email: formCadastro.email,
-    telefone: formCadastro.telefone,
-    senha: formCadastro.senha
+    const usuarioObj = {
+      nome: formCadastro.nome,
+      email: formCadastro.email,
+      telefone: formCadastro.telefone,
+      senha: formCadastro.senha
   }
 
-  axios.post('https://reembolso-de-despesas-production.up.railway.app/api/clientes/register', usuarioObj)
-  .then((res) => {
-    if (res.data.message === 'Usuário cadastrado com sucesso!') {
-      setCardConfirmacaoCadastro(true);
+
+    axios.post('https://reembolso-de-despesas-production.up.railway.app/api/clientes/register', usuarioObj)
+        .then((res) => {
+            if (res.data.message === "Usuario cadastrado com sucesso!") {
+              setIsCardConfirmacaoCadastro(true);
+            }
+        }).catch((error) => {
+            console.log(error);
+        });
+  }
+
+  const handleTelChange = (e) => {
+    const re = /^[0-9\b]+$/;
+
+    if (e.target.value === '' || re.test(e.target.value)) {
+        setFormCadastro({...formCadastro, telefone: e.target.value})
     }
-  }).catch((error) => {
-    console.log(error);
-  });
-}
-
-const handleTelChange = (e) => {
-  const re = /^[0-9\b]+$/;
-
-  if (e.target.value === '' || re.test(e.target.value)) {
-    setFormCadastro({...formCadastro, telefone: e.target.value})
   }
-}
 
   return (
     <section className='card-cadastro-container'>
       <h1 className='card-cadastro-titulo'>Cadastrar</h1>
       <h2 className='card-cadastro-descricao'>Por favor, preencha as informações abaixo.</h2>
 
-      <form onSubmit={e => handleSubmit(e)} action='#' method='post' className='card-cadastro-form'>
+      <form onSubmit={e => handleSubmit(e)} method='post' className='card-cadastro-form'>
         <div className='card-cadastro-form-input-container'>
           <label htmlFor='name' 
                  className="card-cadastro-label" 
@@ -152,9 +155,8 @@ const handleTelChange = (e) => {
         </div>
       </form>
 
-     {isCardConfirmacaoCadastro && <CardConfirmacaoCadastro email={formCadastro.email}
-                                                            aoClicarSair={() => setCardConfirmacaoCadastro(false)}/>}
-                                                            
+      {isCardConfirmacaoCadastro && <CardConfirmacaoCadastro email={formCadastro.email}
+                                                             aoClicarSair={() => setIsCardConfirmacaoCadastro(false)}/>}
     </section>
   )
 }
