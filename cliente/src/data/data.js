@@ -90,7 +90,7 @@ export const Lancamentos = [
         "id": "63ee7368080f686b3219f4fb",
         "titulo": "Terceiro lançamento de teste",
         "descricao": "Some quick example text to build on the Card title and make up the bulk of the card’s content",
-        "status": "AGUARDANDO_REEMBOLSO",
+        "status": "ANALISE",
         "data": "2023-02-20",
         "valor": "14220",
         "categoria": "OUTRO",
