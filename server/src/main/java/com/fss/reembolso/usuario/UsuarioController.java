@@ -17,6 +17,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/clientes")
+@CrossOrigin(origins = "*", maxAge = 36000)
 @AllArgsConstructor
 public class UsuarioController {
 
