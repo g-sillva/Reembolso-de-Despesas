@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import CardLancamento from '../../components/card_lancamento/CardLancamento';
 import CardTelaInicial from '../../components/card_tela_inicial/CardTelaInicial';
 import Header from '../../components/header/Header';
 import ModalFiltro from '../../components/card_filtro/CardFiltro';
-import { Lancamentos, Usuarios } from '../../data/data';
+import { Usuarios } from '../../data/data';
 
 import "./TelaInicial.css";
 import CardEditarLancamento from '../../components/card_cadastro_lancamento/CardEditarLancamento';
+import Context from '../../Context';
+import { useNavigate } from 'react-router';
 
 function TelaInicial() {
-  const [lancamentos, setLancamentos] = useState(Lancamentos);
+  const [lancamentos, setLancamentos] = useState([]);
+  const [context, setContext] = useContext(Context);
 
   const [filtrosPorStatus, setFiltrosPorStatus] = useState([]);
   const [filtrosPorCategoria, setFiltrosPorCategoria] = useState([]);
@@ -23,7 +26,19 @@ function TelaInicial() {
 
   const [currentModalData, setCurrentModalData] = useState(lancamentos[0]);
 
-  const lancamentosOriginal = Lancamentos;
+  const [lancamentosOriginal, setLancamentosOriginal] = useState([]);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (context !== null) {
+      setLancamentos(context.usuario.lancamentos);
+      setLancamentosOriginal(lancamentos[0]);
+      console.log("oi");
+    } else {
+      navigate("/logincadastro")
+    }
+  }, [context, lancamentos])
 
   useEffect(() => {
     if (isFiltroModalAberto || isAdicionarModalAberto || isEditarModalAberto) {

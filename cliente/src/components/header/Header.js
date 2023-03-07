@@ -12,7 +12,6 @@ function Header({ usuario }) {
 
   useEffect(() => {
     if (context !== null) {
-      console.log(context);
       setNotificacoes(context.usuario.notificacaos);
     }
 
