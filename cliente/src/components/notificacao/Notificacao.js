@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Notificacoes } from '../../data/data';
 import ItemNotificacao from './item_notificacao/ItemNotificacao';
 
 import "./Notificacao.css";
@@ -9,7 +8,9 @@ function Notificacao({ conteudo }) {
   const [notificacoes, setNotificacoes] = useState([]);
 
   useEffect(() => {
-    setNotificacoes(conteudo);
+    if (conteudo !== null || conteudo !== undefined) {
+      setNotificacoes(conteudo);
+    }
   }, []);
 
   const handleNotificacaoClick = (i) => {
@@ -21,7 +22,7 @@ function Notificacao({ conteudo }) {
     <div className='notificacoes-container'>
         <h4>Notificações</h4>
         <div className='notificacoes-content'>
-            {/* {conteudo.length == 0 && <p className='nenhuma-notificacao-aviso'>Nenhuma notificação</p>} */}
+            {notificacoes === [] && <p className='nenhuma-notificacao-aviso'>Nenhuma notificação</p>}
             <div className='itens-notificacao-container'>
               {notificacoes.map((x, i) => (
                 <ItemNotificacao onBtnClick={() => handleNotificacaoClick(i)}
