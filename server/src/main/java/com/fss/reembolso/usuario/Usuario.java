@@ -52,10 +52,10 @@ public class Usuario implements UserDetails {
     private List<Role> roles = List.of(Role.USER);
 
     @DBRef
-    private List<Lancamento> lancamentos;
+    private List<Lancamento> lancamentos = new ArrayList<>();
 
     @DBRef
-    private List<Notificacao> notificacaos;
+    private List<Notificacao> notificacaos = new ArrayList<>();
 
     private boolean ativo;
 
