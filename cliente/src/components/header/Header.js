@@ -25,7 +25,7 @@ function Header({ usuario }) {
           <i className="fa-solid fa-user"></i>
           <div className='header-user-container-content'>
             <p>Olá,</p>
-            <p className='header-content-username'>{usuario.nome}</p>
+            <p className='header-content-username'>{usuario}</p>
           </div>
         </div>
         <i className="fa-regular fa-bell" onClick={() => setIsNotificacaoAberta(!isNotificacaoAberta)}></i>
