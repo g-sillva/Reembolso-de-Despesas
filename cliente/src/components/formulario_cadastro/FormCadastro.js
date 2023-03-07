@@ -143,7 +143,7 @@ function FormCadastro({ aoClicarLinkCadastro }) {
         <div className='card-cadastro-container-C'>
           <input type='checkbox' id='card-cadastro-input-C' required onClick={(e) => setFormCadastro({...formCadastro, termos_aceitos: e.target.checked})}></input>
           <label htmlFor='checkbox-confim' id='card-cadastro-label-C'>
-            Eu concordo com os <a className='card-cadastro-label-L' href='https://www.google.com.br/'>Temos e condições de uso *</a>.
+            Eu concordo com os <a className='card-cadastro-label-L' href='https://www.google.com.br/'>Temos e condições de uso</a>.
           </label>
         </div>  
 
