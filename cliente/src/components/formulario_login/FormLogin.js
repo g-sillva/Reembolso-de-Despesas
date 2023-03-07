@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import './FormLogin.css';
 import axios from 'axios';
-import Context from './../../Context';
+import Context from '../../Context';
 
 function FormLogin({ aoClicarLinkLogin }) {
   const [context, setContext] = useContext(Context);
