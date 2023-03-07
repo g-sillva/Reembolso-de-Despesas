@@ -3,7 +3,8 @@ package com.fss.reembolso.lancamento.Enums;
     public enum Status {
     EM_RASCUNHO,
     ENVIADO,
-    AGUARDANDO_REEMBOLSO,
+        ANALISE,
+    NEGADO,
     CREDITADO;
 
     public static Status findByName(String name) {

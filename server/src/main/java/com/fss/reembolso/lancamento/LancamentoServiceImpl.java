@@ -82,33 +82,39 @@ public class LancamentoServiceImpl implements LancamentoService{
     public Lancamento patchLancamento(String id, Map<String, Object> fields, MultipartFile img) throws IOException {
         Optional<Lancamento> l = lancamentoRepository.findById(id);
         if (l.isPresent()) {
+            Optional<Usuario> usuario = usuarioRepository.findById(l.get().getUsuarioId());
 
-            if (img != null && !img.isEmpty()) {
-                l.get().setImg(new Binary(BsonBinarySubType.BINARY, img.getBytes()));
-            }
-
-            fields.forEach((k, v) -> {
-                Field field = ReflectionUtils.findField(Lancamento.class, k);
-                field.setAccessible(true);
-
-                if (field.getName().equalsIgnoreCase("status")) {
-                    Notificacao notificacao = new Notificacao();
-                    notificacao.setTitulo("O seu lançamento mudou de status!");
-                    notificacao.setMsg("O lançamento: '" + l.get().getTitulo() + "' teve o seu status alterado para " + v.toString().replaceAll("-", " "));
-                    notificacao.setUsuarioId(l.get().getUsuarioId());
-                    notificacaoRepository.save(notificacao);
-
-                    Status status = Status.valueOf(v.toString());
-                    l.get().setStatus(status);
-                } else if (field.getName().equalsIgnoreCase("categoria")) {
-                    Categoria c = Categoria.valueOf(v.toString().toUpperCase());
-                    l.get().setCategoria(c);
-                } else {
-                    ReflectionUtils.setField(field, l.get(), v);
+            if (usuario.isPresent()) {
+                if (img != null && !img.isEmpty()) {
+                    l.get().setImg(new Binary(BsonBinarySubType.BINARY, img.getBytes()));
                 }
-            });
-            lancamentoRepository.save(l.get());
-            return l.get();
+
+                fields.forEach((k, v) -> {
+                    Field field = ReflectionUtils.findField(Lancamento.class, k);
+                    field.setAccessible(true);
+
+                    if (field.getName().equalsIgnoreCase("status")) {
+                        Notificacao notificacao = new Notificacao();
+                        notificacao.setTitulo("O seu lançamento mudou de status!");
+                        notificacao.setMsg("O lançamento: '" + l.get().getTitulo() + "' teve o seu status alterado para " + v.toString().replaceAll("-", " "));
+                        notificacao.setUsuarioId(l.get().getUsuarioId());
+                        notificacaoRepository.save(notificacao);
+
+                        usuario.get().getNotificacaos().add(notificacao);
+
+                        Status status = Status.valueOf(v.toString());
+                        l.get().setStatus(status);
+                    } else if (field.getName().equalsIgnoreCase("categoria")) {
+                        Categoria c = Categoria.valueOf(v.toString().toUpperCase());
+                        l.get().setCategoria(c);
+                    } else {
+                        ReflectionUtils.setField(field, l.get(), v);
+                    }
+                });
+                usuarioRepository.save(usuario.get());
+                lancamentoRepository.save(l.get());
+                return l.get();
+            }
         }
         return null;
     }
