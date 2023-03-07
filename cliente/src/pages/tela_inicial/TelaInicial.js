@@ -33,12 +33,11 @@ function TelaInicial() {
   useEffect(() => {
     if (context !== null) {
       setLancamentos(context.usuario.lancamentos);
-      setLancamentosOriginal(lancamentos[0]);
-      console.log("oi");
+      setLancamentosOriginal(lancamentos);
     } else {
       navigate("/logincadastro")
     }
-  }, [context, lancamentos])
+  }, [context, lancamentosOriginal])
 
   useEffect(() => {
     if (isFiltroModalAberto || isAdicionarModalAberto || isEditarModalAberto) {
