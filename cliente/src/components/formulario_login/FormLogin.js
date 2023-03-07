@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import './FormLogin.css';
 import axios from 'axios';
-import Context from './../../Context';
+import Context from '../../Context';
 
 function FormLogin({ aoClicarLinkLogin }) {
   const [context, setContext] = useContext(Context);
@@ -35,11 +35,10 @@ function FormLogin({ aoClicarLinkLogin }) {
 
   return (
     <section className='card-login-container'>
-    <h1 className='card-login-titulo'>Entrar</h1>
+      <h1 className='card-login-titulo'>Entrar</h1>
 
-    <h2 className='card-login-descricao'>Por favor, preencha as informações abaixo.</h2>
+      <h2 className='card-login-descricao'>Por favor, preencha as informações abaixo.</h2>
 
-    <div>
       <form onSubmit={e => handleSubmit(e)} action='#' method='post' className='card-login-form'>
         <label htmlFor='email' className='card-login-label'>E-mail *</label>
         <input onChange={(e) => setFormLogin({...formLogin, email: e.target.value})} type='email' id='email' className='card-login-input' required></input>
@@ -53,7 +52,6 @@ function FormLogin({ aoClicarLinkLogin }) {
           <h2 className='card-login-criar-conta'>Ainda não tem cadastro? <p onClick={aoClicarLinkLogin} className='card-login-criar-conta-L'>Crie sua conta</p></h2>
         </div>
       </form>
-    </div>
   </section>
   )
 }

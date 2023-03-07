@@ -15,7 +15,7 @@
     align-items: center;
     color: #FFFFFF;
     font-size: 1rem;
-    margin-bottom: 3rem;
+    margin-bottom: 1rem;
     box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.097);
 }
 
@@ -63,16 +63,85 @@
     cursor: pointer;
 }
 
-/* Tabela */
+/* Seta dos filtros */
+
+details {
+    transition: height 0.3s ease;
+
+}
+
+details:not([open]) {
+    height: 1.25em;
+}
+
+details[open] {
+    height: 2.50em;
+}
+
+summary::marker {    
+    color: #333333;
+}
+
+/* Filtros */
 
 .filtragem-adm-container {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    text-align: center;
     margin-right: 4.2rem;
     margin-left: 4.2rem;
-    margin-bottom: 2.2rem;
-    align-items: center;
+    min-height: 80px;
 }
+
+.filtragem-adm-filtrar-por {
+    color: #2BD477;
+    font-weight: normal;
+    font-size: 18px;
+    margin-bottom: 0.5rem;
+}
+
+.filtragem-adm-categoria-titulo {
+    margin-bottom: 0.5rem;
+    font-size: 18px;
+    color: #333333CC;
+    cursor: pointer;
+}
+
+.filtragem-adm-categoria-titulo:hover {
+    color: #000000cc;
+    transition: 0.3s;
+}
+
+.filtragem-adm-categoria-input-texto {
+    margin-bottom: 0.5rem;
+    padding: 0.2rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    color: #333333CC;
+    border: 1px solid #33333362;
+    border-radius: 10px;
+    outline: none;
+    font-size: 1rem;
+}
+
+.filtragem-adm-categoria-input-data {
+    margin-bottom: 0.5rem;
+    padding: 0.2rem;
+    font-size: 1rem;
+    color: #333333CC;
+    border: 1px solid #33333362;
+    border-radius: 10px;
+    outline: none;
+}
+
+.filtragem-adm-categoria-opcao {
+    margin-right: 0.8rem;
+    margin-left: 0.3rem;
+    color: #333333CC;
+}
+
+/* Tabela */
 
 .tabela-adm-container {
     width: 90%;
@@ -126,59 +195,6 @@
 
 .foto-adm-comprovante {
     cursor: pointer;
-}
-
-/* Filtros */
-
-.filtragem-adm-container {
-    text-align: center;
-    align-items: center;
-    border-bottom: 1px solid #2BD477;
-}
-
-.filtragem-adm-filtrar-por {
-    color: #2BD477;
-    font-weight: normal;
-    font-size: 18px;
-    margin-bottom: 0.5rem;
-}
-
-.filtragem-adm-categoria-titulo {
-    margin-bottom: 0.5rem;
-    font-size: 18px;
-    color: #333333CC;
-}
-
-.filtragem-adm-categoria-input-texto {
-    margin-bottom: 0.5rem;
-    padding: 0.2rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    color: #333333CC;
-    border: 1px solid #333333CC;
-    border-radius: 10px;
-    outline: none;
-    font-size: 1rem;
-}
-
-.filtragem-adm-categoria-input-checkbox {
-    margin-bottom: 0.5rem;
-}
-
-.filtragem-adm-categoria-input-data {
-    margin-bottom: 0.5rem;
-    padding: 0.2rem;
-    font-size: 1rem;
-    color: #333333CC;
-    border: 1px solid #333333CC;
-    border-radius: 10px;
-    outline: none;
-}
-
-.filtragem-adm-categoria-opcao {
-    margin-right: 0.8rem;
-    margin-left: 0.3rem;
-    color: #333333CC;
 }
 
 
