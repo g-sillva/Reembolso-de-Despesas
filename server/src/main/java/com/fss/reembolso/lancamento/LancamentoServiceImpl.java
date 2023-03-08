@@ -65,7 +65,9 @@ public class LancamentoServiceImpl implements LancamentoService{
             } else {
                 usuario.get().getLancamentos().add(lancamento);
             }
-            lancamento.setImg(new Binary(BsonBinarySubType.BINARY, file.getBytes()));
+            if (file != null && !file.isEmpty()) {
+                lancamento.setImg(new Binary(BsonBinarySubType.BINARY, file.getBytes()));
+            }
             lancamentoRepository.save(lancamento);
             usuarioRepository.save(usuario.get());
             return lancamento;
