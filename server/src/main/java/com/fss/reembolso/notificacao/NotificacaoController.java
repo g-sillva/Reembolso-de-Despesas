@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/notificacoes")
 @AllArgsConstructor
-@CrossOrigin(origins = "*", maxAge = 36000)
 public class NotificacaoController {
 
     private NotificacaoService notificacaoService;
