@@ -106,7 +106,7 @@ function TelaInicial() {
 
   return (
     <section className='container-tela-inicial'>
-        <Header usuario={context.usuario.nome}/> 
+        <Header usuario={context !== null ? context.usuario.nome : "-"}/> 
 
         <div className='tela-inicial-cards-container'>
           <CardTelaInicial titulo="$ Total" dado={handleSomarValores()} img_url="/img/card-tela-inicial/card_total.png" />
