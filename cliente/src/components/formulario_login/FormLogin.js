@@ -1,11 +1,14 @@
 import React, { useContext, useState } from 'react';
 import './FormLogin.css';
 import axios from 'axios';
-import Context from '../../Context';
+import Context from './../../Context';
+import { useNavigate } from 'react-router';
 
 function FormLogin({ aoClicarLinkLogin }) {
   const [context, setContext] = useContext(Context);
   const [formLogin, setFormLogin] = useState({email: "", senha: "", confirmacao_senha: "", erro: ""});
+  const navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -22,15 +25,14 @@ function FormLogin({ aoClicarLinkLogin }) {
               'Authorization': `Bearer ${res.data.token}`
             }
           })
-
           .then((userRes) => {
             setContext({"usuario": userRes.data[0], "token": res.data.token});
+            navigate("/");
           })
 
         }).catch((error) => {
             console.log(error);
         });
-
   }
 
   return (
