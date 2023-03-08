@@ -106,13 +106,13 @@ function TelaInicial() {
 
   const handleAddLancamento = (titulo, valor, categoria, descricao, comprovativo) => {
     setIsAdicionarModalAberto(false);
-    let estaEmRascunho = titulo !== "" && valor !== 0 && categoria !== "Categoria" && comprovativo !== "";
+    let estaEmRascunho = titulo === "" || valor === 0 || categoria === "CATEGORIA" || comprovativo === "";
 
     let lancamentoObj = {
-      "titulo": titulo,
+      "titulo": titulo === "" ? "-" : titulo,
       "descricao": descricao,
       "categoria": categoria.toUpperCase(),
-      "valor": valor,
+      "valor": valor === "" ? "0" : valor,
       "status": estaEmRascunho ? "EM_RASCUNHO" : "ENVIADO",
       "usuarioId": context.usuario.id,
     };
@@ -127,8 +127,6 @@ function TelaInicial() {
     formData.append('lancamento', lancaBlob);
     formData.append('img', comprovativo);
 
-    console.log(...formData);
-
     axios({
       url: `https://reembolso-de-despesas-production.up.railway.app/api/lancamentos`,
       method: 'post',
@@ -138,6 +136,7 @@ function TelaInicial() {
         Authorization: `Bearer ${context.token}`
       }
     }).then((res) => {
+      setLancamentos([...lancamentos, res.data]);
       console.log(res);
     }).catch((err) => {
       console.log(err);
@@ -191,7 +190,7 @@ function TelaInicial() {
                                 titulo={x.titulo} 
                                 descricao={x.descricao} 
                                 categoria={x.categoria} 
-                                comprovativo={x.img.data}
+                                comprovativo={x.img?.data}
                                 aoAbrirEdicao={() => handleAbrirEdicaoLancamento(x)}/>
               ))}
             </div>}

@@ -51,7 +51,7 @@ function CardEditarLancamento({ tituloCard = "",
         <div className='card-editar-lancamento-input-flex'>
           <input type="number" name='valor' placeholder='Valor *' value={valor} onChange={(e) => setValor(e.target.value)}/>
           <select id='categoria' name='categoria' value={categoria} onChange={(e) => setCategoria(e.target.value)}>
-            <option value="categoria" disabled>Categoria</option>
+            <option value="CATEGORIA">Categoria</option>
             <option value="ALIEMENTACAO">Alimentação</option>
             <option value="TRANSPORTE_GASOLINA">Transporte/Gasolina</option>
             <option value="HOSPEDAGEM">Hospedagem</option>
@@ -113,7 +113,7 @@ function CardEditarLancamento({ tituloCard = "",
         </div>
         <p className='card-editar-lancamento-upload-msg'>Apenas arquivos menores que 5Mb no formato PNG ou JPEG</p>
 
-        <input type="submit" value="ADICIONAR" onClick={() => onActionClick(titulo, valor, categoriaCard, descricao, comprovativo)}/>
+        <input type="submit" value="ADICIONAR" onClick={() => onActionClick(titulo, valor, categoria, descricao, comprovativo)}/>
       </form>
     </div>
   </div>
