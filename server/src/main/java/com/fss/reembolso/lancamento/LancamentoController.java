@@ -15,7 +15,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/lancamentos")
 @AllArgsConstructor
-@CrossOrigin(origins = "*", maxAge = 36000)
 public class LancamentoController {
 
     private LancamentoService lancamentoService;
