@@ -3,7 +3,7 @@ import CardLancamento from '../../components/card_lancamento/CardLancamento';
 import CardTelaInicial from '../../components/card_tela_inicial/CardTelaInicial';
 import Header from '../../components/header/Header';
 import ModalFiltro from '../../components/card_filtro/CardFiltro';
-import { Usuarios } from '../../data/data';
+import axios from 'axios';
 
 import "./TelaInicial.css";
 import CardEditarLancamento from '../../components/card_cadastro_lancamento/CardEditarLancamento';
@@ -104,6 +104,46 @@ function TelaInicial() {
     return lancamentos.filter(x => x.status === "CREDITADO").length;
   }
 
+  const handleAddLancamento = (titulo, valor, categoria, descricao, comprovativo) => {
+    setIsAdicionarModalAberto(false);
+    let estaEmRascunho = titulo !== "" && valor !== 0 && categoria !== "Categoria" && comprovativo !== "";
+
+    let lancamentoObj = {
+      "titulo": titulo,
+      "descricao": descricao,
+      "categoria": categoria.toUpperCase(),
+      "valor": valor,
+      "status": estaEmRascunho ? "EM_RASCUNHO" : "ENVIADO",
+      "usuarioId": context.usuario.id,
+    };
+
+    const lancaJSON = JSON.stringify(lancamentoObj);
+    const lancaBlob = new Blob([lancaJSON], {
+      type: 'application/json',
+    });
+
+    var formData = new FormData();
+
+    formData.append('lancamento', lancaBlob);
+    formData.append('img', comprovativo);
+
+    console.log(...formData);
+
+    axios({
+      url: `https://reembolso-de-despesas-production.up.railway.app/api/lancamentos`,
+      method: 'post',
+      data: formData,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${context.token}`
+      }
+    }).then((res) => {
+      console.log(res);
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
+
   return (
     <section className='container-tela-inicial'>
         <Header usuario={context !== null ? context.usuario.nome : "-"}/> 
@@ -176,7 +216,8 @@ function TelaInicial() {
                                              filtroPrecoMaxSelecionado={filtroPorPrecoMax} />}
 
         {isAdicionarModalAberto && <CardEditarLancamento onCloseClick={() => setIsAdicionarModalAberto(false)}
-                                                      tituloCard="Adicionar Lançamento"/>}
+                                                         onActionClick={(titulo, valor, categoria, descricao, comprovativo) => handleAddLancamento(titulo, valor, categoria, descricao, comprovativo)}
+                                                         tituloCard="Adicionar Lançamento"/>}
 
         {isEditarModalAberto && <CardEditarLancamento onCloseClick={() => setIsEditarModalAberto(false)}
                                                tituloCard="Editar Lançamento"
