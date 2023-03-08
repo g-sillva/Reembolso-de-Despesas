@@ -1,6 +1,7 @@
 package com.fss.reembolso.lancamento.Enums;
 
 public enum Categoria {
+    CATEGORIA,
     OUTRO,
     ALIMENTACAO,
     TRANSPORTE_GASOLINA,
