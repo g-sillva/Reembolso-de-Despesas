@@ -7,9 +7,7 @@ import { useNavigate } from 'react-router';
 
 function FormLogin({ aoClicarLinkLogin }) {
   const [context, setContext] = useContext(Context);
-
   const [removeLoading, setRemoveLoading] = useState(false)
-
   const [formLogin, setFormLogin] = useState({email: "", senha: "", confirmacao_senha: "", erro: ""});
   const navigate = useNavigate();
   
