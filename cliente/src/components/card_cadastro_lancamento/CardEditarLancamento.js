@@ -49,7 +49,9 @@ function CardEditarLancamento({ tituloCard = "",
         </div>
 
         <div className='card-editar-lancamento-input-flex'>
+
           <input type="number" name='valor' placeholder='Valor *' value={valor} onChange={(e) => setValor(e.target.value)}/>
+
           <select id='categoria' name='categoria' value={categoria} onChange={(e) => setCategoria(e.target.value)}>
             <option value="CATEGORIA">Categoria</option>
             <option value="ALIEMENTACAO">Alimentação</option>
@@ -80,11 +82,11 @@ function CardEditarLancamento({ tituloCard = "",
                        onChange={(e) => setImagemSelecionada(e.target.files[0])}/>
               </>
           )}
-          {comprovativoCard !== "" && comprovativoCard !== null && imagemSelecionada === undefined && (
+          {comprovativo !== "" && comprovativo !== null && imagemSelecionada === undefined && (
               <>
                 <label htmlFor='upload-img'>
                   <p className='titulo-lancamento-upload'>Comprovativo *</p>
-                  <img src={`data:image/jpeg;base64,${comprovativoCard.data}`} />
+                  <img src={`data:image/jpeg;base64,${comprovativo.data}`} />
                 </label>
                 <input id='upload-img' 
                        type="file" 
@@ -93,7 +95,7 @@ function CardEditarLancamento({ tituloCard = "",
                        onChange={(e) => setImagemSelecionada(e.target.files[0])}/>
               </>
           )}
-          {comprovativoCard === "" || comprovativoCard === null && !imagemSelecionada&&
+          {(comprovativo === "" || comprovativo === null) && !imagemSelecionada &&
           (
             <>
               <label htmlFor='upload-img'>
@@ -113,7 +115,7 @@ function CardEditarLancamento({ tituloCard = "",
         </div>
         <p className='card-editar-lancamento-upload-msg'>Apenas arquivos menores que 5Mb no formato PNG ou JPEG</p>
 
-        <input type="submit" value="ADICIONAR" onClick={() => onActionClick(titulo, valor, categoria, descricao, comprovativo)}/>
+        <input type="submit" value={tituloCard === "Editar Lançamento" ? "EDITAR" : "CADASTRAR"} onClick={() => onActionClick(titulo, valor, categoria, descricao, comprovativo)}/>
       </form>
     </div>
   </div>

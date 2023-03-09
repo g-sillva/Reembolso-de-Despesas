@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -95,7 +96,7 @@ public class LancamentoServiceImpl implements LancamentoService{
                     Field field = ReflectionUtils.findField(Lancamento.class, k);
                     field.setAccessible(true);
 
-                    if (field.getName().equalsIgnoreCase("status")) {
+                    if (field.getName().equalsIgnoreCase("status") && !Objects.equals(v.toString(), "EM_RASCUNHO") && !Objects.equals(v.toString(), "ENVIADO")) {
                         Notificacao notificacao = new Notificacao();
                         notificacao.setTitulo("O seu lançamento mudou de status!");
                         notificacao.setMsg("O lançamento: '" + l.get().getTitulo() + "' teve o seu status alterado para " + v.toString().replaceAll("-", " "));
