@@ -106,13 +106,13 @@ function TelaInicial() {
 
   const handleAddLancamento = (titulo, valor, categoria, descricao, comprovativo) => {
     setIsAdicionarModalAberto(false);
-    let estaEmRascunho = titulo !== "" && valor !== 0 && categoria !== "Categoria" && comprovativo !== "";
+    let estaEmRascunho = titulo === "" || valor === 0 || categoria === "CATEGORIA" || comprovativo === "";
 
     let lancamentoObj = {
-      "titulo": titulo,
+      "titulo": titulo === "" ? "-" : titulo,
       "descricao": descricao,
       "categoria": categoria.toUpperCase(),
-      "valor": valor,
+      "valor": valor === "" ? "0" : valor,
       "status": estaEmRascunho ? "EM_RASCUNHO" : "ENVIADO",
       "usuarioId": context.usuario.id,
     };
@@ -127,8 +127,6 @@ function TelaInicial() {
     formData.append('lancamento', lancaBlob);
     formData.append('img', comprovativo);
 
-    console.log(...formData);
-
     axios({
       url: `https://reembolso-de-despesas-production.up.railway.app/api/lancamentos`,
       method: 'post',
@@ -138,7 +136,48 @@ function TelaInicial() {
         Authorization: `Bearer ${context.token}`
       }
     }).then((res) => {
-      console.log(res);
+      setLancamentos([res.data, ...lancamentos]);
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
+
+  const handleEdicaoLancamento = (titulo, valor, categoria, descricao, comprovativo) => {
+    setIsEditarModalAberto(false);
+    let estaEmRascunho = titulo === "" || valor === 0 || categoria === "CATEGORIA" || comprovativo === "";
+
+    let lancamentoObj = {
+      "titulo": titulo === "" ? "-" : titulo,
+      "descricao": descricao,
+      "categoria": categoria.toUpperCase(),
+      "valor": valor === "" ? "0" : valor,
+      "status": estaEmRascunho ? "EM_RASCUNHO" : "ENVIADO",
+      "usuarioId": context.usuario.id,
+    };
+
+    const lancaJSON = JSON.stringify(lancamentoObj);
+    const lancaBlob = new Blob([lancaJSON], {
+      type: 'application/json',
+    });
+
+    var formData = new FormData();
+
+    formData.append('lancamento', lancaBlob);
+    formData.append('img', comprovativo);
+
+    console.log(currentModalData);
+
+    axios({
+      url: `http://reembolso-de-despesas-production.up.railway.app/api/lancamentos/${currentModalData.id}`,
+      method: 'patch',
+      data: formData,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${context.token}`
+      }
+    }).then((res) => {
+      setLancamentos(lancamentos.filter(x => x.id !== currentModalData.id));
+      setLancamentos([res.data, ...lancamentos]);
     }).catch((err) => {
       console.log(err);
     })
@@ -191,7 +230,7 @@ function TelaInicial() {
                                 titulo={x.titulo} 
                                 descricao={x.descricao} 
                                 categoria={x.categoria} 
-                                comprovativo={x.img.data}
+                                comprovativo={x.img?.data}
                                 aoAbrirEdicao={() => handleAbrirEdicaoLancamento(x)}/>
               ))}
             </div>}
@@ -225,7 +264,8 @@ function TelaInicial() {
                                                valorCard={currentModalData.valor}
                                                categoriaCard={currentModalData.categoria}
                                                descricaoCard={currentModalData.descricao}
-                                               comprovativoCard={currentModalData.img}/>}
+                                               comprovativoCard={currentModalData.img}
+                                               onActionClick={(titulo, valor, categoria, descricao, comprovativo) => handleEdicaoLancamento(titulo, valor, categoria, descricao, comprovativo)}/>}
     </section>
   )
 }

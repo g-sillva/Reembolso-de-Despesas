@@ -7,7 +7,7 @@ function CardLancamento({ valor = "0",
                           data, 
                           titulo = "-", 
                           descricao = "-", 
-                          categoria = "Categoria", 
+                          categoria = "CATEGORIA", 
                           comprovativo, 
                           aoAbrirEdicao }) {
 
@@ -26,7 +26,7 @@ function CardLancamento({ valor = "0",
     if (status === "ANALISE") setProgressoBar(50);
     if (status === "CREDITADO") setProgressoBar(100);
     if (status === "NEGADO") setProgressoBar(100);
-  }, [status])
+  }, [status]);
 
   valor /= 100;
   return (
@@ -46,7 +46,7 @@ function CardLancamento({ valor = "0",
             {titulo.length > 24 ? titulo.substring(0, 24) + "..." : titulo}
           </h4>
           <p className='card-lancamento-texto-descricao'>{descricao.length > 110 ? descricao.substring(0, 110) + "..." : descricao}</p>
-          <p className='card-lancamento-texto-categoria' style={{backgroundColor: categoria === "Categoria" && "#FF4747"}} >{categoria.replace("_", " ")}</p>
+          <p className='card-lancamento-texto-categoria' style={{backgroundColor: categoria === "CATEGORIA" && "#FF4747"}} >{categoria.replace("_", " ")}</p>
         </div>
         <div className='card-lancamento-icones-container'>
           <i className="fa-solid fa-pen" onClick={aoAbrirEdicao}></i>
