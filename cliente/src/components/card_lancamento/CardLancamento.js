@@ -15,7 +15,7 @@ function CardLancamento({ valor = "0",
   const [progressoBar, setProgressoBar] = useState(0);
 
   const handleImgPreviewClick = () => {
-    if (comprovativo !== undefined) {
+    if (comprovativo !== "") {
         setIsImagemOpen(true);
     }
   }

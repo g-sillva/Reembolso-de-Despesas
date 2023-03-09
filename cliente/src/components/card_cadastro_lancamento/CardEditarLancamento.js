@@ -49,7 +49,9 @@ function CardEditarLancamento({ tituloCard = "",
         </div>
 
         <div className='card-editar-lancamento-input-flex'>
+
           <input type="number" name='valor' placeholder='Valor *' value={valor} onChange={(e) => setValor(e.target.value)}/>
+
           <select id='categoria' name='categoria' value={categoria} onChange={(e) => setCategoria(e.target.value)}>
             <option value="CATEGORIA">Categoria</option>
             <option value="ALIEMENTACAO">Alimentação</option>

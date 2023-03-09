@@ -164,8 +164,6 @@ function TelaInicial() {
     formData.append('fields', lancaBlob);
     formData.append('img', comprovativo);
 
-    console.log(currentModalData);
-
     axios({
       url: `https://reembolso-de-despesas-production.up.railway.app/api/lancamentos/${currentModalData.id}`,
       method: 'patch',
@@ -234,7 +232,7 @@ function TelaInicial() {
                                 titulo={x.titulo} 
                                 descricao={x.descricao} 
                                 categoria={x.categoria} 
-                                comprovativo={x.img?.data}
+                                comprovativo={x.img === null ? "" : x.img.data}
                                 aoAbrirEdicao={() => handleAbrirEdicaoLancamento(x)}/>
               ))}
             </div>}
