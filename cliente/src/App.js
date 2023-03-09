@@ -7,6 +7,7 @@ import TelaInicial from './pages/tela_inicial/TelaInicial';
 import TelaAdm from './pages/tela_adm/TelaAdm';
 import Context from './Context';
 import { useState } from 'react';
+// import Loader from './components/loader/Loader';
 
 function App() {
   const [context, setContext] = useState(null);
@@ -19,6 +20,7 @@ function App() {
               <Route path='/LoginCadastro' element={<LoginCadastro />}/>
               <Route path= '' element={<TelaInicial />}/>
               <Route path='/TelaAdm' element={<TelaAdm />}/>
+              {/* <Route path='/Loader' element={<Loader />}/> */}
             </Routes>
           </div>
         </Context.Provider>

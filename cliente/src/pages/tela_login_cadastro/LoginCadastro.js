@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import CardCadastro from '../../components/formulario_cadastro/FormCadastro'
-import CardLogin from '../../components/formulario_login/FormLogin'
+import FormCadastro from '../../components/formulario_cadastro/FormCadastro'
+import FormLogin from '../../components/formulario_login/FormLogin'
 import './LoginCadastro.css'
   
 function LoginCadastro() {
@@ -19,12 +19,12 @@ function LoginCadastro() {
       
       <button className='loginB' onClick={() => setLoginAberto(!isLoginAberto)}>ENTRAR</button>
 
-      {isCadastroAberto && <CardCadastro aoClicarLinkCadastro={() => {
+      {isCadastroAberto && <FormCadastro aoClicarLinkCadastro={() => {
         setCadastroAberto(false);
         setLoginAberto(true);
       }}/>}
 
-      {isLoginAberto && <CardLogin aoClicarLinkLogin={() => {
+      {isLoginAberto && <FormLogin aoClicarLinkLogin={() => {
         setLoginAberto(false);
         setCadastroAberto(true);
       }}/>}
