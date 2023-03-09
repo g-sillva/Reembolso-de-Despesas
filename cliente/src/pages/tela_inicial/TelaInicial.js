@@ -149,10 +149,9 @@ function TelaInicial() {
     let lancamentoObj = {
       "titulo": titulo === "" ? "-" : titulo,
       "descricao": descricao,
-      "categoria": categoria.toUpperCase(),
       "valor": valor === "" ? "0" : valor,
+      "categoria": categoria.toUpperCase(),
       "status": estaEmRascunho ? "EM_RASCUNHO" : "ENVIADO",
-      "usuarioId": context.usuario.id,
     };
 
     const lancaJSON = JSON.stringify(lancamentoObj);
@@ -162,13 +161,13 @@ function TelaInicial() {
 
     var formData = new FormData();
 
-    formData.append('lancamento', lancaBlob);
+    formData.append('fields', lancaBlob);
     formData.append('img', comprovativo);
 
     console.log(currentModalData);
 
     axios({
-      url: `http://reembolso-de-despesas-production.up.railway.app/api/lancamentos/${currentModalData.id}`,
+      url: `http://localhost:8080/api/lancamentos/${currentModalData.id}`,
       method: 'patch',
       data: formData,
       headers: {
@@ -176,8 +175,14 @@ function TelaInicial() {
         Authorization: `Bearer ${context.token}`
       }
     }).then((res) => {
-      setLancamentos(lancamentos.filter(x => x.id !== currentModalData.id));
-      setLancamentos([res.data, ...lancamentos]);
+      const newLancamentos = lancamentos.map((l) => {
+        if (l.id === currentModalData.id) {
+          return res.data;
+        }
+        return l;
+      });
+      setLancamentos(newLancamentos);
+      console.log("foi !");
     }).catch((err) => {
       console.log(err);
     })

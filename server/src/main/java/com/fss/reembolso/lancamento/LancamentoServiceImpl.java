@@ -109,6 +109,8 @@ public class LancamentoServiceImpl implements LancamentoService{
                     } else if (field.getName().equalsIgnoreCase("categoria")) {
                         Categoria c = Categoria.valueOf(v.toString().toUpperCase());
                         l.get().setCategoria(c);
+                    } else if (field.getName().equalsIgnoreCase("valor")) {
+                        l.get().setValor(Long.parseLong(v.toString()));
                     } else {
                         ReflectionUtils.setField(field, l.get(), v);
                     }
