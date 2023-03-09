@@ -2,12 +2,17 @@ import React, { useContext, useEffect, useState } from 'react';
 import './FormLogin.css';
 import Loading from '../layout/Loading'
 import axios from 'axios';
-import Context from '../../Context';
+import Context from './../../Context';
+import { useNavigate } from 'react-router';
 
 function FormLogin({ aoClicarLinkLogin }) {
   const [context, setContext] = useContext(Context);
-  const [formLogin, setFormLogin] = useState({ email: "", senha: "", confirmacao_senha: "", erro: "" });
+
   const [removeLoading, setRemoveLoading] = useState(false)
+
+  const [formLogin, setFormLogin] = useState({email: "", senha: "", confirmacao_senha: "", erro: ""});
+  const navigate = useNavigate();
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     const usuarioObj = {
@@ -27,13 +32,13 @@ function FormLogin({ aoClicarLinkLogin }) {
           .then((userRes) => {
             setContext({ "usuario": userRes.data[0], "token": res.data.token });
             setRemoveLoading(false);
+            navigate("/");
           })
 
       }).catch((error) => {
         console.log(error);
         setRemoveLoading(false);
       });
-
   }
 
   return (

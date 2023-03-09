@@ -32,6 +32,10 @@
     min-height: 100px;
     max-height: 400px;
     overflow-y: auto;
+    align-content: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .nenhuma-notificacao-aviso {

@@ -8,8 +8,9 @@ function CardEditarLancamento({ tituloCard = "",
                                 categoriaCard = 'Categoria', 
                                 descricaoCard = "", 
                                 comprovativoCard = "", 
-                                onCloseClick}) {
-  const [titulo, setTitulo] = useState(tituloLanc);
+                                onCloseClick,
+                                onActionClick}) {
+  const [titulo, setTitulo] = useState(tituloLanc === "-" ? "" : tituloLanc);
   const [valor, setValor] = useState(valorCard);
   const [categoria, setCategoria] = useState(categoriaCard);
   const [descricao, setDescricao] = useState(descricaoCard);
@@ -23,12 +24,13 @@ function CardEditarLancamento({ tituloCard = "",
       setImagemPreview(undefined);
       return;
     }
-
     const objectUrl = URL.createObjectURL(imagemSelecionada);
 
-    setImagemPreview(objectUrl)
+    setComprovativo(imagemSelecionada);
+    setImagemPreview(objectUrl);
+
     return () => URL.revokeObjectURL(objectUrl)
- }, [imagemSelecionada])
+ }, [imagemSelecionada]);
 
   return (
     <div className='card-editar-lancamento-container'>
@@ -42,14 +44,14 @@ function CardEditarLancamento({ tituloCard = "",
       <form onSubmit={(event) => event.preventDefault()}>
 
         <div className='card-editar-lancamento-input'>
-          <input type="text" name='titulo' placeholder='Título *' maxLength="50" value={titulo} required onChange={(e) => setTitulo(e.target.value)}/>
+          <input type="text" name='titulo' placeholder='Título *' maxLength="50" value={titulo} onChange={(e) => setTitulo(e.target.value)}/>
           <p>{titulo.length}/50</p>
         </div>
 
         <div className='card-editar-lancamento-input-flex'>
-          <input type="number" name='valor' placeholder='Valor *' value={valor} required onChange={(e) => setValor(e.target.value)}/>
-          <select id='categoria' name='categoria' value={categoria} required onChange={(e) => setCategoria(e.target.value)}>
-            <option value="categoria" disabled>Categoria</option>
+          <input type="number" name='valor' placeholder='Valor *' value={valor} onChange={(e) => setValor(e.target.value)}/>
+          <select id='categoria' name='categoria' value={categoria} onChange={(e) => setCategoria(e.target.value)}>
+            <option value="CATEGORIA">Categoria</option>
             <option value="ALIEMENTACAO">Alimentação</option>
             <option value="TRANSPORTE_GASOLINA">Transporte/Gasolina</option>
             <option value="HOSPEDAGEM">Hospedagem</option>
@@ -78,7 +80,7 @@ function CardEditarLancamento({ tituloCard = "",
                        onChange={(e) => setImagemSelecionada(e.target.files[0])}/>
               </>
           )}
-          {comprovativoCard !== "" && imagemSelecionada === undefined && (
+          {comprovativoCard !== "" && comprovativoCard !== null && imagemSelecionada === undefined && (
               <>
                 <label htmlFor='upload-img'>
                   <p className='titulo-lancamento-upload'>Comprovativo *</p>
@@ -91,7 +93,7 @@ function CardEditarLancamento({ tituloCard = "",
                        onChange={(e) => setImagemSelecionada(e.target.files[0])}/>
               </>
           )}
-          {comprovativoCard === "" && !imagemSelecionada&&
+          {comprovativoCard === "" || comprovativoCard === null && !imagemSelecionada&&
           (
             <>
               <label htmlFor='upload-img'>
@@ -111,7 +113,7 @@ function CardEditarLancamento({ tituloCard = "",
         </div>
         <p className='card-editar-lancamento-upload-msg'>Apenas arquivos menores que 5Mb no formato PNG ou JPEG</p>
 
-        <input type="submit" value="ADICIONAR"/>
+        <input type="submit" value="ADICIONAR" onClick={() => onActionClick(titulo, valor, categoria, descricao, comprovativo)}/>
       </form>
     </div>
   </div>

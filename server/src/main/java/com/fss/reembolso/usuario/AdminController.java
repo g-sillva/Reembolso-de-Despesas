@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/admin")
 @AllArgsConstructor
-@CrossOrigin(origins = "*", maxAge = 36000)
 public class AdminController {
 
     private UsuarioService usuarioService;

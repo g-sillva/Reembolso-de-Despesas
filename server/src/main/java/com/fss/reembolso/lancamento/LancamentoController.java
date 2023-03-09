@@ -15,7 +15,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/lancamentos")
 @AllArgsConstructor
-@CrossOrigin(origins = "*", maxAge = 36000)
 public class LancamentoController {
 
     private LancamentoService lancamentoService;
@@ -50,7 +49,7 @@ public class LancamentoController {
 
     @PostMapping(consumes = "multipart/form-data")
     public ResponseEntity<?> postLancamento(@RequestPart("lancamento") Lancamento lancamento,
-                                            @RequestPart("img") MultipartFile img) throws IOException {
+                                            @RequestPart(value = "img", required = false) MultipartFile img) throws IOException {
         Lancamento l = lancamentoService.salvarLancamento(lancamento, img);
         if (l != null) return new ResponseEntity<>(l, HttpStatus.CREATED);
         return new ResponseEntity<>(new RequestResponse("Usuário não encontrado"), HttpStatus.NOT_FOUND);

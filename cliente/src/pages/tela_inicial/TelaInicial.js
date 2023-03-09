@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import CardLancamento from '../../components/card_lancamento/CardLancamento';
 import CardTelaInicial from '../../components/card_tela_inicial/CardTelaInicial';
 import Header from '../../components/header/Header';
 import ModalFiltro from '../../components/card_filtro/CardFiltro';
-import { Lancamentos, Usuarios } from '../../data/data';
+import axios from 'axios';
 
 import "./TelaInicial.css";
 import CardEditarLancamento from '../../components/card_cadastro_lancamento/CardEditarLancamento';
+import Context from '../../Context';
+import { useNavigate } from 'react-router';
 
 function TelaInicial() {
-  const [lancamentos, setLancamentos] = useState(Lancamentos);
+  const [lancamentos, setLancamentos] = useState([]);
+  const [context, setContext] = useContext(Context);
 
   const [filtrosPorStatus, setFiltrosPorStatus] = useState([]);
   const [filtrosPorCategoria, setFiltrosPorCategoria] = useState([]);
@@ -23,7 +26,18 @@ function TelaInicial() {
 
   const [currentModalData, setCurrentModalData] = useState(lancamentos[0]);
 
-  const lancamentosOriginal = Lancamentos;
+  const [lancamentosOriginal, setLancamentosOriginal] = useState([]);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (context !== null) {
+      setLancamentos(context.usuario.lancamentos);
+      setLancamentosOriginal(lancamentos);
+    } else {
+      navigate("/logincadastro")
+    }
+  }, [context, lancamentosOriginal])
 
   useEffect(() => {
     if (isFiltroModalAberto || isAdicionarModalAberto || isEditarModalAberto) {
@@ -90,9 +104,93 @@ function TelaInicial() {
     return lancamentos.filter(x => x.status === "CREDITADO").length;
   }
 
+  const handleAddLancamento = (titulo, valor, categoria, descricao, comprovativo) => {
+    setIsAdicionarModalAberto(false);
+    let estaEmRascunho = titulo === "" || valor === 0 || categoria === "CATEGORIA" || comprovativo === "";
+
+    let lancamentoObj = {
+      "titulo": titulo === "" ? "-" : titulo,
+      "descricao": descricao,
+      "categoria": categoria.toUpperCase(),
+      "valor": valor === "" ? "0" : valor,
+      "status": estaEmRascunho ? "EM_RASCUNHO" : "ENVIADO",
+      "usuarioId": context.usuario.id,
+    };
+
+    const lancaJSON = JSON.stringify(lancamentoObj);
+    const lancaBlob = new Blob([lancaJSON], {
+      type: 'application/json',
+    });
+
+    var formData = new FormData();
+
+    formData.append('lancamento', lancaBlob);
+    formData.append('img', comprovativo);
+
+    axios({
+      url: `https://reembolso-de-despesas-production.up.railway.app/api/lancamentos`,
+      method: 'post',
+      data: formData,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${context.token}`
+      }
+    }).then((res) => {
+      setLancamentos([res.data, ...lancamentos]);
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
+
+  const handleEdicaoLancamento = (titulo, valor, categoria, descricao, comprovativo) => {
+    setIsEditarModalAberto(false);
+    let estaEmRascunho = titulo === "" || valor === 0 || categoria === "CATEGORIA" || comprovativo === "";
+
+    let lancamentoObj = {
+      "titulo": titulo === "" ? "-" : titulo,
+      "descricao": descricao,
+      "valor": valor === "" ? "0" : valor,
+      "categoria": categoria.toUpperCase(),
+      "status": estaEmRascunho ? "EM_RASCUNHO" : "ENVIADO",
+    };
+
+    const lancaJSON = JSON.stringify(lancamentoObj);
+    const lancaBlob = new Blob([lancaJSON], {
+      type: 'application/json',
+    });
+
+    var formData = new FormData();
+
+    formData.append('fields', lancaBlob);
+    formData.append('img', comprovativo);
+
+    console.log(currentModalData);
+
+    axios({
+      url: `http://localhost:8080/api/lancamentos/${currentModalData.id}`,
+      method: 'patch',
+      data: formData,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${context.token}`
+      }
+    }).then((res) => {
+      const newLancamentos = lancamentos.map((l) => {
+        if (l.id === currentModalData.id) {
+          return res.data;
+        }
+        return l;
+      });
+      setLancamentos(newLancamentos);
+      console.log("foi !");
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
+
   return (
     <section className='container-tela-inicial'>
-        <Header usuario={Usuarios[0]}/> 
+        <Header usuario={context !== null ? context.usuario.nome : "-"}/> 
 
         <div className='tela-inicial-cards-container'>
           <CardTelaInicial titulo="$ Total" dado={handleSomarValores()} img_url="/img/card-tela-inicial/card_total.png" />
@@ -137,7 +235,7 @@ function TelaInicial() {
                                 titulo={x.titulo} 
                                 descricao={x.descricao} 
                                 categoria={x.categoria} 
-                                comprovativo={x.img.data}
+                                comprovativo={x.img?.data}
                                 aoAbrirEdicao={() => handleAbrirEdicaoLancamento(x)}/>
               ))}
             </div>}
@@ -162,7 +260,8 @@ function TelaInicial() {
                                              filtroPrecoMaxSelecionado={filtroPorPrecoMax} />}
 
         {isAdicionarModalAberto && <CardEditarLancamento onCloseClick={() => setIsAdicionarModalAberto(false)}
-                                                      tituloCard="Adicionar Lançamento"/>}
+                                                         onActionClick={(titulo, valor, categoria, descricao, comprovativo) => handleAddLancamento(titulo, valor, categoria, descricao, comprovativo)}
+                                                         tituloCard="Adicionar Lançamento"/>}
 
         {isEditarModalAberto && <CardEditarLancamento onCloseClick={() => setIsEditarModalAberto(false)}
                                                tituloCard="Editar Lançamento"
@@ -170,7 +269,8 @@ function TelaInicial() {
                                                valorCard={currentModalData.valor}
                                                categoriaCard={currentModalData.categoria}
                                                descricaoCard={currentModalData.descricao}
-                                               comprovativoCard={currentModalData.img}/>}
+                                               comprovativoCard={currentModalData.img}
+                                               onActionClick={(titulo, valor, categoria, descricao, comprovativo) => handleEdicaoLancamento(titulo, valor, categoria, descricao, comprovativo)}/>}
     </section>
   )
 }

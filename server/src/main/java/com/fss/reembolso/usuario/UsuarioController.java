@@ -1,6 +1,5 @@
 package com.fss.reembolso.usuario;
 
-import com.fss.reembolso.exceptions.ApiRequestException;
 import com.fss.reembolso.exceptions.RequestResponse;
 import com.fss.reembolso.usuario.DTOs.UsuarioLoginDTO;
 import com.fss.reembolso.usuario.DTOs.UsuarioRegistroDTO;
@@ -17,7 +16,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/clientes")
-@CrossOrigin(origins = "*", maxAge = 36000)
 @AllArgsConstructor
 public class UsuarioController {
 

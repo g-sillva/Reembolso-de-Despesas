@@ -65,7 +65,9 @@ public class LancamentoServiceImpl implements LancamentoService{
             } else {
                 usuario.get().getLancamentos().add(lancamento);
             }
-            lancamento.setImg(new Binary(BsonBinarySubType.BINARY, file.getBytes()));
+            if (file != null && !file.isEmpty()) {
+                lancamento.setImg(new Binary(BsonBinarySubType.BINARY, file.getBytes()));
+            }
             lancamentoRepository.save(lancamento);
             usuarioRepository.save(usuario.get());
             return lancamento;
@@ -107,6 +109,8 @@ public class LancamentoServiceImpl implements LancamentoService{
                     } else if (field.getName().equalsIgnoreCase("categoria")) {
                         Categoria c = Categoria.valueOf(v.toString().toUpperCase());
                         l.get().setCategoria(c);
+                    } else if (field.getName().equalsIgnoreCase("valor")) {
+                        l.get().setValor(Long.parseLong(v.toString()));
                     } else {
                         ReflectionUtils.setField(field, l.get(), v);
                     }
