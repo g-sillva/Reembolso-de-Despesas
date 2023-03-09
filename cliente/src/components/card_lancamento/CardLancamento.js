@@ -50,7 +50,7 @@ function CardLancamento({ valor = "0",
         </div>
         <div className='card-lancamento-icones-container'>
           <i className="fa-solid fa-pen" onClick={aoAbrirEdicao}></i>
-          <i className="fa-regular fa-image" style={{color: comprovativo === undefined && "#FF4747"}} onClick={() => handleImgPreviewClick()}></i>
+          <i className="fa-regular fa-image" style={{color: comprovativo === "" && "#FF4747"}} onClick={() => handleImgPreviewClick()}></i>
         </div>
       </div>
       <div className='card-lancamento-bottom-container'>
