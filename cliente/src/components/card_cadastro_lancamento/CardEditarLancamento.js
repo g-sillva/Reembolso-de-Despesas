@@ -10,7 +10,7 @@ function CardEditarLancamento({ tituloCard = "",
                                 comprovativoCard = "", 
                                 onCloseClick,
                                 onActionClick}) {
-  const [titulo, setTitulo] = useState(tituloLanc);
+  const [titulo, setTitulo] = useState(tituloLanc === "-" ? "" : tituloLanc);
   const [valor, setValor] = useState(valorCard);
   const [categoria, setCategoria] = useState(categoriaCard);
   const [descricao, setDescricao] = useState(descricaoCard);
@@ -80,7 +80,7 @@ function CardEditarLancamento({ tituloCard = "",
                        onChange={(e) => setImagemSelecionada(e.target.files[0])}/>
               </>
           )}
-          {comprovativoCard !== "" && imagemSelecionada === undefined && (
+          {comprovativoCard !== "" && comprovativoCard !== null && imagemSelecionada === undefined && (
               <>
                 <label htmlFor='upload-img'>
                   <p className='titulo-lancamento-upload'>Comprovativo *</p>
@@ -93,7 +93,7 @@ function CardEditarLancamento({ tituloCard = "",
                        onChange={(e) => setImagemSelecionada(e.target.files[0])}/>
               </>
           )}
-          {comprovativoCard === "" && !imagemSelecionada&&
+          {comprovativoCard === "" || comprovativoCard === null && !imagemSelecionada&&
           (
             <>
               <label htmlFor='upload-img'>

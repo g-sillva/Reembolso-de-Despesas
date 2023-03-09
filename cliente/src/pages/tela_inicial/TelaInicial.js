@@ -136,8 +136,48 @@ function TelaInicial() {
         Authorization: `Bearer ${context.token}`
       }
     }).then((res) => {
-      setLancamentos([...lancamentos, res.data]);
-      console.log(res);
+      setLancamentos([res.data, ...lancamentos]);
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
+
+  const handleEdicaoLancamento = (titulo, valor, categoria, descricao, comprovativo) => {
+    setIsEditarModalAberto(false);
+    let estaEmRascunho = titulo === "" || valor === 0 || categoria === "CATEGORIA" || comprovativo === "";
+
+    let lancamentoObj = {
+      "titulo": titulo === "" ? "-" : titulo,
+      "descricao": descricao,
+      "categoria": categoria.toUpperCase(),
+      "valor": valor === "" ? "0" : valor,
+      "status": estaEmRascunho ? "EM_RASCUNHO" : "ENVIADO",
+      "usuarioId": context.usuario.id,
+    };
+
+    const lancaJSON = JSON.stringify(lancamentoObj);
+    const lancaBlob = new Blob([lancaJSON], {
+      type: 'application/json',
+    });
+
+    var formData = new FormData();
+
+    formData.append('lancamento', lancaBlob);
+    formData.append('img', comprovativo);
+
+    console.log(currentModalData);
+
+    axios({
+      url: `http://reembolso-de-despesas-production.up.railway.app/api/lancamentos/${currentModalData.id}`,
+      method: 'patch',
+      data: formData,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${context.token}`
+      }
+    }).then((res) => {
+      setLancamentos(lancamentos.filter(x => x.id !== currentModalData.id));
+      setLancamentos([res.data, ...lancamentos]);
     }).catch((err) => {
       console.log(err);
     })
@@ -224,7 +264,8 @@ function TelaInicial() {
                                                valorCard={currentModalData.valor}
                                                categoriaCard={currentModalData.categoria}
                                                descricaoCard={currentModalData.descricao}
-                                               comprovativoCard={currentModalData.img}/>}
+                                               comprovativoCard={currentModalData.img}
+                                               onActionClick={(titulo, valor, categoria, descricao, comprovativo) => handleEdicaoLancamento(titulo, valor, categoria, descricao, comprovativo)}/>}
     </section>
   )
 }
