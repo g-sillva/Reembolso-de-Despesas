@@ -113,7 +113,7 @@ public class UsuarioServiceImpl implements UsuarioService{
                     return new ResponseEntity<>(new RequestResponse("E-mail não verificado."), HttpStatus.BAD_REQUEST);
                 }
 
-                return new ResponseEntity<>(new TokenDTO(tokenService.gerarToken(usuario)), HttpStatus.OK);
+                return new ResponseEntity<>(new TokenDTO(tokenService.gerarToken(usuario), u), HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(new RequestResponse("Senha incorreta."), HttpStatus.BAD_REQUEST);
             }
