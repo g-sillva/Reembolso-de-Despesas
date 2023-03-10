@@ -107,13 +107,15 @@ public class UsuarioServiceImpl implements UsuarioService{
     public ResponseEntity<?> logarUsuario(UsuarioLoginDTO usuario) {
         Usuario u = usuarioRepository.findByEmail(usuario.getEmail());
         if (u != null) {
+            UsuarioRetornoDTO usuarioRetornoDTO = new UsuarioRetornoDTO(u);
+
             if (passwordEncoder.matches(usuario.getSenha(),  u.getPassword())) {
 
                 if (!u.isEnabled()) {
                     return new ResponseEntity<>(new RequestResponse("E-mail não verificado."), HttpStatus.BAD_REQUEST);
                 }
 
-                return new ResponseEntity<>(new TokenDTO(tokenService.gerarToken(usuario), u), HttpStatus.OK);
+                return new ResponseEntity<>(new TokenDTO(tokenService.gerarToken(usuario), usuarioRetornoDTO), HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(new RequestResponse("Senha incorreta."), HttpStatus.BAD_REQUEST);
             }
@@ -125,12 +127,13 @@ public class UsuarioServiceImpl implements UsuarioService{
     public ResponseEntity<?> logarUsuarioAdmin(UsuarioLoginDTO usuario) {
         Usuario u = usuarioRepository.findByEmail(usuario.getEmail());
         if (u != null) {
+            UsuarioRetornoDTO usuarioRetornoDTO = new UsuarioRetornoDTO(u);
             if (passwordEncoder.matches(usuario.getSenha(), u.getPassword())) {
 
                 if (!u.getRoles().contains(Role.ADMIN)) {
                     return new ResponseEntity<>(new RequestResponse("Sem permissão de administrador."), HttpStatus.UNAUTHORIZED);
                 }
-                return new ResponseEntity<>(new TokenDTO(tokenService.gerarToken(usuario), u), HttpStatus.OK);
+                return new ResponseEntity<>(new TokenDTO(tokenService.gerarToken(usuario), usuarioRetornoDTO), HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(new RequestResponse("Senha incorreta."), HttpStatus.BAD_REQUEST);
             }
