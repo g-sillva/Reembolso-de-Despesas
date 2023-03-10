@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import './FormLogin.css';
 import Loading from '../layout/Loading'
 import axios from 'axios';
-import Context from './../../Context';
+import Context from '../../Context';
 import { useNavigate } from 'react-router';
 
 function FormLogin({ aoClicarLinkLogin }) {

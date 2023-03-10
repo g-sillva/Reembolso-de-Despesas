@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import LoginCadastro from './pages/tela_login_cadastro/LoginCadastro';
