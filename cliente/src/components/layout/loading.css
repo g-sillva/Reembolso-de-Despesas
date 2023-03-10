@@ -6,6 +6,7 @@
     align-items: center;
     position: absolute;
     background-color: rgba(0, 0, 0, 0.423);
+    top: 0;
 }
 
 .loader {

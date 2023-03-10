@@ -7,9 +7,7 @@ import { useNavigate } from 'react-router';
 
 function FormLogin({ aoClicarLinkLogin }) {
   const [context, setContext] = useContext(Context);
-
   const [removeLoading, setRemoveLoading] = useState(false)
-
   const [formLogin, setFormLogin] = useState({email: "", senha: "", confirmacao_senha: "", erro: ""});
   const navigate = useNavigate();
   
@@ -23,18 +21,9 @@ function FormLogin({ aoClicarLinkLogin }) {
     setRemoveLoading(true)
     axios.post('https://reembolso-de-despesas-production.up.railway.app/api/clientes/login', usuarioObj)
       .then((res) => {
-        axios.get(`https://reembolso-de-despesas-production.up.railway.app/api/clientes?email=${usuarioObj.email}`, {
-          headers: {
-            'Authorization': `Bearer ${res.data.token}`
-          }
-        })
-
-          .then((userRes) => {
-            setContext({ "usuario": userRes.data[0], "token": res.data.token });
-            setRemoveLoading(false);
-            navigate("/");
-          })
-
+        setContext({ "usuario": res.data.usuario, "token": res.data.token });
+        setRemoveLoading(false);
+        navigate("/");
       }).catch((error) => {
         console.log(error);
         setRemoveLoading(false);
