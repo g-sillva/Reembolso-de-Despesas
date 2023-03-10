@@ -130,8 +130,7 @@ public class UsuarioServiceImpl implements UsuarioService{
                 if (!u.getRoles().contains(Role.ADMIN)) {
                     return new ResponseEntity<>(new RequestResponse("Sem permissão de administrador."), HttpStatus.UNAUTHORIZED);
                 }
-
-                return new ResponseEntity<>(new TokenDTO(tokenService.gerarToken(usuario)), HttpStatus.OK);
+                return new ResponseEntity<>(new TokenDTO(tokenService.gerarToken(usuario), u), HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(new RequestResponse("Senha incorreta."), HttpStatus.BAD_REQUEST);
             }

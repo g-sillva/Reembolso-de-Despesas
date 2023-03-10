@@ -16,7 +16,6 @@ public class UsuarioRetornoDTO {
     private String email;
     private LocalDate dataCadastro;
     private String telefone;
-    private List<Lancamento> lancamentos;
     private List<Notificacao> notificacaos;
     private boolean ativo;
 
@@ -26,7 +25,6 @@ public class UsuarioRetornoDTO {
         this.email = u.getEmail();
         this.dataCadastro = u.getDataCadastro();
         this.telefone = u.getTelefone();
-        this.lancamentos = u.getLancamentos();
         this.notificacaos = u.getNotificacaos();
     }
 }
