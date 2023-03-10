@@ -96,14 +96,17 @@ public class LancamentoServiceImpl implements LancamentoService{
                     Field field = ReflectionUtils.findField(Lancamento.class, k);
                     field.setAccessible(true);
 
-                    if (field.getName().equalsIgnoreCase("status") && !Objects.equals(v.toString(), "EM_RASCUNHO") && !Objects.equals(v.toString(), "ENVIADO")) {
-                        Notificacao notificacao = new Notificacao();
-                        notificacao.setTitulo("O seu lançamento mudou de status!");
-                        notificacao.setMsg("O lançamento: '" + l.get().getTitulo() + "' teve o seu status alterado para " + v.toString().replaceAll("-", " "));
-                        notificacao.setUsuarioId(l.get().getUsuarioId());
-                        notificacaoRepository.save(notificacao);
+                    if (field.getName().equalsIgnoreCase("status")) {
 
-                        usuario.get().getNotificacaos().add(notificacao);
+                        if (!Objects.equals(v.toString(), "EM_RASCUNHO") && !Objects.equals(v.toString(), "ENVIADO")) {
+                            Notificacao notificacao = new Notificacao();
+                            notificacao.setTitulo("O seu lançamento mudou de status!");
+                            notificacao.setMsg("O lançamento: '" + l.get().getTitulo() + "' teve o seu status alterado para " + v.toString().replaceAll("-", " "));
+                            notificacao.setUsuarioId(l.get().getUsuarioId());
+                            notificacaoRepository.save(notificacao);
+
+                            usuario.get().getNotificacaos().add(notificacao);
+                        }
 
                         Status status = Status.valueOf(v.toString());
                         l.get().setStatus(status);

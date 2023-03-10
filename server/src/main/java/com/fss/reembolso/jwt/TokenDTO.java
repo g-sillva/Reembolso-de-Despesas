@@ -1,5 +1,6 @@
 package com.fss.reembolso.jwt;
 
+import com.fss.reembolso.usuario.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -8,5 +9,5 @@ import lombok.Getter;
 public class TokenDTO {
 
     private String token;
-
+    private Usuario usuario;
 }
