@@ -33,12 +33,9 @@ function TelaInicial() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (context !== null) {
-      setLancamentos(context.usuario.lancamentos);
-      setLancamentosOriginal(lancamentos);
-    } else {
-      navigate("/logincadastro")
-    }
+    if (context === null) {
+      navigate('/logincadastro')
+    } 
   }, [context, lancamentosOriginal])
 
   useEffect(() => {
