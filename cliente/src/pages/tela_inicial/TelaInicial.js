@@ -9,6 +9,7 @@ import "./TelaInicial.css";
 import CardEditarLancamento from '../../components/card_cadastro_lancamento/CardEditarLancamento';
 import Context from '../../Context';
 import { useNavigate } from 'react-router';
+import CardLancamentoCarregando from '../../components/card_lancamento/card_lancamento_carregando/CardLancamentoCarregando';
 
 function TelaInicial() {
   const [lancamentos, setLancamentos] = useState([]);
@@ -283,7 +284,13 @@ function TelaInicial() {
 
             {lancamentos.length === 0 &&
               <div className='lancamento-content-nenhum-container'>
-                {isLancamentosCarregando ? "..." : 
+                {isLancamentosCarregando ?
+                <>
+                  <CardLancamentoCarregando />
+                  <CardLancamentoCarregando />
+                  <CardLancamentoCarregando />
+                </>
+                : 
                 <>
                   <p>Nenhum lançamento encontrado!</p>
                   <i className="fa-regular fa-face-frown"></i>
@@ -293,7 +300,10 @@ function TelaInicial() {
 
               {totalPaginas >= paginaLancamentos &&
               <div className='lancamento-content-mostrar-mais-container'>
-                {isPaginacaoCarregando ? "..." : <button onClick={() => handleCarregarMaisLancamentos()}>MAIS</button>}
+                {isPaginacaoCarregando ? 
+                <>
+                  <CardLancamentoCarregando />
+                </> : <button onClick={() => handleCarregarMaisLancamentos()}>MAIS</button>}
               </div>}
           </div>
         </div>
