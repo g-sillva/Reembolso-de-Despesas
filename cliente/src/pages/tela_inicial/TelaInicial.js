@@ -12,13 +12,18 @@ import { useNavigate } from 'react-router';
 
 function TelaInicial() {
   const [lancamentos, setLancamentos] = useState([]);
-  const [context, setContext] = useContext(Context);
+  const [context] = useContext(Context);
 
   const [filtrosPorStatus, setFiltrosPorStatus] = useState([]);
   const [filtrosPorCategoria, setFiltrosPorCategoria] = useState([]);
   const [filtroPorPrecoMin, setFiltroPorPrecoMin] = useState("");
   const [filtroPorPrecoMax, setFiltroPorPrecoMax] = useState("");
   const [quantidadeFiltros, setQuantidadeFiltros] = useState(0);
+
+  const [paginaLancamentos, setPaginaLancamentos] = useState(1);
+  const [totalPaginas, setTotalPaginas] = useState(0);
+  const [isPaginacaoCarregando, setIsPaginacaoCarregando] = useState(false);
+  const [isLancamentosCarregando, setIsLancamentosCarregando] = useState(true);
 
   const [isFiltroModalAberto, setIsFiltroModalAberto] = useState(false);
   const [isEditarModalAberto, setIsEditarModalAberto] = useState(false);
@@ -30,14 +35,52 @@ function TelaInicial() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (context !== null) {
-      setLancamentos(context.usuario.lancamentos);
+  const handleCarregarMaisLancamentos = () => {
+    setIsPaginacaoCarregando(true);
+    axios({
+      url: `https://reembolso-de-despesas-production.up.railway.app/api/lancamentos/user?id=${context.usuario.id}&page=${paginaLancamentos}&size=10`,
+      method: 'get',
+      headers: {
+        Authorization: `Bearer ${context.token}`
+      }
+    }).then((res) => {
+      setLancamentos(l => [...l, res.data.content]);
       setLancamentosOriginal(lancamentos);
-    } else {
+      setIsPaginacaoCarregando(false);
+      setPaginaLancamentos(paginaLancamentos + 1);
+    }).catch((err) => {
+      console.log(err);
+      setIsPaginacaoCarregando(false);
+    });
+  }
+
+  let chamouRequisicao = false;
+
+  useEffect(() => {
+    if (context === null) {
       navigate("/logincadastro")
+    };
+
+    if (!chamouRequisicao) {
+      axios({
+        url: `https://reembolso-de-despesas-production.up.railway.app/api/lancamentos/user?id=${context.usuario.id}`,
+        method: 'get',
+        headers: {
+          Authorization: `Bearer ${context.token}`
+        }
+      }).then((res) => {
+        setLancamentos(res.data.content);
+        setLancamentosOriginal(lancamentos);
+        setIsLancamentosCarregando(false);
+        setTotalPaginas(res.data.totalPages);
+      }).catch((err) => {
+        console.log(err);
+        setIsLancamentosCarregando(false);
+      });
+      chamouRequisicao = true;
     }
-  }, [context, lancamentosOriginal])
+
+  }, [context])
 
   useEffect(() => {
     if (isFiltroModalAberto || isAdicionarModalAberto || isEditarModalAberto) {
@@ -80,12 +123,12 @@ function TelaInicial() {
   }
 
   const handleSomarValores = () => {
-    var atual = lancamentos.reduce((total, x) => total + Number(x.valor), 0) / 100;
+    var atual = lancamentosOriginal.reduce((total, x) => total + Number(x.valor), 0) / 100;
     return atual.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
   }
 
   const handleDataUltimo = () => {
-    let x = lancamentos;
+    let x = lancamentosOriginal;
     if (x.length === 0) return "-";
 
     x = x.sort((a,b) => {
@@ -101,7 +144,7 @@ function TelaInicial() {
   }
 
   const handleCreditados = () => {
-    return lancamentos.filter(x => x.status === "CREDITADO").length;
+    return lancamentosOriginal.filter(x => x.status === "CREDITADO").length;
   }
 
   const handleAddLancamento = (titulo, valor, categoria, descricao, comprovativo) => {
@@ -165,7 +208,7 @@ function TelaInicial() {
     formData.append('img', comprovativo);
 
     axios({
-      url: `https://reembolso-de-despesas-production.up.railway.app/api/lancamentos/${currentModalData.id}`,
+      url: `http://localhost:8080/api/lancamentos/${currentModalData.id}`,
       method: 'patch',
       data: formData,
       headers: {
@@ -232,7 +275,7 @@ function TelaInicial() {
                                 titulo={x.titulo} 
                                 descricao={x.descricao} 
                                 categoria={x.categoria} 
-                                comprovativo={x.img === null ? "" : x.img.data}
+                                comprovativo={(x.img === null || x.img === undefined) ? "" : x.img.data}
                                 aoAbrirEdicao={() => handleAbrirEdicaoLancamento(x)}/>
               ))}
             </div>}
@@ -240,8 +283,17 @@ function TelaInicial() {
 
             {lancamentos.length === 0 &&
               <div className='lancamento-content-nenhum-container'>
-                <p>Nenhum lançamento encontrado!</p>
-                <i className="fa-regular fa-face-frown"></i>
+                {isLancamentosCarregando ? "..." : 
+                <>
+                  <p>Nenhum lançamento encontrado!</p>
+                  <i className="fa-regular fa-face-frown"></i>
+                </>}
+
+              </div>}
+
+              {totalPaginas >= paginaLancamentos &&
+              <div className='lancamento-content-mostrar-mais-container'>
+                {isPaginacaoCarregando ? "..." : <button onClick={() => handleCarregarMaisLancamentos()}>MAIS</button>}
               </div>}
           </div>
         </div>
