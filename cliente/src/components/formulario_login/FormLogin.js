@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './FormLogin.css';
 import Loading from '../layout/Loading'
 import axios from 'axios';
@@ -27,6 +27,7 @@ function FormLogin({ aoClicarLinkLogin }) {
       }).catch((error) => {
         console.log(error);
         setRemoveLoading(false);
+
       });
   }
 

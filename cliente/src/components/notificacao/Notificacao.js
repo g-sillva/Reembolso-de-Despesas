@@ -8,7 +8,7 @@ import "./Notificacao.css";
 function Notificacao({ conteudo }) {
   const [notificacaoAberta, setNotificacaoAberta] = useState(-1);
   const [notificacoes, setNotificacoes] = useState([]);
-  const [context, setContext] = useContext(Context);
+  const [context] = useContext(Context);
 
   useEffect(() => {
     if (conteudo !== null || conteudo !== undefined) {
@@ -19,6 +19,7 @@ function Notificacao({ conteudo }) {
   const handleNotificacaoClick = (i) => {
     setNotificacaoAberta(notificacaoAberta === i ? -1 : i);
     notificacoes[i].visto = true;
+
 
     if (!notificacoes[i].visto) {
       axios({
@@ -37,7 +38,7 @@ function Notificacao({ conteudo }) {
     <div className='notificacoes-container'>
         <h4>Notificações</h4>
         <div className='notificacoes-content'>
-            {notificacoes === [] && <p className='nenhuma-notificacao-aviso'>Nenhuma notificação</p>}
+            {notificacoes.length === 0 && <p className='nenhuma-notificacao-aviso'>Nenhuma notificação</p>}
             <div className='itens-notificacao-container'>
               {notificacoes.map((x, i) => (
                 <ItemNotificacao onBtnClick={() => handleNotificacaoClick(i)}
