@@ -77,9 +77,9 @@
     outline: none;
     cursor: pointer;
     width: 80%;
-    font-size: 14px;
-    padding: 1rem 0;
-    border-radius: 10px;
+    font-size: 13px;
+    padding: .8rem 0;
+    border-radius: 5px;
     transition: all .1s ease-out;
 }
 
@@ -95,28 +95,35 @@
     justify-content: space-between;
     width: 100%;
     padding: 0 2rem;
-    margin: 1rem 0;
+    margin-top: 2rem;
 }
 
 .lancamento-content-header-search-container .input-container {
     display: flex;
     align-items: center;
+    width: 88%;
 }
 
 .lancamento-content-header-search-container .fa-magnifying-glass {
-    background: #F4F4F4;
+    background: #e5e5e5;
     padding: 10px;
     border: 1px solid transparent;
+    font-size: 14px;
     border-radius: 5px 0 0 5px;
+    height: 30px;
+    color: #5c5c5c;
 }
 
 .lancamento-content-header-search-container input {
-    background: #F4F4F4;
+    background: #e5e5e5;
     outline: none;
     border: 1px solid transparent;
     align-self: flex-start;
+    height: 30px;
+    font-size: 14px;
     padding: 10px 10px 10px 0;
     border-radius: 0 5px 5px 0;
+    width: 100%;
 }
 
 .lancamento-content-header-search-container .fa-filter {

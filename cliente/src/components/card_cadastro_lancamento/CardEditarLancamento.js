@@ -20,8 +20,6 @@ function CardEditarLancamento({ tituloCard = "",
   const [imagemSelecionada, setImagemSelecionada] = useState();
   const [imagemPreview, setImagemPreview] = useState();
 
-  console.log(valor);
-
   const handleEdicaoValor = (number) => {
     if (number.toString().includes("R$")) {
       setValor(number.toString().substring(2).replace(/\.|\,/g, "").trim());

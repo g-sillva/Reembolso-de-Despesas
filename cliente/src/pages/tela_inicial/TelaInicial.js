@@ -259,21 +259,25 @@ function TelaInicial() {
           
           <div className='lancamentos-content'>
             <div className='lancamentos-content-header'>
-              <button className='lancamento-adicionar-btn' onClick={() => setIsAdicionarModalAberto(true)}>ADICIONAR LANÇAMENTO</button>
+              {!isLancamentosCarregando && 
+              <>
+                <button className='lancamento-adicionar-btn' onClick={() => setIsAdicionarModalAberto(true)}>ADICIONAR LANÇAMENTO</button>
 
-              <div className='lancamento-content-header-search-container'>
-                <div className='input-container'>
-                  <i className="fa-solid fa-magnifying-glass"></i>
-                  <input type="text"
-                         placeholder='Pesquise pelo título de um lançamento' 
-                         onChange={(e) => buscarLancamentoPorTitulo(e.target.value)}/>
-                </div>
+                <div className='lancamento-content-header-search-container'>
+                  <div className='input-container'>
+                    <i className="fa-solid fa-magnifying-glass"></i>
+                    <input type="text"
+                          placeholder='Pesquise pelo título de um lançamento' 
+                          onChange={(e) => buscarLancamentoPorTitulo(e.target.value)}/>
+                  </div>
 
-                <div className='filter-container' onClick={() => setIsFiltroModalAberto(!isFiltroModalAberto)}>
-                  <i className="fa-solid fa-filter"></i>
-                  {quantidadeFiltros !== 0 && <p>{quantidadeFiltros}</p>}
+                  <div className='filter-container' onClick={() => setIsFiltroModalAberto(!isFiltroModalAberto)}>
+                    <i className="fa-solid fa-filter"></i>
+                    {quantidadeFiltros !== 0 && <p>{quantidadeFiltros}</p>}
+                  </div>
                 </div>
-              </div>
+              </>
+              }
             </div>
 
             {(!isEditarModalAberto && !isAdicionarModalAberto && !isFiltroModalAberto) && <div className="lancamentos-container">
@@ -292,8 +296,9 @@ function TelaInicial() {
 
             {lancamentos.length === 0 &&
               <div className='lancamento-content-nenhum-container'>
-                {isLancamentosCarregando ?
+                {isLancamentosCarregando && (!isEditarModalAberto && !isAdicionarModalAberto && !isFiltroModalAberto) ? 
                 <>
+                  <p className='carregando-msg' style={{color: "#2BD477"}}>Carregando seus lançamentos!</p>
                   <CardLancamentoCarregando />
                   <CardLancamentoCarregando />
                   <CardLancamentoCarregando />
@@ -306,7 +311,7 @@ function TelaInicial() {
 
               </div>}
 
-              {totalPaginas >= paginaLancamentos &&
+              {totalPaginas >= paginaLancamentos && lancamentos.length > 0 &&
               <div className='lancamento-content-mostrar-mais-container'>
                 {isPaginacaoCarregando ? 
                 <>
