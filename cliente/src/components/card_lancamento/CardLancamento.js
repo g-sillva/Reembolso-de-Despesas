@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import "./CardLancamento.css";
 
@@ -40,7 +40,7 @@ function CardLancamento({ valor = "0",
     }
 
     setValorExibido(x);
-    if(x == 'NaN') setValorExibido('0,00');
+    if(x === 'NaN') setValorExibido('0,00');
     handleDataFormat();
   }, [])
 
@@ -58,7 +58,7 @@ function CardLancamento({ valor = "0",
         <>
           <div className='card-lancamento-preview-bg' onClick={() => setIsImagemOpen(false)}></div>
           <div className='card-lancamento-preview-img-container'>
-          <img src={`data:image/jpeg;base64,${comprovativo}`} />
+          <img src={`data:image/jpeg;base64,${comprovativo}`} alt="comprovativo"/>
             <i className="fa-solid fa-xmark card-lancamento-preview-img-button" onClick={() => setIsImagemOpen(false)}></i>
           </div>
         </>
@@ -72,7 +72,7 @@ function CardLancamento({ valor = "0",
           <p className='card-lancamento-texto-categoria' style={{backgroundColor: categoria === "CATEGORIA" && "#FF4747"}} >{categoria.replace("_", " ")}</p>
         </div>
         <div className='card-lancamento-icones-container'>
-          <i className="fa-solid fa-pen" onClick={aoAbrirEdicao}></i>
+          {(status !== "ANALISE" && status !== "CREDITADO") && <i className="fa-solid fa-pen" onClick={aoAbrirEdicao}></i>}
           <i className="fa-regular fa-image" style={{color: comprovativo === "" && "#FF4747"}} onClick={() => handleImgPreviewClick()}></i>
         </div>
       </div>
@@ -80,7 +80,7 @@ function CardLancamento({ valor = "0",
         <div className='card-lancamento-bottom-status-container'>
           <div className='card-lancamento-bottom-status-bar'>
             <div className='card-lancamento-bottom-status-bar-full' style={{width: progressoBar + "%"}}></div>
-            <div className='card-lancamento-bottom-status-bar-current' style={{backgroundColor: progressoBar === 0 && "#f2b422"}}></div>
+            <div className='card-lancamento-bottom-status-bar-current' style={{backgroundColor: (progressoBar === 0 || status === "NEGADO") && (status === "NEGADO" ? "red" : "#f2b422")}}></div>
             <p>%</p>
           </div>
           <p className='card-lancamento-bottom-status-text'>{status.replace("_", " ")}</p>
@@ -92,7 +92,7 @@ function CardLancamento({ valor = "0",
             <span>{dataFormatada[1]}</span>
             {dataFormatada[2]}
           </p>
-          {(status === "EM_RASCUNHO" || valor === 0 || titulo === "-" || categoria === "Categoria" || comprovativo === undefined) && <i className="fa-solid fa-triangle-exclamation" style={{color: progressoBar === 0 && "#f2b422"}}></i>}
+          {(status === "EM_RASCUNHO" || status === "NEGADO" || valor === 0 || titulo === "-" || categoria === "Categoria" || comprovativo === undefined) && <i className="fa-solid fa-triangle-exclamation" style={{color: progressoBar === 0 && "#f2b422"}}></i>}
           <h5 style={{color: valor === 0 && "#FF4747"}}>R${valorExibido}</h5>
         </div>
       </div>

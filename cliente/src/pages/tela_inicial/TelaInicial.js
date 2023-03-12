@@ -100,30 +100,29 @@ function TelaInicial() {
   }, [isFiltroModalAberto, isEditarModalAberto, isAdicionarModalAberto]);
 
   useEffect(() => {
-    setLancamentos(lancamentosOriginal);
-    setQuantidadeFiltros(0);
+    let x = lancamentosOriginal;
 
-    if (filtroPorPrecoMin !== "") {
-      setLancamentos(lancamentos.filter(x => Number(x.valor) >= filtroPorPrecoMin));
-      setQuantidadeFiltros(quantidadeFiltros + 1);
-    }
-    if (filtroPorPrecoMax !== "") {
-      setLancamentos(lancamentos.filter(x => Number(x.valor) <= filtroPorPrecoMax));
-      setQuantidadeFiltros(quantidadeFiltros + 1);
-    }
     if (filtrosPorStatus.length !== 0) {
-      setLancamentos(lancamentos.filter(x => filtrosPorStatus.includes(x.status.toLowerCase())));
+      x = x.filter(y => filtrosPorStatus.includes(y.status.toLowerCase()));
     }
     if (filtrosPorCategoria.length !== 0) {
-      setLancamentos(lancamentos.filter(x => filtrosPorCategoria.includes(x.categoria.toLowerCase())));
+      x = x.filter(y => filtrosPorCategoria.includes(y.categoria.toLowerCase()));
     }
 
-    setQuantidadeFiltros(quantidadeFiltros + filtrosPorStatus.length + filtrosPorCategoria.length);
+    setLancamentos(x);
+    setQuantidadeFiltros(filtrosPorStatus.length + filtrosPorCategoria.length);
 
   }, [filtrosPorStatus, filtrosPorCategoria, filtroPorPrecoMin, filtroPorPrecoMax]);
 
   const buscarLancamentoPorTitulo = (titulo) => {
-    setLancamentos(lancamentosOriginal.filter(x => x.titulo.toLowerCase().includes(titulo.toLowerCase())));
+    if (filtrosPorStatus.length !== 0 || filtrosPorCategoria.length !== 0) {
+      setLancamentos(lancamentosOriginal.filter(x => 
+        x.titulo.toLowerCase().includes(titulo.toLowerCase()) &&
+        filtrosPorStatus.includes(x.status.toLowerCase()) &&
+        filtrosPorCategoria.includes(x.categoria.toLowerCase())));
+    } else {
+      setLancamentos(lancamentosOriginal.filter(x => x.titulo.toLowerCase().includes(titulo.toLowerCase())));
+    }
   }
 
   const handleAbrirEdicaoLancamento = (lancamento) => {

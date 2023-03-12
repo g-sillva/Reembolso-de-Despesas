@@ -7,7 +7,7 @@ import "./Header.css";
 
 function Header({ usuario }) {
   const [notificacoes, setNotificacoes] = useState([]);
-  const [context, setContext] = useContext(Context);
+  const [context] = useContext(Context);
   const [isNotificacaoAberta, setIsNotificacaoAberta] = useState(false);
 
   useEffect(() => {

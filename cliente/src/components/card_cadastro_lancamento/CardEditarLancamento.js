@@ -22,8 +22,10 @@ function CardEditarLancamento({ tituloCard = "",
 
   const handleEdicaoValor = (number) => {
     if (number.toString().includes("R$")) {
+      //eslint-disable-next-line
       setValor(number.toString().substring(2).replace(/\.|\,/g, "").trim());
     } else {
+      //eslint-disable-next-line
       setValor(number.toString().replace(/\.|\,/g, "").trim());
     }
     let x = number;
@@ -37,7 +39,7 @@ function CardEditarLancamento({ tituloCard = "",
     }
 
     setValorFormatado(x);
-    if(x == 'NaN') setValorFormatado('0,00');
+    if(x === 'NaN') setValorFormatado('0,00');
   }
 
   useEffect(() => {
@@ -99,7 +101,7 @@ function CardEditarLancamento({ tituloCard = "",
                 <>
                 <label htmlFor='upload-img'>
                   <p className='titulo-lancamento-upload'>Comprovativo *</p>
-                  <img src={imagemPreview} />
+                  <img src={imagemPreview} alt="comprovativo"/>
                 </label>
                 <input id='upload-img' 
                        type="file" 
@@ -112,7 +114,7 @@ function CardEditarLancamento({ tituloCard = "",
               <>
                 <label htmlFor='upload-img'>
                   <p className='titulo-lancamento-upload'>Comprovativo *</p>
-                  <img src={`data:image/jpeg;base64,${comprovativo.data}`} />
+                  <img src={`data:image/jpeg;base64,${comprovativo.data}`} alt="comprovativo"/>
                 </label>
                 <input id='upload-img' 
                        type="file" 
