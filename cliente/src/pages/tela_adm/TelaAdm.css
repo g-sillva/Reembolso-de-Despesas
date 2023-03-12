@@ -115,10 +115,9 @@ summary::marker {
 
 .filtragem-adm-categoria-input-texto {
     margin-bottom: 0.5rem;
-    padding: 0.2rem;
+    padding: 0.3rem;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
-    color: #333333CC;
     border: 1px solid #33333362;
     border-radius: 10px;
     outline: none;
