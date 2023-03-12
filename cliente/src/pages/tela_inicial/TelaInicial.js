@@ -149,7 +149,7 @@ function TelaInicial() {
       return bDate.getTime() - aDate.getTime();
     });
 
-    return x[0].data.substring(8, 10) + "/" + x[0].data.substring(5, 7);
+    return x[0].data.substring(8, 10) + "/" + x[0].data.substring(5, 7) + "/" + x[0].data.substring(0, 4);
   }
 
   const handleCreditados = () => {
