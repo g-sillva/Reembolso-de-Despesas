@@ -284,7 +284,8 @@ function TelaInicial() {
               {lancamentos.map((x, i) => (
                 <CardLancamento key={i} 
                                 valor={x.valor} 
-                                status={x.status} 
+                                status={x.status}
+                                data={x.data}
                                 titulo={x.titulo} 
                                 descricao={x.descricao} 
                                 categoria={x.categoria} 

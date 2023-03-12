@@ -4,7 +4,7 @@ import "./CardLancamento.css";
 
 function CardLancamento({ valor = "0", 
                           status = "EM RASCUNHO", 
-                          data, 
+                          data = "2023-03-12", 
                           titulo = "-", 
                           descricao = "-", 
                           categoria = "CATEGORIA", 
@@ -14,11 +14,18 @@ function CardLancamento({ valor = "0",
   const [isImagemOpen, setIsImagemOpen] = useState(false);
   const [progressoBar, setProgressoBar] = useState(0);
   const [valorExibido, setValorExibido] = useState(valor);
+  const [dataFormatada, setDataFormatada] = useState("");
 
   const handleImgPreviewClick = () => {
     if (comprovativo !== "") {
         setIsImagemOpen(true);
     }
+  }
+
+  const handleDataFormat = () => {
+    const meses = ["JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ"];
+    const elementos = data.split("-");
+    setDataFormatada([parseInt(elementos[2], 10) + " ", meses[parseInt(elementos[1], 10) - 1] + " ", parseInt(elementos[0], 10)]);
   }
 
   useEffect(() => {
@@ -34,6 +41,7 @@ function CardLancamento({ valor = "0",
 
     setValorExibido(x);
     if(x == 'NaN') setValorExibido('0,00');
+    handleDataFormat();
   }, [])
 
   useEffect(() => {
@@ -78,7 +86,12 @@ function CardLancamento({ valor = "0",
           <p className='card-lancamento-bottom-status-text'>{status.replace("_", " ")}</p>
         </div>
         <div className='card-lancamento-bottom-text-container'>
-          <p className='card-lancamento-bottom-text-date'><span>JAV</span> 2023</p>
+          {/* <p className='card-lancamento-bottom-text-date'><span>JAV</span> 2023</p> */}
+          <p className='card-lancamento-bottom-text-date'>
+            {dataFormatada[0]} 
+            <span>{dataFormatada[1]}</span>
+            {dataFormatada[2]}
+          </p>
           {(status === "EM_RASCUNHO" || valor === 0 || titulo === "-" || categoria === "Categoria" || comprovativo === undefined) && <i className="fa-solid fa-triangle-exclamation" style={{color: progressoBar === 0 && "#f2b422"}}></i>}
           <h5 style={{color: valor === 0 && "#FF4747"}}>R${valorExibido}</h5>
         </div>
