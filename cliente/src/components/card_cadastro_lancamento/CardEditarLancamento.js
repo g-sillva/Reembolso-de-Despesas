@@ -4,7 +4,7 @@ import "./CardEditarLancamento.css";
 
 function CardEditarLancamento({ tituloCard = "", 
                                 tituloLanc = "", 
-                                valorCard = "", 
+                                valorCard = "000", 
                                 categoriaCard = 'Categoria', 
                                 descricaoCard = "", 
                                 comprovativoCard = "", 
@@ -12,12 +12,40 @@ function CardEditarLancamento({ tituloCard = "",
                                 onActionClick}) {
   const [titulo, setTitulo] = useState(tituloLanc === "-" ? "" : tituloLanc);
   const [valor, setValor] = useState(valorCard);
+  const [valorFormatado, setValorFormatado] = useState(valor);
   const [categoria, setCategoria] = useState(categoriaCard);
   const [descricao, setDescricao] = useState(descricaoCard);
   const [comprovativo, setComprovativo] = useState(comprovativoCard);
   
   const [imagemSelecionada, setImagemSelecionada] = useState();
   const [imagemPreview, setImagemPreview] = useState();
+
+  console.log(valor);
+
+  const handleEdicaoValor = (number) => {
+    if (number.toString().includes("R$")) {
+      setValor(number.toString().substring(2).replace(/\.|\,/g, "").trim());
+    } else {
+      setValor(number.toString().replace(/\.|\,/g, "").trim());
+    }
+    let x = number;
+    x = x + '';
+    x = parseInt(x.replace(/[\D]+/g, ''));
+    x = x + '';
+    x = x.replace(/([0-9]{2})$/g, ",$1");
+
+    if (x.length > 6) {
+      x = x.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2");
+    }
+
+    setValorFormatado(x);
+    if(x == 'NaN') setValorFormatado('0,00');
+  }
+
+  useEffect(() => {
+    setValorFormatado(valor);
+    handleEdicaoValor(valorCard);
+  }, []);
 
   useEffect(() => {
     if (!imagemSelecionada) {
@@ -50,7 +78,7 @@ function CardEditarLancamento({ tituloCard = "",
 
         <div className='card-editar-lancamento-input-flex'>
 
-          <input type="number" name='valor' placeholder='Valor *' value={valor} onChange={(e) => setValor(e.target.value)}/>
+          <input type="text" name='valor' placeholder='Valor *' minLength={4} value={"R$ " + valorFormatado} onChange={(e) => handleEdicaoValor(e.target.value)}/>
 
           <select id='categoria' name='categoria' value={categoria} onChange={(e) => setCategoria(e.target.value)}>
             <option value="CATEGORIA">Categoria</option>

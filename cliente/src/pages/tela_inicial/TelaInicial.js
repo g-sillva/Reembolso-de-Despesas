@@ -45,7 +45,8 @@ function TelaInicial() {
         Authorization: `Bearer ${context.token}`
       }
     }).then((res) => {
-      setLancamentos(l => [...l, res.data.content]);
+
+      setLancamentos(l => [...l, ...res.data.content]);
       setLancamentosOriginal(lancamentos);
       setIsPaginacaoCarregando(false);
       setPaginaLancamentos(paginaLancamentos + 1);
@@ -55,23 +56,30 @@ function TelaInicial() {
     });
   }
 
+  useEffect(() => {
+    if (lancamentosOriginal.length < lancamentos.length) {
+      setLancamentosOriginal(lancamentos);
+    }
+  }, [lancamentos])
+
   let chamouRequisicao = false;
 
   useEffect(() => {
     if (context === null) {
-      navigate("/logincadastro")
+      navigate("/logincadastro");
+      return;
     };
 
     if (!chamouRequisicao) {
       axios({
-        url: `https://reembolso-de-despesas-production.up.railway.app/api/lancamentos/user?id=${context.usuario.id}`,
+        url: `https://reembolso-de-despesas-production.up.railway.app/api/lancamentos/user?id=${context.usuario.id}&page=0&size=10`,
         method: 'get',
         headers: {
           Authorization: `Bearer ${context.token}`
         }
       }).then((res) => {
         setLancamentos(res.data.content);
-        setLancamentosOriginal(lancamentos);
+        setLancamentosOriginal(res.data.content);
         setIsLancamentosCarregando(false);
         setTotalPaginas(res.data.totalPages);
       }).catch((err) => {
@@ -209,7 +217,7 @@ function TelaInicial() {
     formData.append('img', comprovativo);
 
     axios({
-      url: `http://localhost:8080/api/lancamentos/${currentModalData.id}`,
+      url: `https://reembolso-de-despesas-production.up.railway.app/api/lancamentos/${currentModalData.id}`,
       method: 'patch',
       data: formData,
       headers: {
@@ -235,7 +243,7 @@ function TelaInicial() {
 
         <div className='tela-inicial-cards-container'>
           <CardTelaInicial titulo="$ Total" dado={handleSomarValores()} img_url="/img/card-tela-inicial/card_total.png" />
-          <CardTelaInicial titulo="Lancamento" dado={lancamentos.length} img_url="/img/card-tela-inicial/card_qnt_lancamentos.png" />
+          <CardTelaInicial titulo="Lancamento" dado={lancamentosOriginal.length} img_url="/img/card-tela-inicial/card_qnt_lancamentos.png" />
           <CardTelaInicial titulo="Data Último" dado={handleDataUltimo()} img_url="/img/card-tela-inicial/card_data.png" />
           <CardTelaInicial titulo="Creditados" dado={handleCreditados()} img_url="/img/card-tela-inicial/card_creditados.png" />
         </div>

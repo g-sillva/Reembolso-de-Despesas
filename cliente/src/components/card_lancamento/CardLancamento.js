@@ -13,12 +13,28 @@ function CardLancamento({ valor = "0",
 
   const [isImagemOpen, setIsImagemOpen] = useState(false);
   const [progressoBar, setProgressoBar] = useState(0);
+  const [valorExibido, setValorExibido] = useState(valor);
 
   const handleImgPreviewClick = () => {
     if (comprovativo !== "") {
         setIsImagemOpen(true);
     }
   }
+
+  useEffect(() => {
+    let x = valorExibido;
+    x = x + '';
+    x = parseInt(x.replace(/[\D]+/g, ''));
+    x = x + '';
+    x = x.replace(/([0-9]{2})$/g, ",$1");
+
+    if (x.length > 6) {
+      x = x.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2");
+    }
+
+    setValorExibido(x);
+    if(x == 'NaN') setValorExibido('0,00');
+  }, [])
 
   useEffect(() => {
     if (status === "EM_RASCUNHO") setProgressoBar(0);
@@ -28,7 +44,6 @@ function CardLancamento({ valor = "0",
     if (status === "NEGADO") setProgressoBar(100);
   }, [status]);
 
-  valor /= 100;
   return (
     <div className='card-lancamento'>
       {isImagemOpen && (
@@ -65,7 +80,7 @@ function CardLancamento({ valor = "0",
         <div className='card-lancamento-bottom-text-container'>
           <p className='card-lancamento-bottom-text-date'><span>JAV</span> 2023</p>
           {(status === "EM_RASCUNHO" || valor === 0 || titulo === "-" || categoria === "Categoria" || comprovativo === undefined) && <i className="fa-solid fa-triangle-exclamation" style={{color: progressoBar === 0 && "#f2b422"}}></i>}
-          <h5 style={{color: valor === 0 && "#FF4747"}}>R${valor}</h5>
+          <h5 style={{color: valor === 0 && "#FF4747"}}>R${valorExibido}</h5>
         </div>
       </div>
     </div>
