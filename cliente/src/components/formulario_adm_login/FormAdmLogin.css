@@ -1,0 +1,107 @@
+.card-adm-login-container {
+    display: flex;
+    width: 1280px;
+    height: 720px;
+    border-radius: 10px;
+    background: var(--color-primary);
+    background: #FFFFFF;
+    box-shadow: rgba(100, 100, 111, 0.1) 0px 7px 29px 0px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-adm-login-titulo {
+    font-size: 1.8rem;
+    color: var(--color-primary);
+    margin-bottom: 0.8rem;
+}
+
+.card-adm-login-descricao {
+    margin-bottom: 3rem;
+    font-size: 1.2rem;
+    color: #8C9791;
+    font-weight: normal;
+    text-align: center;
+}
+
+.card-adm-login-form {
+    display: flex;
+    width: 50%;
+    flex-direction: column;
+}
+
+.card-adm-login-label {
+    color: #8C9791;
+    font-size: 1.4rem;
+    margin-left: 0.8rem;
+    padding-bottom: 0.8rem;
+}
+
+.card-adm-login-input-email {
+    border: none;
+    border-bottom: 1px solid #2BD477;
+    margin-bottom: 1rem;
+    outline: none;
+    padding-left: 0.4rem;
+    padding-right: 0.4rem;
+    padding-bottom: 0.2rem;
+    font-size: 1.4rem;
+}
+
+.card-adm-login-input-senha {
+    border: none;
+    border-bottom: 1px solid #2BD477;
+    margin-bottom: 1rem;
+    outline: none;
+    padding-left: 0.4rem;
+    padding-right: 0.4rem;
+    padding-bottom: 0.2rem;
+    font-size: 1.4rem;
+    margin-bottom: 3rem;
+}
+
+#card-adm-login-B-logar {
+    padding: 0.7rem;
+    font-weight: bold;
+    color: #FFFFFF;
+    background: #2BD477;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 350px;
+    font-size: 1.2rem;
+    margin: 0 auto;
+}
+
+#card-adm-login-B-logar:hover {
+    background-color: #FFFFFF;
+    color: #2BD477;
+    border: 1px solid #2BD477;
+    transition: 0.3s ease;
+}
+
+.card-adm-login-criar-conta-container {
+    display: flex;
+    justify-content: center;
+}
+
+.card-adm-login-criar-conta {
+    margin-top: 1.5rem;
+    color: #5B5B5B;
+    font-size: 1.2rem;
+    font-weight: normal;
+}
+
+.card-adm-login-criar-conta-L {
+    color: #2BD477;
+    text-align: center;
+    text-decoration: underline;
+
+}
+
+.card-adm-login-criar-conta-L:hover {
+    color: #009231;
+    transition: 0.3s ease;
+    cursor: pointer;
+}
